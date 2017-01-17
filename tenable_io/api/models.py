@@ -59,6 +59,48 @@ class BaseModel(object):
         return payload_filter(self.__dict__, filter_)
 
 
+class Agent(BaseModel):
+
+    def __init__(
+            self,
+            distro=None,
+            id=None,
+            ip=None,
+            last_scanned=None,
+            name=None,
+            platform=None,
+            token=None,
+            uuid=None
+    ):
+        self.distro = distro
+        self.id = id
+        self.ip = ip
+        self.last_scanned = last_scanned
+        self.name = name
+        self.platform = platform
+        self.token = token
+        self.uuid = uuid
+
+
+class AgentList(BaseModel):
+
+    def __init__(
+            self,
+            agents=None
+    ):
+        self._agents = None
+        self.agents = agents
+
+    @property
+    def agents(self):
+        return self._agents
+
+    @agents.setter
+    @BaseModel._model_list(Agent)
+    def agents(self, agents):
+        self._agents = agents
+
+
 class AgentGroup(BaseModel):
 
     def __init__(
