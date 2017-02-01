@@ -1,0 +1,16 @@
+[tenable_io]
+;endpoint=https://cloud.tenable.com/
+access_key={{ACCESS_KEY}}
+secret_key={{SECRET_KEY}}
+
+[tenable_io-test]
+; Name of template to create a scan with.
+scan_template_name=discovery
+; Host target to create a scan with. (Warning: do not scan targets that you're not authorized to.)
+scan_text_targets={{SCAN_TEXT_TARGETS}}
+; Host alternative target to launch a scan with. (Warning: do not scan targets that you're not authorized to.)
+scan_alt_targets={{SCAN_ALT_TARGETS}}
+; The valid domain name for username
+users_domain_name={{USERS_DOMAIN_NAME}}
+; Name of template to create a policy with.
+policy_template_name=discovery

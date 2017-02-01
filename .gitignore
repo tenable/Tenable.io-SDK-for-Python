@@ -1,0 +1,19 @@
+*.pyc
+doc/build
+
+# Wheel packaging
+build
+dist
+tenable_io.egg-info
+
+# TenableIO config
+tenable_io.ini
+
+# Test state / virtualenvs
+.cache
+.tox
+.venv
+.venv3
+
+# IntelliJ / PyCharm IDE
+.idea/

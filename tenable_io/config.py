@@ -1,0 +1,25 @@
+from os import environ
+import six
+
+if six.PY34:
+    import configparser
+else:
+    import ConfigParser as configparser
+
+base_config = {
+    'endpoint': environ.get('TENABLEIO_ENDPOINT', 'https://cloud.tenable.com/'),
+    'access_key': environ.get('TENABLEIO_ACCESS_KEY'),
+    'secret_key': environ.get('TENABLEIO_SECRET_KEY'),
+}
+
+# Read tenable_io.ini config. Default to environment variables if exist.
+config = configparser.SafeConfigParser(base_config)
+config.add_section('tenable_io')
+config.read('tenable_io.ini')
+
+
+class TenableIOConfig(object):
+
+    @staticmethod
+    def get(key):
+        return config.get('tenable_io', key)
