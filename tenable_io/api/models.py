@@ -1309,3 +1309,230 @@ class UserList(BaseModel):
     @BaseModel._model_list(User)
     def users(self, users):
         self._users = users
+
+
+class AssetSeverity(BaseModel):
+
+    def __init__(
+            self,
+            count=None,
+            level=None,
+            name=None,
+    ):
+        self.count = count
+        self.level = level
+        self.name = name
+
+
+class Asset(BaseModel):
+
+    def __init__(
+            self,
+            id=None,
+            fqdn=None,
+            ipv4=None,
+            ipv6=None,
+            last_seen=None,
+            operating_system=None,
+            severities=None,
+    ):
+        self._severities = None
+
+        self.id = id
+        self.fqdn = fqdn
+        self.ipv4 = ipv4
+        self.ipv6 = ipv6
+        self.last_seen = last_seen
+        self.operating_system = operating_system
+        self.severities = severities
+
+    @property
+    def severities(self):
+        return self._severities
+
+    @severities.setter
+    @BaseModel._model_list(AssetSeverity)
+    def severities(self, severities):
+        self._severities = severities
+
+
+class AssetInfo(BaseModel):
+
+    def __init__(
+            self,
+            counts=None,
+            first_seen=None,
+            fqdn=None,
+            ipv4=None,
+            ipv6=None,
+            last_authenticated_scan_date=None,
+            last_seen=None,
+            mac_address=None,
+            netbios_name=None,
+            operating_system=None,
+            system_type=None,
+    ):
+        self._counts = None
+
+        self.counts = counts
+        self.first_seen = first_seen
+        self.fqdn = fqdn
+        self.ipv4 = ipv4
+        self.ipv6 = ipv6
+        self.last_authenticated_scan_date = last_authenticated_scan_date
+        self.last_seen = last_seen
+        self.mac_address = mac_address
+        self.netbios_name = netbios_name
+        self.operating_system = operating_system
+        self.system_type = system_type
+
+    @property
+    def counts(self):
+        return self._counts
+
+    @counts.setter
+    def counts(self, counts):
+        self._counts = counts
+        if isinstance(self._counts, dict) \
+                and 'vulnerabilities' in self._counts \
+                and 'severities' in self._counts['vulnerabilities'] \
+                and isinstance(self._counts['vulnerabilities']['severities'], list):
+            self._counts['vulnerabilities']['severities'] = \
+                AssetSeverity.from_list(self._counts['vulnerabilities']['severities'])
+
+
+class AssetList(BaseModel):
+
+    def __init__(
+            self,
+            assets=None,
+    ):
+        self._assets = None
+
+        self.assets = assets
+
+    @property
+    def assets(self):
+        return self._assets
+
+    @assets.setter
+    @BaseModel._model_list(Asset)
+    def assets(self, assets):
+        self._assets = assets
+
+
+class Vulnerability(BaseModel):
+
+    def __init_(
+            self,
+            count=None,
+            plugin_family=None,
+            plugin_id=None,
+            plugin_name=None,
+            vulnerability_state=None,
+            severity=None,
+    ):
+        self.count = count
+        self.plugin_family = plugin_family
+        self.plugin_id = plugin_id
+        self.plugin_name = plugin_name
+        self.vulnerability_state = vulnerability_state
+        self.severity = severity
+
+
+class VulnerabilityList(BaseModel):
+
+    def __init__(
+            self,
+            vulnerabilities=None,
+    ):
+        self._vulnerabilities = None,
+        self.vulnerabilities = vulnerabilities
+
+    @property
+    def vulnerabilities(self):
+        return self._vulnerabilities
+
+    @vulnerabilities.setter
+    @BaseModel._model_list(Vulnerability)
+    def vulnerabilities(self, vulnerabilities):
+        self._vulnerabilities = vulnerabilities
+
+
+class VulnerabilityOutput(BaseModel):
+
+    def __init__(
+            self,
+            application_protocol=None,
+            assets=None,
+            port=None,
+            transport_protocol=None,
+    ):
+        self.application_protocol = application_protocol
+        self.assets = assets
+        self.port = port
+        self.transport_protocol = transport_protocol
+
+
+class VulnerabilityPluginOutputState(BaseModel):
+
+    def __init__(
+            self,
+            name=None,
+            results=None,
+    ):
+        self._results = None
+
+        self.name = name
+        self.results = results
+
+    @property
+    def results(self):
+        return self._results
+
+    @results.setter
+    @BaseModel._model_list(VulnerabilityOutput)
+    def results(self, results):
+        self._results = results
+
+
+class VulnerabilityPluginOutput(BaseModel):
+
+    def __init__(
+            self,
+            plugin_output=None,
+            states=None,
+    ):
+        self._states = states
+
+        self.plugin_output = plugin_output
+        self.states = states
+
+    @property
+    def states(self):
+        return self._states
+
+    @states.setter
+    @BaseModel._model_list(VulnerabilityPluginOutputState)
+    def states(self, states):
+        self._states = states
+
+
+class VulnerabilityOutputList(BaseModel):
+
+    def __init__(
+            self,
+            outputs=None
+    ):
+        self._outputs = None,
+
+        self.outputs = outputs
+
+    @property
+    def outputs(self):
+        return self._outputs
+
+    @outputs.setter
+    @BaseModel._model_list(VulnerabilityPluginOutput)
+    def outputs(self, outputs):
+        self._outputs = outputs

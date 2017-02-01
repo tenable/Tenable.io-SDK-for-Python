@@ -20,6 +20,7 @@ from tenable_io.api.server import ServerApi
 from tenable_io.api.session import SessionApi
 from tenable_io.api.target_groups import TargetGroupsApi
 from tenable_io.api.users import UsersApi
+from tenable_io.api.workbenches import WorkbenchApi
 from tenable_io.helpers.folder import FolderHelper
 from tenable_io.helpers.policy import PolicyHelper
 from tenable_io.helpers.scan import ScanHelper
@@ -66,14 +67,15 @@ class TenableIOClient(object):
         self.session_api = SessionApi(self)
         self.target_groups_api = TargetGroupsApi(self)
         self.users_api = UsersApi(self)
+        self.workbenches_api = WorkbenchApi(self)
 
     def _init_helpers(self):
         """
         Initialize all helpers.
         """
+        self.folder_helper = FolderHelper(self)
         self.policy_helper = PolicyHelper(self)
         self.scan_helper = ScanHelper(self)
-        self.folder_helper = FolderHelper(self)
 
     def _retry(f):
         """
