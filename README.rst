@@ -1,24 +1,24 @@
 Tenable.io SDK for Python
-=================
+=========================
 
 Tenable.io SDK for Python
 
 Configuration
 ~~~~~~~~~~~~~
 
-Access key and secret key are needed to authenticate with the [Tenable
-Cloud API]. There are three ways to configure the ``TenableIOClient`` with
-the keys.
+Access key and secret key are needed to authenticate with the
+`Tenable Cloud API <https://cloud.tenable.com/api>`_. There are three ways to
+configure the ``TenableIOClient`` with the keys.
 
 INI File
-''''''''
+^^^^^^^^
 
 | A ``tenable_io.ini`` can be created in the working directory. See
   ``tenable_io.ini.example`` on what it should look like.
 | Note: The ``tenable_io.ini.example`` file is in Jinja template format.
 
 ``TenableIOClient`` Constructor Arguments
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: python
 
@@ -54,6 +54,7 @@ Install dependencies.
 .. code:: sh
 
     $ pip install -r ./requirements.txt
+    $ pip install -r ./requirements-build.txt
 
 Run Tests
 ~~~~~~~~~
