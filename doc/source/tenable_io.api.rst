@@ -4,14 +4,6 @@ tenable_io.api package
 Submodules
 ----------
 
-tenable_io.api.asset_lists module
----------------------------------
-
-.. automodule:: tenable_io.api.asset_lists
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 tenable_io.api.base module
 --------------------------
 
@@ -112,6 +104,14 @@ tenable_io.api.session module
 -----------------------------
 
 .. automodule:: tenable_io.api.session
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tenable_io.api.target_groups module
+-----------------------------------
+
+.. automodule:: tenable_io.api.target_groups
     :members:
     :undoc-members:
     :show-inheritance:

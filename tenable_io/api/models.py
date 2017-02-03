@@ -59,52 +59,6 @@ class BaseModel(object):
         return payload_filter(self.__dict__, filter_)
 
 
-class AssetList(BaseModel):
-
-    def __init__(
-        self,
-        id=None,
-        default_list=None,
-        name=None,
-        members=None,
-        type=None,
-        owner=None,
-        owner_id=None,
-        last_modification_date=None,
-        shared=None,
-        user_permissions=None,
-    ):
-        self.id = id
-        self.default_list = default_list
-        self.name = name
-        self.members = members
-        self.type = type
-        self.owner = owner
-        self.owner_id = owner_id
-        self.last_modification_date = last_modification_date
-        self.shared = shared
-        self.user_permissions = user_permissions
-
-
-class AssetListList(BaseModel):
-
-    def __init__(
-            self,
-            asset_lists=None,
-    ):
-        self._asset_lists = None
-        self.asset_lists = asset_lists
-
-    @property
-    def asset_lists(self):
-        return self._asset_lists
-
-    @asset_lists.setter
-    @BaseModel._model_list(AssetList)
-    def asset_lists(self, asset_lists):
-        self._asset_lists = asset_lists
-
-
 class Exclusion(BaseModel):
     def __init__(
             self,
@@ -1193,6 +1147,52 @@ class Session(BaseModel):
         self.lastlogin = lastlogin
         self.container_id = container_id
         self.groups = groups
+
+
+class TargetGroup(BaseModel):
+
+    def __init__(
+        self,
+        id=None,
+        default_group=None,
+        name=None,
+        members=None,
+        type=None,
+        owner=None,
+        owner_id=None,
+        last_modification_date=None,
+        shared=None,
+        user_permissions=None,
+    ):
+        self.id = id
+        self.default_group = default_group
+        self.name = name
+        self.members = members
+        self.type = type
+        self.owner = owner
+        self.owner_id = owner_id
+        self.last_modification_date = last_modification_date
+        self.shared = shared
+        self.user_permissions = user_permissions
+
+
+class TargetGroupList(BaseModel):
+
+    def __init__(
+            self,
+            target_groups=None,
+    ):
+        self._target_groups = None
+        self.target_groups = target_groups
+
+    @property
+    def target_groups(self):
+        return self._target_groups
+
+    @target_groups.setter
+    @BaseModel._model_list(TargetGroup)
+    def target_groups(self, target_groups):
+        self._target_groups = target_groups
 
 
 class Template(BaseModel):

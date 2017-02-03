@@ -5,7 +5,6 @@ from time import sleep
 
 from tenable_io.config import TenableIOConfig
 from tenable_io.exceptions import TenableIOApiException, TenableIORetryableApiException
-from tenable_io.api.asset_lists import AssetListsApi
 from tenable_io.api.base import BaseRequest
 from tenable_io.api.editor import EditorApi
 from tenable_io.api.exclusions import ExclusionApi
@@ -18,6 +17,7 @@ from tenable_io.api.scans import ScansApi
 from tenable_io.api.scanners import ScannersApi
 from tenable_io.api.server import ServerApi
 from tenable_io.api.session import SessionApi
+from tenable_io.api.target_groups import TargetGroupsApi
 from tenable_io.api.users import UsersApi
 from tenable_io.helpers.folder import FolderHelper
 from tenable_io.helpers.policy import PolicyHelper
@@ -51,7 +51,6 @@ class TenableIOClient(object):
         """
         Initialize all api.
         """
-        self.asset_lists_api = AssetListsApi(self)
         self.editor_api = EditorApi(self)
         self.exclusions_api = ExclusionApi(self)
         self.file_api = FileApi(self)
@@ -63,6 +62,7 @@ class TenableIOClient(object):
         self.scanners_api = ScannersApi(self)
         self.server_api = ServerApi(self)
         self.session_api = SessionApi(self)
+        self.target_groups_api = TargetGroupsApi(self)
         self.users_api = UsersApi(self)
 
     def _init_helpers(self):
