@@ -1,4 +1,5 @@
 import requests
+import sys
 
 from requests.utils import quote
 from time import sleep
@@ -41,7 +42,8 @@ class TenableIOClient(object):
         self._endpoint = endpoint
 
         self._headers = {
-            u'X-ApiKeys': u'accessKey=%s; secretKey=%s;' % (self._access_key, self._secret_key)
+            u'X-ApiKeys': u'accessKey=%s; secretKey=%s;' % (self._access_key, self._secret_key),
+            u'User-Agent': u'TenableIOSDK Python/%s' % ('.'.join([str(i) for i in sys.version_info][0:3]))
         }
 
         self._ini_api()
