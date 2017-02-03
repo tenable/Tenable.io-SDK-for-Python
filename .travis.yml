@@ -1,0 +1,20 @@
+language: python
+python:
+  - "2.7"
+  - "3.4"
+# command to install dependencies
+install:
+  - pip install pep8
+#  - pip install j2cli
+  - pip install -r requirements.txt
+  - pip install -r requirements-build.txt
+before_script:
+#   j2cli does not seem to work with python 3
+#  - j2 tenable_io.ini.example > tenable_io.ini
+#   alternative script to generate config
+  - cp tenable_io.ini.example tenable_io.ini
+  - grep -oP "\{{\K[^\}]+" tenable_io.ini | sed 's/[{}]//g' | awk '{print "sed -i -e '\''s@{{"$0"}}@'\''\"$"$0"\"'\''@'\'' tenable_io.ini"}' | sh
+# command to run tests
+script:
+  - pep8 tenable_io tests
+  - pytest
