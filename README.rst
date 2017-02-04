@@ -61,7 +61,7 @@ Run Tests
 
 .. code:: sh
 
-    $ py.test -s
+    $ py.test
 
 Documentations
 ~~~~~~~~~~~~~~

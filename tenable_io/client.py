@@ -23,7 +23,7 @@ from tenable_io.api.users import UsersApi
 from tenable_io.helpers.folder import FolderHelper
 from tenable_io.helpers.policy import PolicyHelper
 from tenable_io.helpers.scan import ScanHelper
-from tenable_io.util import Logger
+from tenable_io.log import logging
 
 
 class TenableIOClient(object):
@@ -97,8 +97,7 @@ class TenableIOClient(object):
                     if count <= TenableIOClient.MAX_RETRIES:
                         retry = True
                         sleep_ms += count * TenableIOClient.RETRY_SLEEP_MILLISECONDS
-                        Logger.warn(u'Retry %d of %d. Sleep %dms' % (count, TenableIOClient.MAX_RETRIES, sleep_ms),
-                                    TenableIOClient)
+                        logging.warn(u'Retry %d of %d. Sleep %dms' % (count, TenableIOClient.MAX_RETRIES, sleep_ms))
                         sleep(sleep_ms / 1000.0)
                     else:
                         raise TenableIOApiException(exception.response)
