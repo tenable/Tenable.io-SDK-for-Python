@@ -115,7 +115,7 @@ class TenableIOClient(object):
 
             if response.status_code == 429:
                 raise TenableIORetryableApiException(response)
-            if response.status_code in [501, 502, 503]:
+            if response.status_code in [501, 502, 503, 504]:
                 raise TenableIORetryableApiException(response)
             if not 200 <= response.status_code <= 299:
                 raise TenableIOApiException(response)
@@ -151,8 +151,21 @@ class TenableIOClient(object):
         if path_params:
             # Ensure path param is encoded.
             path_params = {key: quote(str(value), safe=u'') for key, value in path_params.items()}
-            uri = uri % path_params
-        return requests.request(method, self._endpoint + uri, headers=self._headers, **kwargs)
+            uri %= path_params
+
+        full_uri = self._endpoint + uri
+        logging.debug(u'API Request: %s %s %s' % (method, full_uri, kwargs))
+
+        response = requests.request(method, full_uri, headers=self._headers, **kwargs)
+        log_message = u'API Response: %s %s %s %s %s %s' % (response.request.method, response.url, response.reason,
+                                                            ('status_code', response.status_code),
+                                                            response.headers.get('x-gateway-site-id'),
+                                                            response.headers.get('x-request-uuid'))
+        logging.debug(log_message)
+        if not 200 <= response.status_code <= 299:
+            logging.error(log_message)
+
+        return response
 
     # Delayed qualifying decorator as staticmethod. This is a workaround to error raised from using a decorator
     # decorated by @staticmethod.

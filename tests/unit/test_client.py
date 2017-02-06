@@ -34,6 +34,7 @@ class TestTenableIOClient(BaseTest):
             [{'status_code': 501}, True],
             [{'status_code': 502}, True],
             [{'status_code': 503}, True],
+            [{'status_code': 504}, True],
         ]
 
         # Function that returns Responses with above status codes.

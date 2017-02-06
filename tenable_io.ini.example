@@ -3,7 +3,7 @@
 access_key={{ACCESS_KEY}}
 secret_key={{SECRET_KEY}}
 ; Logging level. (Available levels: CRITICAL, ERROR, WARNING, INFO, DEBUG)
-logging_level={{LOGGING_LEVEL}}
+;logging_level=WARNING
 
 [tenable_io-test]
 ; Name of template to create a scan with.

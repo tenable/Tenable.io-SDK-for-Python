@@ -10,6 +10,7 @@ base_config = {
     'endpoint': environ.get('TENABLEIO_ENDPOINT', 'https://cloud.tenable.com/'),
     'access_key': environ.get('TENABLEIO_ACCESS_KEY'),
     'secret_key': environ.get('TENABLEIO_SECRET_KEY'),
+    'logging_level': environ.get('TENABLEIO_LOGGING_LEVEL', 'WARNING'),
 }
 
 # Read tenable_io.ini config. Default to environment variables if exist.
