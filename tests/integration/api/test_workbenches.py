@@ -1,7 +1,10 @@
+import os
+
 from tests.base import BaseTest
 
-from tenable_io.exceptions import TenableIOErrorCode, TenableIOApiException
 from tenable_io.api.models import AssetList, VulnerabilityList
+from tenable_io.api.workbenches import WorkbenchesApi
+from tenable_io.exceptions import TenableIOErrorCode, TenableIOApiException
 
 
 class TestWorkbenchesApi(BaseTest):
@@ -38,3 +41,29 @@ class TestWorkbenchesApi(BaseTest):
             assert False, u'TenableIOApiException should have been thrown for bad ID.'
         except TenableIOApiException as e:
             assert e.code is TenableIOErrorCode.BAD_REQUEST, u'Appropriate exception thrown.'
+
+    def test_export(self, app, client):
+        file_id = client.workbenches_api.export_request(
+            WorkbenchesApi.FORMAT_NESSUS,
+            WorkbenchesApi.REPORT_VULNERABILITIES,
+            WorkbenchesApi.CHAPTER_VULN_BY_ASSET,
+        )
+        assert file_id, u'The `export_request` method returns a valid file ID.'
+
+        export_status = self.wait_until(lambda: client.workbenches_api.export_status(file_id),
+                                        lambda status: status == WorkbenchesApi.STATUS_EXPORT_READY)
+
+        assert export_status == WorkbenchesApi.STATUS_EXPORT_READY, u'Workbench export is ready.'
+
+        iter_content = client.workbenches_api.export_download(file_id, False)
+        download_path = app.session_file_output('test_workbench_export')
+
+        assert not os.path.isfile(download_path), u'Workbench report does not yet exist.'
+
+        with open(download_path, 'wb') as fd:
+            for chunk in iter_content:
+                fd.write(chunk)
+        assert os.path.isfile(download_path), u'Workbench report is downloaded.'
+        assert os.path.getsize(download_path) > 0, u'Workbench report is not empty.'
+
+        os.remove(download_path)

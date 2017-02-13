@@ -22,10 +22,11 @@ from tenable_io.api.server import ServerApi
 from tenable_io.api.session import SessionApi
 from tenable_io.api.target_groups import TargetGroupsApi
 from tenable_io.api.users import UsersApi
-from tenable_io.api.workbenches import WorkbenchApi
+from tenable_io.api.workbenches import WorkbenchesApi
 from tenable_io.helpers.folder import FolderHelper
 from tenable_io.helpers.policy import PolicyHelper
 from tenable_io.helpers.scan import ScanHelper
+from tenable_io.helpers.workbench import WorkbenchHelper
 from tenable_io.log import format_request, logging
 
 
@@ -92,7 +93,7 @@ class TenableIOClient(object):
         self.session_api = SessionApi(self)
         self.target_groups_api = TargetGroupsApi(self)
         self.users_api = UsersApi(self)
-        self.workbenches_api = WorkbenchApi(self)
+        self.workbenches_api = WorkbenchesApi(self)
 
     def _init_helpers(self):
         """
@@ -101,6 +102,7 @@ class TenableIOClient(object):
         self.folder_helper = FolderHelper(self)
         self.policy_helper = PolicyHelper(self)
         self.scan_helper = ScanHelper(self)
+        self.workbench_helper = WorkbenchHelper(self)
 
     def _error_handler(f):
         """
@@ -139,11 +141,34 @@ class TenableIOClient(object):
     def delete(self, uri, path_params=None, **kwargs):
         return self._request('DELETE', uri, path_params, **kwargs)
 
+    @classmethod
+    def _flatten_param(cls, params):
+        """
+        Flatten the query params to be compatible with the API.
+        :param params: The params object to process.
+        :return: Nested dict/list values are flatten into single level dict.
+        """
+        flatten = params
+        if type(params) in [dict, list]:
+            flatten = {}
+            for k, v in (params.items() if type(params) is dict else enumerate(params)):
+                f = cls._flatten_param(v)
+                if type(f) is dict:
+                    for kk, vv in f.items():
+                        flatten[u'%s.%s' % (k, kk)] = vv
+                else:
+                    flatten[k] = v
+        return flatten
+
     def _request(self, method, uri, path_params=None, **kwargs):
         if path_params:
             # Ensure path param is encoded.
             path_params = {key: quote(str(value), safe=u'') for key, value in path_params.items()}
             uri %= path_params
+
+        # Custom nested object flattening
+        if 'params' in kwargs:
+            kwargs['params'] = self._flatten_param(kwargs['params'])
 
         full_uri = self._endpoint + uri
 
