@@ -37,15 +37,20 @@ class TenableIOClient(object):
             access_key=TenableIOConfig.get('access_key'),
             secret_key=TenableIOConfig.get('secret_key'),
             endpoint=TenableIOConfig.get('endpoint'),
+            impersonate=None,
     ):
         self._access_key = access_key
         self._secret_key = secret_key
         self._endpoint = endpoint
+        self._impersonate = impersonate
 
         self._headers = {
             u'X-ApiKeys': u'accessKey=%s; secretKey=%s;' % (self._access_key, self._secret_key),
             u'User-Agent': u'TenableIOSDK Python/%s' % ('.'.join([str(i) for i in sys.version_info][0:3]))
         }
+
+        if impersonate is not None:
+            self._headers[u'X-Impersonate'] = u'username=%s' % self._impersonate
 
         self._ini_api()
         self._init_helpers()
@@ -124,6 +129,10 @@ class TenableIOClient(object):
 
             return response
         return wrapper
+
+    @staticmethod
+    def impersonate(username):
+        return TenableIOClient(impersonate=username)
 
     @_retry
     @_error_handler
