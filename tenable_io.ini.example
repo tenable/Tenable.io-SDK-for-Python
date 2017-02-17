@@ -4,6 +4,8 @@ access_key={{ACCESS_KEY}}
 secret_key={{SECRET_KEY}}
 ; Logging level. (Available levels: CRITICAL, ERROR, WARNING, INFO, DEBUG)
 ;logging_level=WARNING
+; Polling interval in seconds.
+;polling_interval={{POLLING_INTERVAL}}
 
 [tenable_io-test]
 ; Name of template to create a scan with.

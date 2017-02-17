@@ -8,6 +8,7 @@ from datetime import datetime
 from tenable_io.api.models import Scan, ScanSettings, Template
 from tenable_io.api.scans import ScansApi, ScanCreateRequest, ScanExportRequest, ScanImportRequest, ScanLaunchRequest
 from tenable_io.exceptions import TenableIOException
+from tenable_io.util import wait_until
 
 
 class ScanHelper(object):
@@ -190,7 +191,7 @@ class ScanRef(object):
             ScanExportRequest(format=format),
             history_id
         )
-        self._wait_until(
+        wait_until(
             lambda: self._client.scans_api.export_status(self.id, file_id) == ScansApi.STATUS_EXPORT_READY)
 
         iter_content = self._client.scans_api.export_download(self.id, file_id)
@@ -230,7 +231,7 @@ class ScanRef(object):
             ScanLaunchRequest(alt_targets=alt_targets)
         )
         if wait:
-            self._wait_until(lambda: self.status() not in Scan.STATUS_PENDING)
+            wait_until(lambda: self.status() not in Scan.STATUS_PENDING)
         return self
 
     def name(self, history_id=None):
@@ -279,7 +280,7 @@ class ScanRef(object):
         """
         self._client.scans_api.pause(self.id)
         if wait:
-            self._wait_until(lambda: self.status() != Scan.STATUS_PAUSING)
+            wait_until(lambda: self.status() != Scan.STATUS_PAUSING)
         return self
 
     def resume(self, wait=True):
@@ -291,7 +292,7 @@ class ScanRef(object):
         """
         self._client.scans_api.resume(self.id)
         if wait:
-            self._wait_until(lambda: self.status() != Scan.STATUS_RESUMING)
+            wait_until(lambda: self.status() != Scan.STATUS_RESUMING)
         return self
 
     def status(self, history_id=None):
@@ -328,7 +329,7 @@ class ScanRef(object):
         :return: The same ScanRef instance.
         """
         start_time = time.time()
-        self._wait_until(lambda: time.time() - start_time > seconds or self.stopped())
+        wait_until(lambda: time.time() - start_time > seconds or self.stopped())
         if not self.stopped():
             self.stop()
         return self
@@ -339,12 +340,5 @@ class ScanRef(object):
         :param history_id: The scan history to wait for, None for most recent. Default to None.
         :return: The same ScanRef instance.
         """
-        self._wait_until(lambda: self.stopped(history_id=history_id))
+        wait_until(lambda: self.stopped(history_id=history_id))
         return self
-
-    @staticmethod
-    def _wait_until(condition):
-        while True:
-            if condition():
-                return True
-            time.sleep(1)
