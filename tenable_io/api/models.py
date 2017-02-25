@@ -889,7 +889,7 @@ class ScanSettings(BaseModel):
             text_targets,
             description=None,
             emails=None,
-            enabled=True,
+            enabled=False,
             launch=None,
             folder_id=None,
             policy_id=None,
