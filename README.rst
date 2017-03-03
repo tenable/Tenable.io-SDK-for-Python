@@ -8,7 +8,22 @@ Configuration
 
 Access key and secret key are needed to authenticate with the
 `Tenable Cloud API <https://cloud.tenable.com/api>`_. There are three ways to
-configure the ``TenableIOClient`` with the keys.
+supply the keys to the ``TenableIOClient``:
+
+========== ==========
+Precedence   Method
+========== ==========
+   1       Constructor Arguments
+   2       INI File
+   3       Environment Variables
+========== ==========
+
+TenableIOClient Constructor Arguments
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: python
+
+    TenableIOClient(access_key='YOUR_ACCESS_KEY', secret_key='YOUR_SECRET_KEY')
 
 INI File
 ^^^^^^^^
@@ -16,13 +31,6 @@ INI File
 | A ``tenable_io.ini`` can be created in the working directory. See
   ``tenable_io.ini.example`` on what it should look like.
 | Note: The ``tenable_io.ini.example`` file is in Jinja template format.
-
-``TenableIOClient`` Constructor Arguments
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code:: python
-
-    TenableIOClient(access_key='YOUR_ACCESS_KEY', secret_key='YOUR_SECRET_KEY')
 
 Environment Variables
 ^^^^^^^^^^^^^^^^^^^^^
