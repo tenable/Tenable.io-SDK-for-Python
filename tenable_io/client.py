@@ -24,7 +24,7 @@ from tenable_io.api.workbenches import WorkbenchApi
 from tenable_io.helpers.folder import FolderHelper
 from tenable_io.helpers.policy import PolicyHelper
 from tenable_io.helpers.scan import ScanHelper
-from tenable_io.log import logging
+from tenable_io.log import format_request, logging
 
 
 class TenableIOClient(object):
@@ -104,7 +104,8 @@ class TenableIOClient(object):
                     if count <= TenableIOClient.MAX_RETRIES:
                         retry = True
                         sleep_ms += count * TenableIOClient.RETRY_SLEEP_MILLISECONDS
-                        logging.warn(u'Retry %d of %d. Sleep %dms' % (count, TenableIOClient.MAX_RETRIES, sleep_ms))
+                        logging.warn(u'RETRY(%d/%d)AFTER(%dms):%s' %
+                                     (count, TenableIOClient.MAX_RETRIES, sleep_ms, format_request(exception.response)))
                         sleep(sleep_ms / 1000.0)
                     else:
                         raise TenableIOApiException(exception.response)
@@ -165,14 +166,11 @@ class TenableIOClient(object):
             uri %= path_params
 
         full_uri = self._endpoint + uri
-        logging.debug(u'API Request: %s %s %s' % (method, full_uri, kwargs))
 
         response = requests.request(method, full_uri, headers=self._headers, **kwargs)
-        log_message = u'API Response: %s %s %s %s %s %s' % (response.request.method, response.url, response.reason,
-                                                            ('status_code', response.status_code),
-                                                            response.headers.get('x-gateway-site-id'),
-                                                            response.headers.get('x-request-uuid'))
-        logging.debug(log_message)
+        log_message = format_request(response)
+
+        logging.info(log_message)
         if not 200 <= response.status_code <= 299:
             logging.error(log_message)
 

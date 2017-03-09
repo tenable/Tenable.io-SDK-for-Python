@@ -1,3 +1,4 @@
+import json
 import logging as logging_
 import sys
 
@@ -8,6 +9,7 @@ class LevelFilter(logging_.Filter):
     """ LevelFilter instances are used to filter messages by log level(s).
     """
     def __init__(self, levels):
+        super(LevelFilter, self).__init__()
         self.levels = levels if hasattr(levels, "__iter__") else []
 
     def filter(self, record):
@@ -40,3 +42,44 @@ def configure_logging():
     stderr_handler.setFormatter(formatter)
 
 configure_logging()
+
+
+def format_request(response):
+    try:
+        data = list()
+
+        meta = {
+            u'method': response.request.method,
+            u'url': response.request.path_url,
+            u'status_code': response.status_code,
+            u'reason': response.reason,
+        }
+
+        if LOGGER_LEVEL == logging_.DEBUG:
+            meta[u'request_headers'] = {k: (u'*****REDACTED******' if k == u'X-ApiKeys' else v)
+                                        for k, v in response.request.headers.iteritems()}
+            meta[u'response_headers'] = dict(response.headers)
+            data.append(json.dumps(meta))
+
+            if response.request.body:
+                data += [
+                    u'REQUEST_BODY:',
+                    response.request.body[:100000] + u'...Response Body Truncated'
+                    if len(response.request.body) > 100000 else response.request.body,
+                ]
+
+            if response.text:
+                data += [
+                    u'RESPONSE_BODY:',
+                    response.text[:100000] + u'...Response Body Truncated'
+                    if len(response.text) > 100000 else response.text,
+                ]
+        else:
+            meta[u'response_headers'] = {k: v for k, v in response.headers.iteritems()
+                                         if k in [u'X-Request-Uuid', u'X-Gateway-Site-ID']}
+            data.append(json.dumps(meta))
+
+        return u'\n'.join(data)
+    except Exception as e:
+        logging.error(e)
+        return u'Error formatting request.'
