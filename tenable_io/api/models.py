@@ -59,6 +59,48 @@ class BaseModel(object):
         return payload_filter(self.__dict__, filter_)
 
 
+class AgentGroup(BaseModel):
+
+    def __init__(
+            self,
+            id=None,
+            name=None,
+            owner_id=None,
+            owner=None,
+            shared=None,
+            user_permissions=None,
+            creation_date=None,
+            last_modification_date=None
+    ):
+        self.id = id
+        self.name = name
+        self.owner_id = owner_id
+        self.owner = owner
+        self.shared = shared
+        self.user_permissions = user_permissions
+        self.creation_date = creation_date
+        self.last_modification_date = last_modification_date
+
+
+class AgentGroupList(BaseModel):
+
+    def __init__(
+            self,
+            groups=None
+    ):
+        self._groups = None
+        self.groups = groups
+
+    @property
+    def groups(self):
+        return self._groups
+
+    @groups.setter
+    @BaseModel._model_list(AgentGroup)
+    def groups(self, groups):
+        self._groups = groups
+
+
 class Exclusion(BaseModel):
     def __init__(
             self,
