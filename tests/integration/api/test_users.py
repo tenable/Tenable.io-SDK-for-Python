@@ -17,7 +17,8 @@ class TestUsersApi(BaseTest):
             name='test_users',
             password='test_users',
             permissions="16",
-            type='local'
+            type='local',
+            email=app.session_name(u'test_user_email+%%s@%s' % TenableIOTestConfig.get('users_domain_name'))
         ))
         yield new_user
         client.users_api.delete(new_user)
@@ -47,24 +48,27 @@ class TestUsersApi(BaseTest):
             name='test_users_create',
             password='test_users_create',
             permissions='16',
-            type='local'
+            type='local',
+            email=app.session_name(u'test_user_email+%%s@%s' % TenableIOTestConfig.get('users_domain_name'))
         ))
 
         assert type(new_user_id) == int, u'User responded with ID of integer type.'
         client.users_api.delete(new_user_id)
 
-    def test_users_edit(self, user_id, client):
+    def test_users_edit(self, user_id, app, client):
         user_info = client.users_api.get(user_id)
         previous_name = user_info.name
         new_name = 'test_users_edit'
 
         edited_user = client.users_api.edit(user_id, UserEditRequest(
-            name=new_name
+            name=new_name,
+            email=app.session_name(u'test_user_email+%%s@%s' % TenableIOTestConfig.get('users_domain_name'))
         ))
         assert edited_user.name == new_name, u'The `edit` method returns user with matching name.'
 
         reverted_edit_user = client.users_api.edit(user_id, UserEditRequest(
-            name=previous_name
+            name=previous_name,
+            email=app.session_name(u'test_user_email+%%s@%s' % TenableIOTestConfig.get('users_domain_name'))
         ))
         assert reverted_edit_user.name == previous_name, u'The reverted user has matching name.'
 
