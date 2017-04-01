@@ -4,7 +4,7 @@ access_key={{ACCESS_KEY}}
 secret_key={{SECRET_KEY}}
 ; Logging level. (Available levels: CRITICAL, ERROR, WARNING, INFO, DEBUG)
 ;logging_level=WARNING
-; Polling interval in seconds.
+; Polling interval in seconds. (Default: 10)
 ;polling_interval={{POLLING_INTERVAL}}
 
 [tenable_io-test]

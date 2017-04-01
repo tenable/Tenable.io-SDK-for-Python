@@ -67,6 +67,11 @@ Install dependencies.
 Run Tests
 ~~~~~~~~~
 
+Additional configuration is needed for tests to correctly run. See the
+``[tenable_io-test]`` section under ``tenable_io.ini.example``. Such
+configuration can be done via the INI file ``tenable_io.ini`` or environment
+variables.
+
 .. code:: sh
 
     $ py.test
