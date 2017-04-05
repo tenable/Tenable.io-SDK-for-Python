@@ -175,20 +175,28 @@ class ScanRef(object):
         """
         return self._client.scans_api.details(self.id, history_id=history_id)
 
-    def download(self, path, history_id=None, format=ScanExportRequest.FORMAT_PDF, file_open_mode='wb'):
+    def download(self, path, history_id=None, format=ScanExportRequest.FORMAT_PDF,
+                 chapter=ScanExportRequest.CHAPTER_EXECUTIVE_SUMMARY, file_open_mode='wb'):
         """Download a scan report.
 
         :param path: The file path to save the report to.
-        :param format: The report format. Default to :class:`tenable_io.api.models.ScanDetails`.FORMAT_PDF.
+        :param format: The report format. Default to :class:`tenable_io.api.scans.ScanExportRequest`.FORMAT_PDF.
+        :param chapter: The report contents. Default to \
+        :class:`tenable_io.api.scans.ScanExportRequest`.CHAPTER_EXECUTIVE_SUMMARY.
         :param file_open_mode: The open mode to the file output. Default to "wb".
         :param history_id: A specific scan history ID, None for the most recent scan history. default to None.
         :return: The same ScanRef instance.
         """
         self.wait_until_stopped(history_id=history_id)
 
+        if format in [ScanExportRequest.FORMAT_HTML, ScanExportRequest.FORMAT_PDF]:
+            export_request = ScanExportRequest(format=format, chapters=chapter)
+        else:
+            export_request = ScanExportRequest(format=format)
+
         file_id = self._client.scans_api.export_request(
             self.id,
-            ScanExportRequest(format=format),
+            export_request,
             history_id
         )
         wait_until(

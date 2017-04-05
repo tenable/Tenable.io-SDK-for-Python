@@ -226,6 +226,10 @@ class ScanConfigureRequest(ScanSaveRequest):
 
 class ScanExportRequest(BaseRequest):
 
+    CHAPTER_CUSTOM_VULN_BY_HOST = u'vuln_by_host'
+    CHAPTER_CUSTOM_VULN_BY_PLUGIN = u'vuln_by_plugin'
+    CHAPTER_EXECUTIVE_SUMMARY = u'vuln_hosts_summary'
+
     FORMAT_CSV = u'csv'
     FORMAT_DB = u'db'
     FORMAT_HTML = u'html'
@@ -244,6 +248,12 @@ class ScanExportRequest(BaseRequest):
             ScanExportRequest.FORMAT_HTML,
             ScanExportRequest.FORMAT_NESSUS,
             ScanExportRequest.FORMAT_PDF,
+        ]
+        assert chapters in [
+            None,
+            ScanExportRequest.CHAPTER_CUSTOM_VULN_BY_HOST,
+            ScanExportRequest.CHAPTER_CUSTOM_VULN_BY_PLUGIN,
+            ScanExportRequest.CHAPTER_EXECUTIVE_SUMMARY,
         ]
         self.format = format
         self.password = password
