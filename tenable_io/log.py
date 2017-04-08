@@ -1,5 +1,6 @@
 import json
 import logging as logging_
+import six
 import sys
 
 from tenable_io.config import TenableIOConfig
@@ -57,7 +58,7 @@ def format_request(response):
 
         if LOGGER_LEVEL == logging_.DEBUG:
             meta[u'request_headers'] = {k: (u'*****REDACTED******' if k == u'X-ApiKeys' else v)
-                                        for k, v in response.request.headers.iteritems()}
+                                        for k, v in six.iteritems(response.request.headers)}
             meta[u'response_headers'] = dict(response.headers)
             data.append(json.dumps(meta))
 
@@ -75,7 +76,7 @@ def format_request(response):
                     if len(response.text) > 100000 else response.text,
                 ]
         else:
-            meta[u'response_headers'] = {k: v for k, v in response.headers.iteritems()
+            meta[u'response_headers'] = {k: v for k, v in six.iteritems(response.headers)
                                          if k in [u'X-Request-Uuid', u'X-Gateway-Site-ID']}
             data.append(json.dumps(meta))
 

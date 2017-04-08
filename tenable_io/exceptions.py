@@ -22,10 +22,6 @@ class TenableIOApiException(TenableIOException):
             super(TenableIOApiException, self).__init__(response.text)
 
 
-class TenableIORetryableApiException(TenableIOApiException):
-    pass
-
-
 class ErrorCode(object):
 
     _HTTP_CODES = {}
