@@ -1,3 +1,4 @@
+from os import environ
 import six
 
 if six.PY34:
@@ -6,6 +7,7 @@ else:
     import ConfigParser as configparser
 
 base_config = {
+    'wait_timeout': environ.get('TENABLEIOTEST_WAIT_TIMEOUT', '300'),
 }
 
 # Read tenable_io.ini config. Default to environment variables if exist.

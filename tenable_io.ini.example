@@ -8,6 +8,8 @@ secret_key={{SECRET_KEY}}
 ;polling_interval={{POLLING_INTERVAL}}
 
 [tenable_io-test]
+; Amount of seconds to wait for a test condition before timing out. (Default: 300)
+;wait_timeout=300
 ; Name of template to create a scan with.
 scan_template_name=discovery
 ; Host target to create a scan with. (Warning: do not scan targets that you're not authorized to.)

@@ -143,7 +143,7 @@ class TestScansApi(BaseTest):
                                         lambda status: status == ScansApi.STATUS_EXPORT_READY)
         assert export_status == ScansApi.STATUS_EXPORT_READY, u'Scan export is ready.'
 
-        iter_content = client.scans_api.export_download(scan_id, file_id, False, None)
+        iter_content = client.scans_api.export_download(scan_id, file_id, False)
 
         download_path = app.session_file_output('test_scan_export_import')
         assert not os.path.isfile(download_path), u'Scan report does not yet exist.'

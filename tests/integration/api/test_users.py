@@ -78,10 +78,10 @@ class TestUsersApi(BaseTest):
             assert isinstance(user, User), u'User list\'s element type.'
         assert len([user for user in user_list.users if user.id == user_id]) == 1, u'User list contains created user.'
 
-    def test_edit_password(self, client):
+    def test_edit_password(self, user_id, client):
         new_password = 'test_edit_password'
 
-        assert client.users_api.password(8, new_password), u'A new password should be set.'
+        assert client.users_api.password(user_id, new_password), u'A new password should be set.'
 
     def test_get_details(self, client):
         user_list = client.users_api.list()

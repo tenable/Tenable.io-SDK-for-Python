@@ -1,4 +1,7 @@
 from time import sleep, time
+from tests.config import TenableIOTestConfig
+
+WAIT_TIMEOUT = int(TenableIOTestConfig.get('wait_timeout'))
 
 
 class BaseTest(object):
@@ -15,11 +18,17 @@ class BaseTest(object):
 
     @staticmethod
     def wait_until(expression, condition):
+        assert WAIT_TIMEOUT >= 0, u'Invalid wait_timeout value.'
+
         value = expression()
-        max_check = 20
-        while not condition(value) and max_check > 0:
-            sleep(2 + max_check)
-            max_check -= 1
+        start_time = time()
+        wait_interval = 20
+        elapsed = 0
+        while not condition(value) and elapsed <= WAIT_TIMEOUT:
+            sleep(wait_interval)
+            if wait_interval > 2:  # Wait no less than 2 seconds in between.
+                wait_interval -= 1
             value = expression()
-        assert condition(value), u'Timeout waiting for a condition.'
+            elapsed = time() - start_time
+        assert condition(value), u'Timeout waiting for a condition (%d seconds elapsed).' % elapsed
         return value

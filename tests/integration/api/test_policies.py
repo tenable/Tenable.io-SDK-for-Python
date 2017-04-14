@@ -78,7 +78,7 @@ class TestPoliciesApi(BaseTest):
         assert response is True, u'The `delete` method returns True.'
 
     def test_export_and_import(self, app, client, policy_id):
-        iter_content = client.policies_api.export(policy_id, False, None)
+        iter_content = client.policies_api.export(policy_id, False)
 
         path = app.session_file_output(u'test_policies_export_and_import')
         with open(path, 'wb') as fd:
