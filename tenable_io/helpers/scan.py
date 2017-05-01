@@ -213,7 +213,7 @@ class ScanRef(object):
 
         :param since: As instance of `datetime`. Default to None. \
         If defined, only scan histories after this are returned.
-        :return: A list of :class:`tenable_io.api.models.ScanHistory`.
+        :return: A list of :class:`tenable_io.api.models.ScanDetailsHistory`.
         """
         histories = self.details().history
         if since:
@@ -239,7 +239,7 @@ class ScanRef(object):
             ScanLaunchRequest(alt_targets=alt_targets)
         )
         if wait:
-            wait_until(lambda: self.status() not in Scan.STATUS_PENDING)
+            wait_until(lambda context: self.status(_context=context) not in Scan.STATUS_PENDING, context={})
         return self
 
     def name(self, history_id=None):
@@ -288,7 +288,7 @@ class ScanRef(object):
         """
         self._client.scans_api.pause(self.id)
         if wait:
-            wait_until(lambda: self.status() != Scan.STATUS_PAUSING)
+            wait_until(lambda context: self.status(_context=context) != Scan.STATUS_PAUSING, context={})
         return self
 
     def resume(self, wait=True):
@@ -300,16 +300,29 @@ class ScanRef(object):
         """
         self._client.scans_api.resume(self.id)
         if wait:
-            wait_until(lambda: self.status() != Scan.STATUS_RESUMING)
+            wait_until(lambda context: self.status(_context=context) != Scan.STATUS_RESUMING, context={})
         return self
 
-    def status(self, history_id=None):
+    def status(self, history_id=None, _context=None):
         """Get the scan's status.
 
         :param history_id: The scan history to get status for, None for most recent. Default to None.
         :return: The same ScanRef instance.
         """
-        return self.details(history_id=history_id).info.status
+        # _context allows caller to keep the context for subsequent calls, this is a temporary workaround to the cheaper
+        # status API requires a history_id, which is not always available during the pending phases when a scan is
+        # starting.
+        if _context is not None and history_id is None:
+            history_id = _context.get('history_id')
+
+        if history_id is not None:
+            status = self._client.scans_api.history(self.id, history_id=history_id).status
+        else:
+            details = self.details(history_id=history_id)
+            if _context and len(details.history) > 0:
+                _context['history_id'] = details.history[0].history_id
+            status = details.info.status
+        return status
 
     def stop(self, wait=True):
         """Stop the scan.
@@ -322,13 +335,13 @@ class ScanRef(object):
             self.wait_until_stopped()
         return self
 
-    def stopped(self, history_id=None):
+    def stopped(self, history_id=None, _context=None):
         """Check if the scan is stopped.
 
         :param history_id: The scan history to check, None for most recent. Default to None.
         :return: True if stopped, False otherwise.
         """
-        return self.status(history_id=history_id) in ScanHelper.STATUSES_STOPPED
+        return self.status(history_id=history_id, _context=_context) in ScanHelper.STATUSES_STOPPED
 
     def wait_or_cancel_after(self, seconds):
         """Blocks until the scan is stopped, or cancel if it isn't stopped within the specified seconds.
@@ -348,5 +361,5 @@ class ScanRef(object):
         :param history_id: The scan history to wait for, None for most recent. Default to None.
         :return: The same ScanRef instance.
         """
-        wait_until(lambda: self.stopped(history_id=history_id))
+        wait_until(lambda context: self.stopped(history_id=history_id, _context=context), context={})
         return self

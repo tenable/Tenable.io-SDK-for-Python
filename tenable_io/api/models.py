@@ -815,7 +815,7 @@ class Scan(BaseModel):
         self.rrules = rrules
 
 
-class ScanHistory(BaseModel):
+class ScanDetailsHistory(BaseModel):
     def __init__(
             self,
             history_id=None,
@@ -878,9 +878,40 @@ class ScanDetails(BaseModel):
         return self._history
 
     @history.setter
-    @BaseModel._model_list(ScanHistory)
+    @BaseModel._model_list(ScanDetailsHistory)
     def history(self, history):
         self._history = history
+
+
+class ScanHistory(BaseModel):
+
+    def __init__(
+            self,
+            name=None,
+            object_id=None,
+            owner=None,
+            owner_id=None,
+            owner_uuid=None,
+            scan_end=None,
+            scan_start=None,
+            scan_type=None,
+            schedule_uuid=None,
+            status=None,
+            targets=None,
+            uuid=None,
+    ):
+        self.name = name
+        self.object_id = object_id
+        self.owner = owner
+        self.owner_id = owner_id
+        self.owner_uuid = owner_uuid
+        self.scan_end = scan_end
+        self.scan_start = scan_start
+        self.scan_type = scan_type
+        self.schedule_uuid = schedule_uuid
+        self.status = status
+        self.targets = targets
+        self.uuid = uuid
 
 
 class ScanInfo(BaseModel):
