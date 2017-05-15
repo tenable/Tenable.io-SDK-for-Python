@@ -3,6 +3,8 @@ Tenable.io SDK for Python
 
 Tenable.io SDK for Python
 
+For you coffee lovers, check out Tenable.io SDK for Java: https://github.com/tenable/Tenable.io-SDK-for-Java.
+
 Configuration
 ~~~~~~~~~~~~~
 
