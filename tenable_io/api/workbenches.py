@@ -1,7 +1,7 @@
 from json import loads
 
 from tenable_io.api.base import BaseApi
-from tenable_io.api.models import AssetList, AssetInfo, VulnerabilityList, \
+from tenable_io.api.models import AssetActivityList, AssetList, AssetInfo, VulnerabilityList, \
     VulnerabilityOutputList
 
 
@@ -52,19 +52,25 @@ class WorkbenchesApi(BaseApi):
                                     params={k: v for (k, v) in params.items() if v})
         return AssetList.from_json(response.text)
 
-    def asset_info(self, asset_id, date_range=None, filters=None, filter_search_type=None):
+    def asset_activity(self, asset_id):
         """List detailed info of an asset.
 
         :param asset_id: The asset ID.
-        :param date_range: The number of days of data prior to and including today that should be returned.
-        :param filters: An array containing filters to apply to the exported scan report.
-        :param filter_search_type: The type of search to be used. Can have a value of **and**(default) or **or**.
         :raise TenableIOApiException:  When API error is encountered.
         :return: An instance of :class:`AssetInfo`.
         """
-        params = {'date_range': date_range, 'filter': filters, 'filter.search_type': filter_search_type}
+        response = self._client.get('workbenches/assets/%(asset_id)s/activity',
+                                    path_params={'asset_id': asset_id})
+        return AssetActivityList.from_json(response.text)
+
+    def asset_info(self, asset_id):
+        """List detailed info of an asset.
+
+        :param asset_id: The asset ID.
+        :raise TenableIOApiException:  When API error is encountered.
+        :return: An instance of :class:`AssetInfo`.
+        """
         response = self._client.get('workbenches/assets/%(asset_id)s/info',
-                                    params={k: v for (k, v) in params.items() if v},
                                     path_params={'asset_id': asset_id})
         return AssetInfo.from_dict(loads(response.text).get('info'))
 

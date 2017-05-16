@@ -12,9 +12,9 @@ from tenable_io.exceptions import TenableIOApiException
 def example(test_name, test_file):
 
     # Generate unique name and file.
-    scan_name = test_name(u'my test scan')
-    test_nessus_file = test_file(u'my_test_report.nessus')
-    test_pdf_file = test_file(u'my_test_report.pdf')
+    scan_name = test_name(u'example scan')
+    test_nessus_file = test_file(u'example_report.nessus')
+    test_pdf_file = test_file(u'example_report.pdf')
 
     '''
     Instantiate an instance of the TenableIOClient.
@@ -112,6 +112,13 @@ def example(test_name, test_file):
     Note: Use with caution as this will stop all ongoing scans (including any automated test).
     '''
     # client.scan_helper.stop_all()
+
+    '''
+    Check if a target has recently been scanned (including running scans).
+    '''
+    activities = client.scan_helper.activities('tenable.com')
+    last_history_id = scan.last_history().history_id
+    assert [a for a in activities if last_history_id == a.history_id]
 
     '''
     Delete scans.

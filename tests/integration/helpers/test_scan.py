@@ -11,16 +11,23 @@ from tests.config import TenableIOTestConfig
 class TestScanHelper(BaseTest):
 
     @pytest.fixture(scope='class')
-    def scan(self, app, client):
+    def scan_targets(self):
+        """
+        Define a scan_targets
+        """
+        yield TenableIOTestConfig.get('scan_text_targets')
+
+    @pytest.fixture(scope='class')
+    def scan(self, app, client, scan_targets):
         """
         Create a scan for testing.
         """
         scan = client.scan_helper.create(
             app.session_name('test_scan'),
-            TenableIOTestConfig.get('scan_text_targets'),
+            scan_targets,
             TenableIOTestConfig.get('scan_template_name'))
         yield scan
-        scan.delete()
+        scan.delete(force_stop=True)
 
     def test_details(self, scan):
         scan_detail = scan.details()
@@ -57,3 +64,20 @@ class TestScanHelper(BaseTest):
         assert stop_time - start_time >= cancel_after_seconds, \
             u'Scan is ran for at least %s seconds.' % cancel_after_seconds
         assert scan.stopped(), u'Scan is stopped.'
+
+    def test_activities(self, client, scan, scan_targets):
+        scan.launch().pause()
+        history_id = scan.last_history().history_id
+
+        activities = client.scan_helper.activities([scan_targets], date_range=1)
+
+        activity = next((a for a in activities if a.history_id == history_id), None)
+        assert activity, u'Uncompleted scan history should be in activities.'
+        assert activity.timestamp is None, u'Uncompleted scan activity has no timestamp.'
+
+        scan.resume().wait_until_stopped()
+
+        activities = client.scan_helper.activities([scan_targets], date_range=1)
+        activity = next((a for a in activities if a.history_id == history_id), None)
+        assert activity, u'Completed scan history should be in activities.'
+        assert activity.timestamp is not None, u'Completed scan activity has a timestamp.'

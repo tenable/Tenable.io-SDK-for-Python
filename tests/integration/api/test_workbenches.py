@@ -17,6 +17,13 @@ class TestWorkbenchesApi(BaseTest):
         assets_list = client.workbenches_api.assets_vulnerabilities()
         assert isinstance(assets_list, AssetList), u'The method returns asset list.'
 
+    def test_asset_activity(self, client):
+        try:
+            client.workbenches_api.asset_activity('test_asset_activity')
+            assert False, u'TenableIOApiException should have been thrown for bad ID.'
+        except TenableIOApiException as e:
+            assert e.code is TenableIOErrorCode.BAD_REQUEST, u'Appropriate exception thrown.'
+
     def test_asset_info(self, client):
         try:
             client.workbenches_api.asset_info('test_asset_info')

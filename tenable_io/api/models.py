@@ -1471,6 +1471,44 @@ class Asset(BaseModel):
         self._severities = severities
 
 
+class AssetActivity(BaseModel):
+
+    def __init__(
+            self,
+            type=None,
+            timestamp=None,
+            scan_id=None,
+            schedule_id=None,
+            source=None,
+            matches=None
+    ):
+        self.type = type,
+        self.timestamp = timestamp,
+        self.scan_id = scan_id,
+        self.schedule_id = schedule_id,
+        self.source = source,
+        self.matches = matches
+
+
+class AssetActivityList(BaseModel):
+
+    def __init__(
+            self,
+            activity=None,
+    ):
+        self._activity = None
+        self.activity = activity
+
+    @property
+    def activity(self):
+        return self._activity
+
+    @activity.setter
+    @BaseModel._model_list(AssetActivity)
+    def activity(self, activity):
+        self._activity = activity
+
+
 class AssetInfo(BaseModel):
 
     def __init__(

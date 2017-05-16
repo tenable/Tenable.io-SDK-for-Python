@@ -3,12 +3,12 @@ import os
 import re
 import time
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from tenable_io.api.models import Scan, ScanSettings, Template
 from tenable_io.api.scans import ScansApi, ScanCreateRequest, ScanExportRequest, ScanImportRequest, ScanLaunchRequest
 from tenable_io.exceptions import TenableIOException
-from tenable_io.util import wait_until
+import tenable_io.util as util
 
 
 class ScanHelper(object):
@@ -46,8 +46,10 @@ class ScanHelper(object):
         :param id: Scan ID.
         :return: ScanRef referenced by id if exists.
         """
-        scan_detail = self._client.scans_api.details(id)
-        return ScanRef(self._client, scan_detail.info.object_id)
+        self._client.scans_api.details(id)
+        # object_id is not returned by the API when the current user is not the owner of the scan.
+        # return ScanRef(self._client, self._client.scans_api.details(id).info.object_id)
+        return ScanRef(self._client, id)
 
     def stop_all(self, folder=None, folder_id=None):
         """Stop all scans.
@@ -145,6 +147,223 @@ class ScanHelper(object):
 
         return self.id(imported_scan_id)
 
+    def activities(
+            self,
+            targets=None,
+            fqdns=None,
+            ipv4s=None,
+            mac_addresses=None,
+            netbios_names=None,
+            tenable_uuids=None,
+            date_range=7
+    ):
+        """Get scan activities against a list of targets. Note: For uncompleted scans, only the targets configured for
+        the scan are matched against on the SDK-side. Completed scans are queried and matched on the API server-side.
+
+        :param targets: A single string target or a list of string targets in IPv4 or FQDN format.
+        :param fqdns: A list of string values in FQDN format.
+        :param ipv4s: A list of string values in IPv4 format.
+        :param mac_addresses: A list of string values in MAC address format.
+        :param netbios_names: A list of netbios_name's.
+        :param tenable_uuids: A list of tenable_uuid's.
+        :param date_range: The number of days of data prior to and including today that should be considered.
+        return: ScanActivity list sort by timestamp; active ScanActivity's are ordered first with None timestamp.
+        """
+        if not isinstance(targets, list):
+            targets = [targets] if targets else []
+
+        if not fqdns:
+            fqdns = []
+        if not ipv4s:
+            ipv4s = []
+        if not mac_addresses:
+            mac_addresses = []
+        if not netbios_names:
+            netbios_names = []
+        if not tenable_uuids:
+            tenable_uuids = []
+
+        for target in targets:
+            if util.is_ipv4(target):
+                ipv4s.append(target)
+            if util.is_mac(target):
+                mac_addresses.append(target)
+            elif isinstance(target, six.string_types) and len(target) > 0:
+                fqdns.append(target)
+
+        asset_activities = self._asset_activities(fqdns, ipv4s, mac_addresses, netbios_names, tenable_uuids, date_range)
+        running_activities = self._running_activities(fqdns, ipv4s)
+
+        return running_activities + asset_activities
+
+    def _asset_activities(self, fqdns, ipv4s, mac_addresses, netbios_names, tenable_uuids, date_range):
+        """Get scan activities against FQDNs and IPv4s targets from scan are not completed yet. Note: The method is to
+        inspect all active scan jobs from all scanners.
+
+        :param fqdns: List of string targets in FQDN-format.
+        :param ipv4s: List of string targets in IPv4-format.
+        :param date_range: The number of days of data prior to and including today that should be considered.
+        return: ScanActivity list.
+        """
+        activities = []
+        filters = []
+
+        for fqdn in fqdns:
+            filters.append({
+                'quality': 'eq',
+                'filter': 'fqdn',
+                'value': fqdn
+            })
+
+        for ipv4 in ipv4s:
+            filters.append({
+                'quality': 'eq',
+                'filter': 'ipv4',
+                'value': ipv4
+            })
+
+        for mac_address in mac_addresses:
+            filters.append({
+                'quality': 'eq',
+                'filter': 'mac_address',
+                'value': mac_address
+            })
+
+        for netbios_name in netbios_names:
+            filters.append({
+                'quality': 'eq',
+                'filter': 'netbios_name',
+                'value': netbios_name
+            })
+
+        for tenable_uuid in tenable_uuids:
+            filters.append({
+                'quality': 'eq',
+                'filter': 'tenable_uuid',
+                'value': tenable_uuid
+            })
+
+        if len(filters):
+            # Get assets associated with targets
+            assets = self._client.workbenches_api.assets(
+                date_range=date_range,
+                filters=filters,
+                filter_search_type='or'
+            )
+
+            for asset in assets.assets:
+                activity_list = self._client.workbenches_api.asset_activity(asset.id)
+                activities.extend([a for a in activity_list.activity if None not in [a.scan_id, a.schedule_id]])
+
+        # TODO support for date_range is broken as of 2017/05/15, remove manual filtering when support is functional.
+        # Filter out activities that are outside of the time range.
+        start = datetime.now() - timedelta(days=date_range)
+        activities = [
+            ScanActivity(self._client, None, a.scan_id, None, a.schedule_id, a.timestamp)
+            for a in activities
+            if a.timestamp and start < datetime.strptime(a.timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
+        ]
+
+        # Build scan_id lookup table with schedule_uuid as keys.
+        scans = self._client.scans_api.list()
+        scan_ids = {
+            s.schedule_uuid: s.id
+            for s in scans.scans
+        }
+
+        # Group activities by scan_id (a scenario where this can be possible is when a scan have multiple targets that
+        # matches the targets being queried).
+        activities_by_scan_history = {}
+        for a in activities:
+            if a.schedule_uuid in scan_ids:
+                a.scan_id = scan_ids[a.schedule_uuid]
+                if a.scan_id not in activities_by_scan_history:
+                    activities_by_scan_history[a.scan_id] = {}
+                if a.history_uuid not in activities_by_scan_history[a.scan_id]:
+                    activities_by_scan_history[a.scan_id][a.history_uuid] = []
+                activities_by_scan_history[a.scan_id][a.history_uuid].append(a)
+
+        # Look up history_id for each history_uuid
+        for scan_id, activities_by_history_uuid in activities_by_scan_history.items():
+            details = self._client.scans_api.details(scan_id)
+            for history in details.history:
+                if history.uuid in activities_by_history_uuid:
+                    for a in activities_by_history_uuid[history.uuid]:
+                        a.history_id = history.history_id
+                    del activities_by_history_uuid[history.uuid]
+                if len(activities_by_history_uuid) < 1:
+                    break
+
+        # Order by timestamp
+        return sorted(activities, key=lambda a: datetime.strptime(a.timestamp, '%Y-%m-%dT%H:%M:%S.%fZ'), reverse=True)
+
+    def _running_activities(self, fqdns, ipv4s):
+        """Get scan activities against FQDNs and IPv4s targets from scan are not completed yet. Note: The method is to
+        inspect all active scan jobs from all scanners.
+
+        :param fqdns: List of string targets in FQDN-format.
+        :param ipv4s: List of string targets in IPv4-format.
+        return: ScanActivity list.
+        """
+        activities = []
+
+        # Iterate through all scanners with at least 1 running scans.
+        for scanner in [s for s in self._client.scanners_api.list().scanners if s.scan_count > 0]:
+            scans = self._client.scanners_api.get_scans(scanner.id)
+            # Iterate through each running scan.
+            for s in scans.scans:
+                # Find the corresponding history.
+                history = None
+                for h in self._client.scans_api.details(scan_id=s.scan_id).history:
+                    if s.id == h.uuid:
+                        history = h
+                        break
+                assert history, u'There should be history with the matching ID returned by the scanner.'
+
+                details = self._client.scans_api.details(scan_id=s.scan_id, history_id=history.history_id)
+
+                # Check if this scan has matching targets.
+                if details.info.targets:
+                    scan_targets = set(details.info.targets.lower().split(u','))
+                    if scan_targets.intersection(fqdns) or scan_targets.intersection(ipv4s):
+                        activities.append(
+                            ScanActivity(
+                                self._client,
+                                history.history_id,
+                                history.uuid,
+                                s.scan_id,
+                                details.info.schedule_uuid
+                            )
+                        )
+
+        return sorted(activities, key=lambda o: o.scan_id, reverse=True)
+
+
+class ScanActivity(object):
+
+    def __init__(
+            self,
+            client=None,
+            history_id=None,
+            history_uuid=None,
+            scan_id=None,
+            schedule_uuid=None,
+            timestamp=None,
+    ):
+        self._client = client
+        self.history_id = history_id
+        self.history_uuid = history_uuid
+        self.scan_id = scan_id
+        self.schedule_uuid = schedule_uuid
+        self.timestamp = timestamp
+
+    def scan(self):
+        return None if self.scan_id is None else ScanRef(self._client, self.scan_id)
+
+    def details(self):
+        return None if self.scan_id is None else \
+            self._client.scans_api.details(scan_id=self.scan_id, history_id=self.history_id)
+
 
 class ScanRef(object):
 
@@ -160,11 +379,13 @@ class ScanRef(object):
         scan = self._client.scans_api.copy(self.id)
         return ScanRef(self._client, scan.id)
 
-    def delete(self):
+    def delete(self, force_stop=False):
         """Delete the scan.
 
         :return: The same ScanRef instance.
         """
+        if force_stop and not self.stopped():
+            self.stop()
         self._client.scans_api.delete(self.id)
         return self
 
@@ -199,7 +420,7 @@ class ScanRef(object):
             export_request,
             history_id
         )
-        wait_until(
+        util.wait_until(
             lambda: self._client.scans_api.export_status(self.id, file_id) == ScansApi.STATUS_EXPORT_READY)
 
         iter_content = self._client.scans_api.export_download(self.id, file_id)
@@ -222,6 +443,14 @@ class ScanRef(object):
             histories = [h for h in histories if h.creation_date >= ts]
         return histories
 
+    def last_history(self):
+        """Get last (most recent) scan history if exists.
+
+        :return: An instance of :class:`tenable_io.api.models.ScanDetailsHistory` if exists, otherwise None.
+        """
+        histories = self.histories()
+        return histories[-1] if len(histories) else None
+
     def launch(self, wait=True, alt_targets=None):
         """Launch the scan.
 
@@ -239,7 +468,7 @@ class ScanRef(object):
             ScanLaunchRequest(alt_targets=alt_targets)
         )
         if wait:
-            wait_until(lambda context: self.status(_context=context) not in Scan.STATUS_PENDING, context={})
+            util.wait_until(lambda context: self.status(_context=context) not in Scan.STATUS_PENDING, context={})
         return self
 
     def name(self, history_id=None):
@@ -288,7 +517,7 @@ class ScanRef(object):
         """
         self._client.scans_api.pause(self.id)
         if wait:
-            wait_until(lambda context: self.status(_context=context) != Scan.STATUS_PAUSING, context={})
+            util.wait_until(lambda context: self.status(_context=context) != Scan.STATUS_PAUSING, context={})
         return self
 
     def resume(self, wait=True):
@@ -300,7 +529,7 @@ class ScanRef(object):
         """
         self._client.scans_api.resume(self.id)
         if wait:
-            wait_until(lambda context: self.status(_context=context) != Scan.STATUS_RESUMING, context={})
+            util.wait_until(lambda context: self.status(_context=context) != Scan.STATUS_RESUMING, context={})
         return self
 
     def status(self, history_id=None, _context=None):
@@ -350,7 +579,7 @@ class ScanRef(object):
         :return: The same ScanRef instance.
         """
         start_time = time.time()
-        wait_until(lambda: time.time() - start_time > seconds or self.stopped())
+        util.wait_until(lambda: time.time() - start_time > seconds or self.stopped())
         if not self.stopped():
             self.stop()
         return self
@@ -361,5 +590,5 @@ class ScanRef(object):
         :param history_id: The scan history to wait for, None for most recent. Default to None.
         :return: The same ScanRef instance.
         """
-        wait_until(lambda context: self.stopped(history_id=history_id, _context=context), context={})
+        util.wait_until(lambda context: self.stopped(history_id=history_id, _context=context), context={})
         return self
