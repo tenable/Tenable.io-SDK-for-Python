@@ -2,8 +2,8 @@
 ;endpoint=https://cloud.tenable.com/
 access_key={{ACCESS_KEY}}
 secret_key={{SECRET_KEY}}
-; Logging level. (Available levels: CRITICAL, ERROR, WARNING, INFO, DEBUG)
-;logging_level=WARNING
+; Logging level. (Default: Warning, Available levels: CRITICAL, ERROR, WARNING, INFO, DEBUG)
+;logging_level={{LOGGING_LEVEL}}
 ; Polling interval in seconds. (Default: 10)
 ;polling_interval={{POLLING_INTERVAL}}
 

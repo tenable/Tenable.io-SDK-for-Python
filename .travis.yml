@@ -13,8 +13,8 @@ before_script:
 #  - j2 tenable_io.ini.example > tenable_io.ini
 #   alternative script to generate config
   - cp tenable_io.ini.example tenable_io.ini
-  - grep -oP "\{{\K[^\}]+" tenable_io.ini | sed 's/[{}]//g' | awk '{print "sed -i -e '\''s@{{"$0"}}@'\''\"$"$0"\"'\''@'\'' tenable_io.ini"}' | sh
+  - grep -oP "\{{\K[^\}]+" tenable_io.ini | sed 's/[{}]//g' | awk '{print "[ -n \"$"$0"\" ] && sed -i -E '\''s@;?(.*)\\{\\{"$0"\\}\\}@\\1'\''\"$"$0"\"'\''@'\'' tenable_io.ini"}' | sh
 # command to run tests
 script:
   - pep8 tenable_io tests
-  - pytest
+  - pytest -s
