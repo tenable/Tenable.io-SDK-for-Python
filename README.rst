@@ -1,12 +1,26 @@
 Tenable.io SDK for Python
 =========================
+.. image:: https://img.shields.io/pypi/v/tenable-io.svg?style=flat-square
+    :target: https://pypi.python.org/pypi/tenable-io
 
 Tenable.io SDK for Python
 
-For you coffee lovers, check out Tenable.io SDK for Java: https://github.com/tenable/Tenable.io-SDK-for-Java.
+For you coffee lovers, check out `Tenable.io SDK for Java <https://github.com/tenable/Tenable.io-SDK-for-Java>`_.
+
+Installation
+------------
+
+.. code-block:: bash
+
+    $ pip install requests
+
+Quick Start
+-----------
+
+Quickest way to get started is to checkout the `example scripts <./examples/>`_.
 
 Configuration
-~~~~~~~~~~~~~
+-------------
 
 Access key and secret key are needed to authenticate with the
 `Tenable Cloud API <https://cloud.tenable.com/api>`_. There are three ways to
@@ -41,12 +55,12 @@ TenableIOClient looks for the environment variables ``TENABLEIO_ACCESS_KEY``
 and ``TENABLEIO_SECRET_KEY``.
 
 Python Version
-~~~~~~~~~~~~~~
+--------------
 
-2.7, 3.4
+2.7, 3.4+
 
 Development
-~~~~~~~~~~~
+-----------
 
 It is recommend to use ``virtualenv`` to setup an isolated local
 environment.
@@ -67,7 +81,7 @@ Install dependencies.
     $ pip install -r ./requirements-build.txt
 
 Run Tests
-~~~~~~~~~
+---------
 
 Additional configuration is needed for tests to correctly run. See the
 ``[tenable_io-test]`` section under ``tenable_io.ini.example``. Such
@@ -79,7 +93,7 @@ variables.
     $ py.test
 
 Documentations
-~~~~~~~~~~~~~~
+--------------
 
 To generate/force update the RST documentations from docstrings.
 
