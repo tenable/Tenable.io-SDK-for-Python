@@ -58,7 +58,7 @@ class TenableIOClient(object):
         retries = Retry(
                     total=TenableIOClient._MAX_RETRIES,
                     status_forcelist=TenableIOClient._RETRY_STATUS_CODES,
-                    backoff_factor=0.1,
+                    backoff_factor=2,
                     respect_retry_after_header=True
         )
         adapter = requests.adapters.HTTPAdapter(max_retries=retries)
