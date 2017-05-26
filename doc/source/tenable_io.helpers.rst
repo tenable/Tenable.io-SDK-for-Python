@@ -28,6 +28,14 @@ tenable_io.helpers.scan module
     :undoc-members:
     :show-inheritance:
 
+tenable_io.helpers.workbench module
+-----------------------------------
+
+.. automodule:: tenable_io.helpers.workbench
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

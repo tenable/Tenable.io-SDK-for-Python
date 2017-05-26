@@ -4,6 +4,22 @@ tenable_io.api package
 Submodules
 ----------
 
+tenable_io.api.agent_groups module
+----------------------------------
+
+.. automodule:: tenable_io.api.agent_groups
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tenable_io.api.agents module
+----------------------------
+
+.. automodule:: tenable_io.api.agents
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 tenable_io.api.base module
 --------------------------
 
@@ -120,6 +136,14 @@ tenable_io.api.users module
 ---------------------------
 
 .. automodule:: tenable_io.api.users
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tenable_io.api.workbenches module
+---------------------------------
+
+.. automodule:: tenable_io.api.workbenches
     :members:
     :undoc-members:
     :show-inheritance:

@@ -8,6 +8,7 @@ Subpackages
 
     tenable_io.api
     tenable_io.helpers
+    tenable_io.parser
 
 Submodules
 ----------
@@ -32,6 +33,14 @@ tenable_io.exceptions module
 ----------------------------
 
 .. automodule:: tenable_io.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tenable_io.log module
+---------------------
+
+.. automodule:: tenable_io.log
     :members:
     :undoc-members:
     :show-inheritance:

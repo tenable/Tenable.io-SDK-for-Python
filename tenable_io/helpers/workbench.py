@@ -188,6 +188,41 @@ class WorkbenchHelper(object):
         if len(vulnerabilities) > 0:
             yield vulnerabilities
 
+    def export(
+            self,
+            path,
+            format=WorkbenchesApi.FORMAT_NESSUS,
+            report=WorkbenchesApi.REPORT_VULNERABILITIES,
+            chapter=WorkbenchesApi.CHAPTER_VULN_BY_ASSET,
+            file_open_mode='wb',
+            **kwargs
+    ):
+        """Download a workbench report.
+
+        :param format: The file format. Default to WorkbenchesApi.FORMAT_NESSUS.
+        :param report: The type of workbench report. Default to WorkbenchesApi.REPORT_VULNERABILITIES.
+        :param chapter: Chapter to include. Default to WorkbenchesApi.CHAPTER_VULN_BY_ASSET.
+        :param file_open_mode: Chapter to include, WorkbenchesApi.CHAPTER_VULN_BY_ASSET.
+        :param **kwargs: Additional keyword arguments are the same as
+            :class:`tenable_io.api.workbenches.WorkbenchesApi.export_request`
+        :return: The same WorkbenchHelper instance.
+        """
+        file_id = self._client.workbenches_api.export_request(
+            format,
+            report,
+            chapter,
+            **kwargs
+        )
+
+        wait_until(lambda: self._client.workbenches_api.export_status(file_id) == WorkbenchesApi.STATUS_EXPORT_READY)
+
+        iter_content = self._client.workbenches_api.export_download(file_id)
+        with open(path, file_open_mode) as fd:
+            for chunk in iter_content:
+                fd.write(chunk)
+
+        return self
+
 
 class AssetVulnerabilities(object):
 

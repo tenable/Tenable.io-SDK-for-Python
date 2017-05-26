@@ -15,6 +15,6 @@ class TestExamples(BaseTest):
         from examples.scans import example
         example(app.session_name, app.session_file_output)
 
-    def test_workbench(self):
+    def test_workbench(self, app):
         from examples.workbench import example
-        example()
+        example(app.session_file_output)
