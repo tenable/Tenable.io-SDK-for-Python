@@ -137,13 +137,9 @@ class ScanHelper(object):
         :param path: Path of the scan report.
         :return: ScanRef referenced by id if exists.
         """
-        if not os.path.isfile(path):
-            raise TenableIOException(u'File does not exist at path.')
+        uploaded_file_name = self._client.file_helper.upload(path)
 
-        with open(path, 'rb') as upload_file:
-            upload_file_name = self._client.file_api.upload(upload_file)
-
-        imported_scan_id = self._client.scans_api.import_scan(ScanImportRequest(upload_file_name))
+        imported_scan_id = self._client.scans_api.import_scan(ScanImportRequest(uploaded_file_name))
 
         return self.id(imported_scan_id)
 

@@ -15,4 +15,4 @@ class TestFileApi(BaseTest):
 
     def test_upload(self, client, file):
         uploaded_file_name = client.file_api.upload(file)
-        assert file.name in uploaded_file_name
+        assert file.name in uploaded_file_name, u'File name is a part of the returned identifier.'

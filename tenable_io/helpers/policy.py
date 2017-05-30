@@ -42,11 +42,7 @@ class PolicyHelper(object):
         :param path: Path of the policy file.
         :return: PolicyRef referenced by id if exists.
         """
-        if not os.path.isfile(path):
-            raise TenableIOException(u'File does not exist')
-
-        with open(path, 'rb') as upload_file:
-            uploaded_file_name = self._client.file_api.upload(upload_file)
+        uploaded_file_name = self._client.file_helper.upload(path)
 
         policy_id = self._client.policies_api.import_policy(
             PolicyImportRequest(uploaded_file_name)

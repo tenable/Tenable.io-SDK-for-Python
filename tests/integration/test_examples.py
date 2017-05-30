@@ -3,6 +3,10 @@ from tests.base import BaseTest
 
 class TestExamples(BaseTest):
 
+    def test_files(self, app):
+        from examples.files import example
+        example(app.session_file_output)
+
     def test_folders(self, app):
         from examples.folders import example
         example(app.session_name)

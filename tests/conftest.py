@@ -20,8 +20,12 @@ class App:
             session_name = u'%s_%s' % (name, self._uuid.hex[:length])
         return session_name
 
-    def session_file_output(self, name):
-        return u'%s/%s' % (self._output_dir, name)
+    def session_file_output(self, name, content=None):
+        path = u'%s/%s' % (self._output_dir, name)
+        if content:
+            with open(path, 'a') as fd:
+                fd.write('test_file')
+        return path
 
     def tear_down(self):
         shutil.rmtree(self._output_dir)

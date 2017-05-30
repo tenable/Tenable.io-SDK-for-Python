@@ -23,6 +23,7 @@ from tenable_io.api.session import SessionApi
 from tenable_io.api.target_groups import TargetGroupsApi
 from tenable_io.api.users import UsersApi
 from tenable_io.api.workbenches import WorkbenchesApi
+from tenable_io.helpers.file import FileHelper
 from tenable_io.helpers.folder import FolderHelper
 from tenable_io.helpers.policy import PolicyHelper
 from tenable_io.helpers.scan import ScanHelper
@@ -99,6 +100,7 @@ class TenableIOClient(object):
         """
         Initializes all helpers.
         """
+        self.file_helper = FileHelper(self)
         self.folder_helper = FolderHelper(self)
         self.policy_helper = PolicyHelper(self)
         self.scan_helper = ScanHelper(self)
