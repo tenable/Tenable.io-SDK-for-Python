@@ -47,9 +47,15 @@ def example(test_name, test_file):
     Delete policies.
     '''
     policy.delete()
+    imported_policy.delete()
     policy_copy.delete()
     try:
         policy.details()
+        assert False
+    except TenableIOApiException:
+        pass
+    try:
+        imported_policy.details()
         assert False
     except TenableIOApiException:
         pass

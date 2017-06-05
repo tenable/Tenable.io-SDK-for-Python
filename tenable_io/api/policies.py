@@ -1,7 +1,7 @@
 from json import loads
 
 from tenable_io.api.base import BaseApi
-from tenable_io.api.models import PolicyDetails, PolicySettings, PolicyList
+from tenable_io.api.models import PolicyAudits, PolicyCredentials, PolicyDetails, PolicySCAP, PolicySettings, PolicyList
 from tenable_io.api.base import BaseRequest
 
 
@@ -102,10 +102,22 @@ class PolicyCreateRequest(BaseRequest):
             self,
             uuid,
             settings,
-            ):
+            audits=None,
+            credentials=None,
+            plugins=None,
+            scap=None,
+    ):
         assert isinstance(settings, PolicySettings)
+        assert audits is None or isinstance(audits, PolicyAudits)
+        assert credentials is None or isinstance(audits, PolicyCredentials)
+        assert scap is None or isinstance(audits, PolicySCAP)
+
         self.uuid = uuid
         self.settings = settings
+        self.audits = audits
+        self.credentials = credentials
+        self.plugins = plugins
+        self.scap = scap
 
     def as_payload(self, filter_=None):
         return {

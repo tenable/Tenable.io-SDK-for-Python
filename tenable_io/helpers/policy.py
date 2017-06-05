@@ -1,5 +1,3 @@
-import os
-
 from tenable_io.api.models import Template
 from tenable_io.api.policies import PolicyCreateRequest, PolicyImportRequest, PolicySettings
 from tenable_io.exceptions import TenableIOException

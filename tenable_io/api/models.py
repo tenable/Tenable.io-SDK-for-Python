@@ -483,6 +483,98 @@ class PolicyList(BaseModel):
         self._policies = policies
 
 
+class PolicyAudits(BaseModel):
+
+    def __init__(
+            self,
+            custom=None,
+            feed=None,
+    ):
+        assert custom is None or isinstance(custom, PolicyAuditsCustom)
+        assert feed is None or isinstance(feed, PolicyAuditsFeed)
+
+        self.custom = custom
+        self.feed = feed
+
+
+class PolicyAuditsCustom(BaseModel):
+
+    def __init__(
+            self,
+            add=None,
+            delete=None,
+            edit=None
+    ):
+        assert add is None or len([a for a in add if isinstance(a, PolicyAuditsCustomItem)]) is len(add)
+
+        self.add = add
+        self.delete = delete
+        self.edit = edit
+
+
+class PolicyAuditsCustomItem(BaseModel):
+
+    def __init__(
+            self,
+            category=None,
+            file=None,
+    ):
+        self.category = category
+        self.file = file
+
+
+class PolicyAuditsFeed(BaseModel):
+
+    def __init__(
+            self,
+            add=None,
+            delete=None,
+            edit=None
+    ):
+        assert add is None or len([a for a in add if isinstance(a, PolicyAuditsFeedItem)]) is len(add)
+
+        self.add = add
+        self.delete = delete
+        self.edit = edit
+
+
+class PolicyAuditsFeedItem(BaseModel):
+
+    def __init__(
+            self,
+            id=None,
+            variables=None,
+    ):
+        self.id = id
+        self.variables = variables
+
+
+class PolicyCredentials(BaseModel):
+
+    def __init__(
+            self,
+            add=None,
+            delete=None,
+            edit=None,
+    ):
+        self.add = add
+        self.delete = delete
+        self.edit = edit
+
+
+class PolicySCAP(BaseModel):
+
+    def __init__(
+            self,
+            add=None,
+            delete=None,
+            edit=None,
+    ):
+        self.add = add
+        self.delete = delete
+        self.edit = edit
+
+
 class PolicySettings(BaseModel):
 
     def __init__(
