@@ -12,7 +12,7 @@ Installation
 
 .. code-block:: bash
 
-    $ pip install requests
+    $ pip install tenable_io
 
 Quick Start
 -----------
