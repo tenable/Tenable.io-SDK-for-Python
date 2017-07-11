@@ -20,7 +20,7 @@ class BaseModel(object):
     @classmethod
     def from_list(cls, list_):
         model_list = None
-        if list_:
+        if list_ is not None:
             model_list = []
             for item in list_:
                 model_list.append(cls.from_dict(item))
@@ -1279,6 +1279,30 @@ class ScannerScanList(BaseModel):
     @BaseModel._model_list(ScannerScan)
     def scans(self, scans):
         self._scans = scans
+
+
+class ScContainer(BaseModel):
+    def __init__(
+            self,
+            number_of_vulnerabilities=None,
+            name=None,
+            digest=None,
+            score=None,
+            id=None,
+            status=None,
+            created_at=None,
+            platform=None,
+            updated_at=None,
+    ):
+        self.number_of_vulnerabilities = number_of_vulnerabilities
+        self.name = name
+        self.digest = digest
+        self.score = score
+        self.id = id
+        self.status = status
+        self.created_at = created_at
+        self.platform = platform
+        self.updated_at = updated_at
 
 
 class ServerProperties(BaseModel):
