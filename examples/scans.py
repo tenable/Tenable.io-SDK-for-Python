@@ -47,7 +47,7 @@ def example(test_name, test_file):
     '''
     Select scans by name with regular expression.
     '''
-    scans = client.scan_helper.scans(name_regex=r'.*test scan.*')
+    scans = client.scan_helper.scans(name_regex=r'.*example scan.*')
     assert len(scans) > 0
 
     '''
