@@ -1,6 +1,7 @@
 import xml.etree.cElementTree as ET
 
 from tenable_io.exceptions import TenableIOException
+from tenable_io.log import logging
 
 
 class WorkbenchParser(object):
@@ -53,7 +54,10 @@ class WorkbenchParser(object):
                         elif tag == WorkbenchParser.REPORT_HOST:
                             report_items.append(report_item)
         except ET.ParseError as e:
-            raise TenableIOException(u'Failed to parse Nessus XML: ' + e.message)
+            logging.warn(u'Failed to parse Nessus XML: ' + e.msg)
+            # TODO The service return malformed XML for empty set, for now we won't raise an exception for what should
+            # TODO be a normal state. However, this might masked out real error from bubble up (unlikely).
+            # raise TenableIOException(u'Failed to parse Nessus XML: ' + e.message)
 
     @staticmethod
     def _from_report_host(elem):
