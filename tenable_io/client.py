@@ -19,6 +19,7 @@ from tenable_io.api.policies import PoliciesApi
 from tenable_io.api.scans import ScansApi
 from tenable_io.api.scanners import ScannersApi
 from tenable_io.api.sc_containers import ScContainersApi
+from tenable_io.api.sc_reports import ScReportsApi
 from tenable_io.api.sc_test_jobs import ScTestJobsApi
 from tenable_io.api.server import ServerApi
 from tenable_io.api.session import SessionApi
@@ -35,7 +36,7 @@ from tenable_io.log import format_request, logging
 
 class TenableIOClient(object):
 
-    _MAX_RETRIES = 3
+    _MAX_RETRIES = TenableIOConfig.get('max_retries')
     _RETRY_STATUS_CODES = {429, 501, 502, 503, 504}
 
     def __init__(
@@ -93,6 +94,7 @@ class TenableIOClient(object):
         self.scans_api = ScansApi(self)
         self.scanners_api = ScannersApi(self)
         self.sc_containers_api = ScContainersApi(self)
+        self.sc_reports_api = ScReportsApi(self)
         self.sc_test_jobs_api = ScTestJobsApi(self)
         self.server_api = ServerApi(self)
         self.session_api = SessionApi(self)

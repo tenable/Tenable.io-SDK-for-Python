@@ -6,6 +6,8 @@ secret_key={{SECRET_KEY}}
 ;logging_level={{LOGGING_LEVEL}}
 ; Polling interval in seconds. (Default: 10)
 ;polling_interval={{POLLING_INTERVAL}}
+; Maximum retries on calling the endpoint. (Default: 3)
+;max_retries={{MAX_RETRIES}}
 
 [tenable_io-test]
 ; Amount of seconds to wait for a test condition before timing out. (Default: 300)

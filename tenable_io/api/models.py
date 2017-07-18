@@ -1305,6 +1305,48 @@ class ScContainer(BaseModel):
         self.updated_at = updated_at
 
 
+class ScReport(BaseModel):
+    def __init__(
+            self,
+            id=None,
+            image_name=None,
+            docker_image_id=None,
+            tag=None,
+            os=None,
+            os_version=None,
+            os_architecture=None,
+            sha256=None,
+            sha1=None,
+            md5=None,
+            platform=None,
+            created_at=None,
+            updated_at=None,
+            malware=None,
+            findings=None,
+            installed_packages=None,
+            risk_score=None,
+            digest=None,
+    ):
+        self.id = id
+        self.image_name = image_name
+        self.docker_image_id = docker_image_id
+        self.tag = tag
+        self.os = os
+        self.os_version = os_version
+        self.os_architecture = os_architecture
+        self.sha256 = sha256
+        self.sha1 = sha1
+        self.md5 = md5
+        self.platform = platform
+        self.created_at = created_at
+        self.updated_at = updated_at
+        self.malware = malware
+        self.findings = findings
+        self.installed_packages = installed_packages
+        self.risk_score = risk_score
+        self.digest = digest
+
+
 class ScTestJob(BaseModel):
     def __init__(
             self,

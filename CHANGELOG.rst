@@ -10,3 +10,4 @@ Unreleased
 malformed XML instead of an actual erroneous condition.
 * Added: Support of Container Security Containers API.
 * Added: Support of Container Security Test Jobs API.
+* Added: Support of Container Security Reports API.
