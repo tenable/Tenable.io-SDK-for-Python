@@ -19,6 +19,7 @@ from tenable_io.api.policies import PoliciesApi
 from tenable_io.api.scans import ScansApi
 from tenable_io.api.scanners import ScannersApi
 from tenable_io.api.sc_containers import ScContainersApi
+from tenable_io.api.sc_test_jobs import ScTestJobsApi
 from tenable_io.api.server import ServerApi
 from tenable_io.api.session import SessionApi
 from tenable_io.api.target_groups import TargetGroupsApi
@@ -92,6 +93,7 @@ class TenableIOClient(object):
         self.scans_api = ScansApi(self)
         self.scanners_api = ScannersApi(self)
         self.sc_containers_api = ScContainersApi(self)
+        self.sc_test_jobs_api = ScTestJobsApi(self)
         self.server_api = ServerApi(self)
         self.session_api = SessionApi(self)
         self.target_groups_api = TargetGroupsApi(self)

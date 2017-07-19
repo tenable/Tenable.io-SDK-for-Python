@@ -3,6 +3,7 @@ import pytest
 import shutil
 import uuid
 
+from tests.base import BaseTest
 from tests.util import upload_image
 
 from tenable_io.client import TenableIOClient
@@ -48,12 +49,16 @@ def client():
 @pytest.fixture(scope='session')
 def image(app, client):
     i = upload_image(app.session_name(u'test_image_%s'), u'test_image')
+    BaseTest.wait_until(lambda: client.sc_test_jobs_api.by_image(i['id']),
+                        lambda job: job.job_status == u'completed')
     yield i
     client.sc_containers_api.delete(i['name'], i['digest'])
 
 
 @pytest.fixture(scope='session')
 def vulnerable_image(app, client):
-    i = upload_image(app.session_name(u'test_vulnerable_image_%s'), u'test_vulnerable_image')
+    i = upload_image(app.session_name(u'test_vulnerable_image_%s'), u'test_vulnerable_image', vulnerable=True)
+    BaseTest.wait_until(lambda: client.sc_test_jobs_api.by_image(i['id']),
+                        lambda job: job.job_status == u'completed')
     yield i
     client.sc_containers_api.delete(i['name'], i['digest'])

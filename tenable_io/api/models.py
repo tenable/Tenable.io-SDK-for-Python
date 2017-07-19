@@ -1305,6 +1305,24 @@ class ScContainer(BaseModel):
         self.updated_at = updated_at
 
 
+class ScTestJob(BaseModel):
+    def __init__(
+            self,
+            container_id=None,
+            job_id=None,
+            error=None,
+            job_status=None,
+            created_at=None,
+            updated_at=None,
+    ):
+        self.container_id = container_id
+        self.job_id = job_id
+        self.error = error
+        self.job_status = job_status
+        self.created_at = created_at
+        self.updated_at = updated_at
+
+
 class ServerProperties(BaseModel):
 
     def __init__(
