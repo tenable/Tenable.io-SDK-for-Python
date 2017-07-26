@@ -20,3 +20,5 @@ scan_alt_targets={{SCAN_ALT_TARGETS}}
 users_domain_name={{USERS_DOMAIN_NAME}}
 ; Name of template to create a policy with.
 policy_template_name=discovery
+; Docker Registry host.
+;registry_host=https://registry.cloud.tenable.com

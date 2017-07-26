@@ -1,3 +1,5 @@
+import json
+
 from tenable_io.api.base import BaseApi
 from tenable_io.api.models import ScContainer
 
@@ -17,8 +19,8 @@ class ScContainersApi(BaseApi):
         # URI encoded, i.e. retain any slashes in repository_name.
         uri = 'container-security/api/v1/container/%(repository_name)s/manifests/%%(sha256)s' % \
               {'repository_name': repository_name}
-        self._client.delete(uri, path_params={'sha256': sha256})
-        return True
+        response = self._client.delete(uri, path_params={'sha256': sha256})
+        return json.loads(response.text)
 
     def list(self):
         """List container images stored.

@@ -1,21 +1,27 @@
-import json
-import pytest
-
 from tests.base import BaseTest
+from tests.util import upload_image
 
 from tenable_io.api.models import ScContainer
-from tenable_io.exceptions import TenableIOApiException
 
 
 class TestScContainersApi(BaseTest):
 
-    def test_delete(self, client):
-        with pytest.raises(TenableIOApiException) as e:
-            client.sc_containers_api.delete(u'test_sc_containers', u'test_sc_containers')
-        assert e.value.response.status_code == 404, u'Request cannot return with 404.'
-        assert json.loads(e.value.response.text)[u'status'] == u'digest_not_found'
+    def test_delete(self, app, client):
+        image = upload_image(app.session_name(u'test_sc_containers_delete_%s'), u'test_sc_containers_delete')
 
-    def test_list(self, client):
+        response = client.sc_containers_api.delete(image['name'], image['digest'])
+
+        assert response[u'status'] == u'deleted', u'Correct status for a successful deletion.'
+
         containers = client.sc_containers_api.list()
-        if len(containers) > 0:
-            assert isinstance(containers[0], ScContainer), u'The method returns container list.'
+        match = [c for c in containers if image['name'].endswith(c.name) and c.digest == u'sha256:%s' % image['digest']]
+        assert len(match) == 0, u'The image no longer exists.'
+
+    def test_list(self, client, image):
+        containers = client.sc_containers_api.list()
+
+        assert len(containers) > 0, u'At least one image exists.'
+        assert isinstance(containers[0], ScContainer), u'The method returns container list.'
+
+        match = [c for c in containers if image['name'].endswith(c.name) and c.digest == u'sha256:%s' % image['digest']]
+        assert len(match) == 1, u'The test image exists.'
