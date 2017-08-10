@@ -12,7 +12,9 @@ setup(
     description='Tenable.io API SDK',
     long_description=long_description,
     author='Tenable Network Security, Inc',
+    url='https://github.com/tenable/Tenable.io-SDK-for-Python',
     packages=find_packages(exclude=['doc', 'tests*']),
+    license='MIT License',
     install_requires=[
         "requests>=2.12.1",
         "six>=1.10.0",
