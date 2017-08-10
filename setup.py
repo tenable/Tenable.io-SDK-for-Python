@@ -8,7 +8,7 @@ with open(path.join(here, 'README.rst')) as file:
 
 setup(
     name='tenable_io',
-    version='0.1.0',
+    version='0.2.0',
     description='Tenable.io API SDK',
     long_description=long_description,
     author='Tenable Network Security, Inc',
