@@ -3,12 +3,15 @@ from os import path
 
 here = path.abspath(path.dirname(__file__))
 
+about = {}
+exec(open(path.join(here, 'tenable_io/__init__.py')).read(), about)
+
 with open(path.join(here, 'README.rst')) as file:
     long_description = file.read()
 
 setup(
     name='tenable_io',
-    version='0.2.0',
+    version=about['__version__'],
     description='Tenable.io API SDK',
     long_description=long_description,
     author='Tenable Network Security, Inc',
