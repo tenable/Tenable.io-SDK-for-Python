@@ -7,7 +7,7 @@ from tests.base import BaseTest
 from tests.util import upload_image
 
 from tenable_io.client import TenableIOClient
-
+from tests.config import TenableIOTestConfig
 
 class App:
 
@@ -29,6 +29,9 @@ class App:
             with open(path, 'a') as fd:
                 fd.write('test_file')
         return path
+
+    def session_scan_target(self):
+        return TenableIOTestConfig.get('scan_text_targets')
 
     def tear_down(self):
         shutil.rmtree(self._output_dir)
