@@ -13,7 +13,7 @@ secret_key={{SECRET_KEY}}
 ; Amount of seconds to wait for a test condition before timing out. (Default: 300)
 ;wait_timeout=300
 ; Name of template to create a scan with.
-scan_template_name=discovery
+;scan_template_name=basic
 ; Host target to create a scan with. (Warning: do not scan targets that you're not authorized to.)
 scan_text_targets={{SCAN_TEXT_TARGETS}}
 ; Host alternative target to launch a scan with. (Warning: do not scan targets that you're not authorized to.)
