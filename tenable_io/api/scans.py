@@ -125,14 +125,21 @@ class ScansApi(BaseApi):
                                     path_params={'scan_id': scan_id, 'history_id': history_id})
         return ScanHistory.from_json(response.text)
 
-    def import_scan(self, scan_import):
+    def import_scan(self, scan_import, include_aggregate=True):
         """Import an existing scan which has been uploaded using :func:`TenableIO.FileApi.upload`
 
         :param scan_import: An instance of :class:`ScanImportRequest`.
+        :param include_aggregate: Boolean indicating whether scan data should appear in Workbenches.
         :raise TenableIOApiException:  When API error is encountered.
         :return: The ID of the imported scan.
         """
-        response = self._client.post('scans/import', scan_import)
+        aggregate_option = 0
+        if include_aggregate:
+            aggregate_option = 1
+
+        response = self._client.post('scans/import?include_aggregate=%(include_aggregate)s',
+                                     scan_import,
+                                     path_params={'include_aggregate': aggregate_option})
         return loads(response.text).get('scan', {}).get('id')
 
     def launch(self, scan_id, scan_launch_request):

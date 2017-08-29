@@ -5,6 +5,7 @@ CHANGELOG
 Unreleased
 ==========
 
+* Added: Support for include_aggregate parameter for ScansApi.import_scan.
 
 0.2.0
 =====

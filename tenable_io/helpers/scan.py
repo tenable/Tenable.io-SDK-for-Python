@@ -131,15 +131,16 @@ class ScanHelper(object):
 
         return template
 
-    def import_scan(self, path):
+    def import_scan(self, path, include_aggregate=True):
         """Uploads and then imports scan report.
 
         :param path: Path of the scan report.
+        :param include_aggregate: Flag indicating whether import scan results should be shown on Workbenches.
         :return: ScanRef referenced by id if exists.
         """
         uploaded_file_name = self._client.file_helper.upload(path)
 
-        imported_scan_id = self._client.scans_api.import_scan(ScanImportRequest(uploaded_file_name))
+        imported_scan_id = self._client.scans_api.import_scan(ScanImportRequest(uploaded_file_name), include_aggregate)
 
         return self.id(imported_scan_id)
 
