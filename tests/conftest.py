@@ -1,7 +1,7 @@
 import os
+import pytest
 import shutil
 import uuid
-import pytest
 
 from tests.base import BaseTest
 from tests.util import upload_image
