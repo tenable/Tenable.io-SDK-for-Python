@@ -1,4 +1,5 @@
 from tests.base import BaseTest
+from tests.config import TenableIOTestConfig
 
 
 class TestExamples(BaseTest):
@@ -17,7 +18,7 @@ class TestExamples(BaseTest):
 
     def test_scans(self, app):
         from examples.scans import example
-        example(app.session_name, app.session_file_output, app.session_scan_target)
+        example(app.session_name, app.session_file_output, TenableIOTestConfig.get('scan_text_targets'))
 
     def test_workbench(self, app):
         from examples.workbench import example
