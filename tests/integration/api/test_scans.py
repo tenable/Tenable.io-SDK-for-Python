@@ -2,7 +2,7 @@ import os
 import pytest
 
 from tenable_io.exceptions import TenableIOApiException
-from tenable_io.api.models import Folder, Scan, ScanList, ScanSettings
+from tenable_io.api.models import Folder, Scan, ScanHostDetails, ScanList, ScanSettings
 from tenable_io.api.scans import ScansApi, ScanConfigureRequest, ScanCreateRequest, \
     ScanExportRequest, ScanImportRequest, ScanLaunchRequest
 
@@ -71,7 +71,7 @@ class TestScansApi(BaseTest):
         scan = client.scans_api.list()
         assert isinstance(scan, ScanList), u'The `list` method returns type.'
 
-    def test_create_launch_pause_resume_history_stop_delete(self, client, scan_id):
+    def test_create_launch_pause_resume_history_stop_delete_host_details(self, client, scan_id):
         scan_details = client.scans_api.details(scan_id)
         assert scan_details.info.status in [Scan.STATUS_CANCELED, Scan.STATUS_COMPLETED, Scan.STATUS_EMPTY], \
             u'Scan is in idling state.'
@@ -121,6 +121,11 @@ class TestScansApi(BaseTest):
         history_id = scan_details.history[0].history_id
         history = client.scans_api.history(scan_id, history_id)
         assert history.status == scan_details.info.status, u'Scan history reports same status as scan details.'
+
+        # Test the scan host details API.
+        assert len(scan_details.hosts) > 0, u'Scan has at least one host.'
+        host_details = client.scans_api.host_details(scan_id, scan_details.hosts[0].host_id)
+        assert isinstance(host_details, ScanHostDetails), u'The `host_details` method returns correct type.'
 
     def test_export_import(self, app, client, scan_id):
 

@@ -6,6 +6,8 @@ Unreleased
 ==========
 
 * Added: Support for include_aggregate parameter for ScansApi.import_scan.
+* Added: Support for scans host-details API.
+* Changed: Model ScanDetails.hosts is now a list of ScanHost's instead of dict's.
 
 0.2.0
 =====

@@ -925,6 +925,41 @@ class ScanDetailsHistory(BaseModel):
         self.last_modification_date = last_modification_date
 
 
+class ScanHost(BaseModel):
+
+    def __init__(
+            self,
+            host_id=None,
+            host_index=None,
+            hostname=None,
+            progress=None,
+            critical=None,
+            high=None,
+            medium=None,
+            low=None,
+            info=None,
+            totalchecksconsidered=None,
+            numchecksconsidered=None,
+            scanprogresstotal=None,
+            scanprogresscurrent=None,
+            score=None,
+    ):
+        self.host_id = host_id
+        self.host_index = host_index
+        self.hostname = hostname
+        self.progress = progress
+        self.critical = critical
+        self.high = high
+        self.medium = medium
+        self.low = low
+        self.info = info
+        self.totalchecksconsidered = totalchecksconsidered
+        self.numchecksconsidered = numchecksconsidered
+        self.scanprogresstotal = scanprogresstotal
+        self.scanprogresscurrent = scanprogresscurrent
+        self.score = score
+
+
 class ScanDetails(BaseModel):
 
     def __init__(
@@ -941,6 +976,7 @@ class ScanDetails(BaseModel):
     ):
         self._info = None
         self._history = None
+        self._hosts = None
 
         self.info = info
         self.hosts = hosts
@@ -974,6 +1010,15 @@ class ScanDetails(BaseModel):
     def history(self, history):
         self._history = history
 
+    @property
+    def hosts(self):
+        return self._hosts
+
+    @hosts.setter
+    @BaseModel._model_list(ScanHost)
+    def hosts(self, hosts):
+        self._hosts = hosts
+
 
 class ScanHistory(BaseModel):
 
@@ -1004,6 +1049,121 @@ class ScanHistory(BaseModel):
         self.status = status
         self.targets = targets
         self.uuid = uuid
+
+
+class ScanHostInfo(BaseModel):
+
+    def __init__(
+            self,
+            host_start=None,
+            mac_address=None,
+            host_fqdn=None,
+            host_end=None,
+            operating_system=None,
+            host_ip=None,
+    ):
+        self.host_start = host_start
+        self.mac_address = mac_address
+        self.host_fqdn = host_fqdn
+        self.host_end = host_end
+        self.operating_system = operating_system
+        self.host_ip = host_ip
+
+
+class ScanHostCompliance(BaseModel):
+
+    def __init__(
+            self,
+            host_id=None,
+            hostname=None,
+            plugin_id=None,
+            plugin_name=None,
+            plugin_family=None,
+            count=None,
+            severity_index=None,
+            severity=None,
+    ):
+        self.host_id = host_id
+        self.hostname = hostname
+        self.plugin_id = plugin_id
+        self.plugin_name = plugin_name
+        self.plugin_family = plugin_family
+        self.count = count
+        self.severity_index = severity_index
+        self.severity = severity
+
+
+class ScanHostVulnerability(BaseModel):
+
+    def __init__(
+            self,
+            host_id=None,
+            hostname=None,
+            plugin_id=None,
+            plugin_name=None,
+            plugin_family=None,
+            count=None,
+            vuln_index=None,
+            severity_index=None,
+            severity=None,
+    ):
+        self.host_id = host_id
+        self.hostname = hostname
+        self.plugin_id = plugin_id
+        self.plugin_name = plugin_name
+        self.plugin_family = plugin_family
+        self.count = count
+        self.vuln_index = vuln_index
+        self.severity_index = severity_index
+        self.severity = severity
+
+
+class ScanHostDetails(BaseModel):
+
+    def __init__(
+            self,
+            info=None,
+            vulnerabilities=None,
+            compliance=None,
+    ):
+        self._info = None
+        self._vulnerabilities = None
+        self._compliance = None
+
+        self.info = info
+        self.vulnerabilities = vulnerabilities
+        self.compliance = compliance
+
+    @property
+    def info(self):
+        return self._info
+
+    @info.setter
+    def info(self, info):
+        if isinstance(info, ScanHostInfo):
+            self._info = info
+        elif isinstance(info, dict):
+            self._info = ScanHostInfo.from_dict(info)
+        else:
+            self._info = None
+
+    @property
+    def compliance(self):
+        return self._compliance
+
+    @compliance.setter
+    @BaseModel._model_list(ScanHostCompliance)
+    def compliance(self, compliance):
+        self._compliance = compliance
+
+    @property
+    def vulnerabilities(self):
+        return self._vulnerabilities
+
+    @vulnerabilities.setter
+    @BaseModel._model_list(ScanHostVulnerability)
+    def vulnerabilities(self, vulnerabilities):
+        self._vulnerabilities = vulnerabilities
 
 
 class ScanInfo(BaseModel):

@@ -1,7 +1,7 @@
 from json import loads
 
 from tenable_io.api.base import BaseApi
-from tenable_io.api.models import Scan, ScanDetails, ScanHistory, ScanList, ScanSettings
+from tenable_io.api.models import Scan, ScanDetails, ScanHistory, ScanHostDetails, ScanList, ScanSettings
 from tenable_io.api.base import BaseRequest
 
 
@@ -124,6 +124,18 @@ class ScansApi(BaseApi):
         response = self._client.get('scans/%(scan_id)s/history/%(history_id)s',
                                     path_params={'scan_id': scan_id, 'history_id': history_id})
         return ScanHistory.from_json(response.text)
+
+    def host_details(self, scan_id, host_id):
+        """Returns details for the given host.
+
+        :param scan_id: The scan ID.
+        :param host_id: The host ID.
+        :raise TenableIOApiException:  When API error is encountered.
+        :return: An instance of :class:`tenable_io.api.models.ScanHostDetails`.
+        """
+        response = self._client.get('scans/%(scan_id)s/hosts/%(host_id)s',
+                                    path_params={'scan_id': scan_id, 'host_id': host_id})
+        return ScanHostDetails.from_json(response.text)
 
     def import_scan(self, scan_import, include_aggregate=True):
         """Import an existing scan which has been uploaded using :func:`TenableIO.FileApi.upload`
