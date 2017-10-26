@@ -13,7 +13,7 @@ class TestImpersonation(BaseTest):
         user_id = client.users_api.create(UserCreateRequest(
             username=app.session_name(u'test_impersonation%%s@%s' % TenableIOTestConfig.get('users_domain_name')),
             name='test_impersonation',
-            password='test_impersonation',
+            password='Sdk!Test1',
             permissions='16',
             type='local',
             email=app.session_name(u'test_user_email+%%s@%s' % TenableIOTestConfig.get('users_domain_name'))
