@@ -15,7 +15,7 @@ class TestUsersApi(BaseTest):
         new_user = client.users_api.create(UserCreateRequest(
             username=app.session_name(u'test_users+%%s@%s' % TenableIOTestConfig.get('users_domain_name')),
             name='test_users',
-            password='test_users',
+            password='Sdk!Test1',
             permissions="16",
             type='local',
             email=app.session_name(u'test_user_email+%%s@%s' % TenableIOTestConfig.get('users_domain_name'))
@@ -46,7 +46,7 @@ class TestUsersApi(BaseTest):
         new_user_id = client.users_api.create(UserCreateRequest(
             username=app.session_name(u'test_users_create+%%s@%s' % TenableIOTestConfig.get('users_domain_name')),
             name='test_users_create',
-            password='test_users_create',
+            password='Sdk!Test1',
             permissions='16',
             type='local',
             email=app.session_name(u'test_user_email+%%s@%s' % TenableIOTestConfig.get('users_domain_name'))
@@ -79,7 +79,7 @@ class TestUsersApi(BaseTest):
         assert len([user for user in user_list.users if user.id == user_id]) == 1, u'User list contains created user.'
 
     def test_edit_password(self, user_id, client):
-        new_password = 'test_edit_password'
+        new_password = 'Sdk!Test2'
 
         assert client.users_api.password(user_id, new_password), u'A new password should be set.'
 
