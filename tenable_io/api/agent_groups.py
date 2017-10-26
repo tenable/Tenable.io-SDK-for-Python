@@ -1,7 +1,7 @@
 from json import loads
 
 from tenable_io.api.base import BaseApi, BaseRequest
-from tenable_io.api.models import AgentGroup, AgentGroupList
+from tenable_io.api.models import AgentGroup, AgentGroupList, AgentList
 
 
 class AgentGroupsApi(BaseApi):
@@ -20,6 +20,25 @@ class AgentGroupsApi(BaseApi):
                              'agent_id': agent_id
                          })
         return True
+
+    def agents(self, agent_group_id, offset=None, limit=None):
+        """Get agent list for given agent group.
+
+        :param agent_group_id: The agent group ID.
+        :param offset: The starting record to retrieve, defaults to 0 if not defined.
+        :param limit: The number of records to retrieve, API will defaults to 50 if not defined.
+        :raise TenableIOApiException: When API error is encountered.
+        :return: An instance of :class:`tenable_io.api.models.AgentList`.
+        """
+        params = {}
+        if offset is not None:
+            params['offset'] = offset
+        if limit is not None:
+            params['limit'] = limit
+        response = self._client.get('scanners/1/agent-groups/%(agent_group_id)s/agents',
+                                    path_params={'agent_group_id': agent_group_id},
+                                    params=params)
+        return AgentList.from_json(response.text)
 
     def configure(self, agent_group_id, configure_agent_group):
         """Configure name of give agent group.
@@ -71,15 +90,23 @@ class AgentGroupsApi(BaseApi):
                             })
         return True
 
-    def details(self, agent_group_id):
+    def details(self, agent_group_id, offset=None, limit=None):
         """Get details of given agent group.
 
         :param agent_group_id: The agent group ID.
+        :param offset: The starting record to retrieve, defaults to 0 if not defined.
+        :param limit: The number of records to retrieve, API will defaults to 50 if not defined.
         :raise TenableIOApiException: When API error is encountered.
         :return: An instance of :class:`tenable_io.api.models.AgentGroup`.
         """
+        params = {}
+        if offset is not None:
+            params['offset'] = offset
+        if limit is not None:
+            params['limit'] = limit
         response = self._client.get('scanners/1/agent-groups/%(agent_group_id)s',
-                                    path_params={'agent_group_id': agent_group_id})
+                                    path_params={'agent_group_id': agent_group_id},
+                                    params=params)
         return AgentGroup.from_json(response.text)
 
     def list(self):

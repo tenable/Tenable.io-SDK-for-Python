@@ -6,6 +6,10 @@ Unreleased
 ==========
 
 
+0.4.0
+=====
+* Added: Support for offset and limit on endpoints returning an agent list.
+
 0.3.0
 =====
 

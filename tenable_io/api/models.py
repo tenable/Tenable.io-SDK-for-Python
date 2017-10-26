@@ -70,7 +70,14 @@ class Agent(BaseModel):
             name=None,
             platform=None,
             token=None,
-            uuid=None
+            uuid=None,
+            linked_on=None,
+            last_connect=None,
+            plugin_feed_id=None,
+            core_build=None,
+            core_version=None,
+            groups=None,
+            status=None
     ):
         self.distro = distro
         self.id = id
@@ -80,16 +87,25 @@ class Agent(BaseModel):
         self.platform = platform
         self.token = token
         self.uuid = uuid
+        self.linked_on = linked_on
+        self.last_connect = last_connect
+        self.plugin_feed_id = plugin_feed_id
+        self.core_build = core_build
+        self.core_version = core_version
+        self.groups = groups
+        self.status = status
 
 
 class AgentList(BaseModel):
 
     def __init__(
             self,
-            agents=None
+            agents=None,
+            pagination=None
     ):
         self._agents = None
         self.agents = agents
+        self.pagination = pagination
 
     @property
     def agents(self):
@@ -109,20 +125,29 @@ class AgentGroup(BaseModel):
             name=None,
             owner_id=None,
             owner=None,
+            owner_name=None,
+            owner_uuid=None,
             shared=None,
             user_permissions=None,
             creation_date=None,
-            last_modification_date=None
+            last_modification_date=None,
+            agents=None,
+            uuid=None,
+            pagination=None
     ):
         self.id = id
         self.name = name
         self.owner_id = owner_id
         self.owner = owner
+        self.owner_name = owner_name
+        self.owner_uuid = owner_uuid
         self.shared = shared
         self.user_permissions = user_permissions
         self.creation_date = creation_date
         self.last_modification_date = last_modification_date
-
+        self.agents = agents
+        self.uuid = uuid
+        self.pagination = pagination
 
 class AgentGroupList(BaseModel):
 
