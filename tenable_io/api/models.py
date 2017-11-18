@@ -80,6 +80,80 @@ class BaseModel(object):
         return payload_filter(self.__dict__, filter_)
 
 
+class Filter(BaseModel):
+
+    def __init__(
+            self,
+            operators=None,
+            control=None,
+            name=None,
+            readable_name=None
+    ):
+        self.operators = operators
+        self.control = control
+        self.name = name
+        self.readable_name = readable_name
+
+
+class Filters(BaseModel):
+
+    def __init__(
+            self,
+            filters=None,
+            sort=None,
+            wildcard_fields=None
+    ):
+        self._filters = None
+        self.filters = filters
+        self.sort = sort
+        self.wildcard_fields = wildcard_fields
+
+    @property
+    def filters(self):
+        return self._filters
+
+    @filters.setter
+    @BaseModel._model_list(Filter)
+    def filters(self, filters):
+        self._filters = filters
+
+
+class FilterSort(BaseModel):
+
+    def __init__(
+            self,
+            name=None,
+            order=None
+    ):
+        self.name = name
+        self.order = order
+
+
+class FilterPagination(BaseModel):
+
+    def __init__(
+            self,
+            total=None,
+            offset=None,
+            limit=None,
+            sort=None
+    ):
+        self._sort = None
+        self.total = total
+        self.offset = offset
+        self.limit = limit
+        self.sort = sort
+
+    @property
+    def sort(self):
+        return self._sort
+
+    @sort.setter
+    @BaseModel._model_list(FilterSort)
+    def sort(self, sorts):
+        self._sort = sorts
+
+
 class Agent(BaseModel):
 
     def __init__(
@@ -90,7 +164,6 @@ class Agent(BaseModel):
             last_scanned=None,
             name=None,
             platform=None,
-            token=None,
             uuid=None,
             linked_on=None,
             last_connect=None,
@@ -106,7 +179,6 @@ class Agent(BaseModel):
         self.last_scanned = last_scanned
         self.name = name
         self.platform = platform
-        self.token = token
         self.uuid = uuid
         self.linked_on = linked_on
         self.last_connect = last_connect
@@ -126,6 +198,7 @@ class AgentList(BaseModel):
     ):
         self._agents = None
         self.agents = agents
+        self._pagination = None
         self.pagination = pagination
 
     @property
@@ -136,6 +209,15 @@ class AgentList(BaseModel):
     @BaseModel._model_list(Agent)
     def agents(self, agents):
         self._agents = agents
+
+    @property
+    def pagination(self):
+        return self._pagination
+
+    @pagination.setter
+    @BaseModel._model(FilterPagination)
+    def pagination(self, pagination):
+        self._pagination = pagination
 
 
 class AgentGroup(BaseModel):
@@ -170,6 +252,7 @@ class AgentGroup(BaseModel):
         self.uuid = uuid
         self.pagination = pagination
 
+
 class AgentGroupList(BaseModel):
 
     def __init__(
@@ -188,7 +271,7 @@ class AgentGroupList(BaseModel):
     def groups(self, groups):
         self._groups = groups
 
-    
+
 class ExclusionRrules(BaseModel):
 
     def __init__(
