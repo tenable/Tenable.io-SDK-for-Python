@@ -234,10 +234,14 @@ class AgentGroup(BaseModel):
             user_permissions=None,
             creation_date=None,
             last_modification_date=None,
+            timestamp=None,
             agents=None,
+            agents_count=None,
             uuid=None,
             pagination=None
     ):
+        self._agents = agents
+        self._pagination = None
         self.id = id
         self.name = name
         self.owner_id = owner_id
@@ -248,9 +252,29 @@ class AgentGroup(BaseModel):
         self.user_permissions = user_permissions
         self.creation_date = creation_date
         self.last_modification_date = last_modification_date
+        self.timestamp = timestamp
         self.agents = agents
+        self.agents_count = agents_count
         self.uuid = uuid
         self.pagination = pagination
+
+    @property
+    def agents(self):
+        return self._agents
+
+    @agents.setter
+    @BaseModel._model_list(Agent)
+    def agents(self, agents):
+        self._agents = agents
+
+    @property
+    def pagination(self):
+        return self._pagination
+
+    @pagination.setter
+    @BaseModel._model(FilterPagination)
+    def pagination(self, pagination):
+        self._pagination = pagination
 
 
 class AgentGroupList(BaseModel):
