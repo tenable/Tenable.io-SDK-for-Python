@@ -55,8 +55,103 @@ class BaseModel(object):
             return wrapper
         return decorator
 
+    @staticmethod
+    def _model(class_):
+        """
+        :param class_: The class that the value should be an instance of.
+        :return: A decorator that ensures the assigning value is of `class_` instances.
+        """
+        assert issubclass(class_, BaseModel)
+
+        def decorator(f):
+            def wrapper(self, model):
+                if isinstance(model, class_):
+                    f(self, model)
+                elif isinstance(model, dict):
+                    f(self, class_.from_dict(model))
+                elif model is None:
+                    f(self, None)
+                else:
+                    raise TenableIOException(u'Invalid value type.')
+            return wrapper
+        return decorator
+
     def as_payload(self, filter_=None):
         return payload_filter(self.__dict__, filter_)
+
+
+class Filter(BaseModel):
+
+    def __init__(
+            self,
+            operators=None,
+            control=None,
+            name=None,
+            readable_name=None
+    ):
+        self.operators = operators
+        self.control = control
+        self.name = name
+        self.readable_name = readable_name
+
+
+class Filters(BaseModel):
+
+    def __init__(
+            self,
+            filters=None,
+            sort=None,
+            wildcard_fields=None
+    ):
+        self._filters = None
+        self.filters = filters
+        self.sort = sort
+        self.wildcard_fields = wildcard_fields
+
+    @property
+    def filters(self):
+        return self._filters
+
+    @filters.setter
+    @BaseModel._model_list(Filter)
+    def filters(self, filters):
+        self._filters = filters
+
+
+class FilterSort(BaseModel):
+
+    def __init__(
+            self,
+            name=None,
+            order=None
+    ):
+        self.name = name
+        self.order = order
+
+
+class FilterPagination(BaseModel):
+
+    def __init__(
+            self,
+            total=None,
+            offset=None,
+            limit=None,
+            sort=None
+    ):
+        self._sort = None
+        self.total = total
+        self.offset = offset
+        self.limit = limit
+        self.sort = sort
+
+    @property
+    def sort(self):
+        return self._sort
+
+    @sort.setter
+    @BaseModel._model_list(FilterSort)
+    def sort(self, sorts):
+        self._sort = sorts
 
 
 class Agent(BaseModel):
@@ -69,7 +164,6 @@ class Agent(BaseModel):
             last_scanned=None,
             name=None,
             platform=None,
-            token=None,
             uuid=None,
             linked_on=None,
             last_connect=None,
@@ -85,7 +179,6 @@ class Agent(BaseModel):
         self.last_scanned = last_scanned
         self.name = name
         self.platform = platform
-        self.token = token
         self.uuid = uuid
         self.linked_on = linked_on
         self.last_connect = last_connect
@@ -105,6 +198,7 @@ class AgentList(BaseModel):
     ):
         self._agents = None
         self.agents = agents
+        self._pagination = None
         self.pagination = pagination
 
     @property
@@ -115,6 +209,15 @@ class AgentList(BaseModel):
     @BaseModel._model_list(Agent)
     def agents(self, agents):
         self._agents = agents
+
+    @property
+    def pagination(self):
+        return self._pagination
+
+    @pagination.setter
+    @BaseModel._model(FilterPagination)
+    def pagination(self, pagination):
+        self._pagination = pagination
 
 
 class AgentGroup(BaseModel):
@@ -149,6 +252,7 @@ class AgentGroup(BaseModel):
         self.uuid = uuid
         self.pagination = pagination
 
+
 class AgentGroupList(BaseModel):
 
     def __init__(
@@ -166,6 +270,58 @@ class AgentGroupList(BaseModel):
     @BaseModel._model_list(AgentGroup)
     def groups(self, groups):
         self._groups = groups
+
+
+class ExclusionRrules(BaseModel):
+
+    def __init__(
+            self,
+            freq=None,
+            interval=None,
+            byweekday=None,
+            bymonthday=None
+    ):
+        self.freq = freq
+        self.interval = interval
+        self.byweekday = byweekday
+        self.bymonthday = bymonthday
+
+
+class ExclusionSchedule(BaseModel):
+
+    def __init__(
+            self,
+            enabled=None,
+            starttime=None,
+            endtime=None,
+            timezone=None,
+            rrules=None
+    ):
+        self._rrules = None
+
+        self.enabled = enabled
+        self.starttime = starttime
+        self.endtime = endtime
+        self.timezone = timezone
+        self.rrules = rrules
+
+    @property
+    def rrules(self):
+        return self._rrules
+
+    @rrules.setter
+    @BaseModel._model(ExclusionRrules)
+    def rrules(self, rrules):
+        self._rrules = rrules
+
+    def as_payload(self, filter_=None):
+        payload = super(ExclusionSchedule, self).as_payload(True)
+        if isinstance(self.rrules, ExclusionRrules):
+            payload.__setitem__('rrules', self.rrules.as_payload(True))
+        else:
+            payload.pop('rrules', None)
+        payload.pop('_rrules', None)
+        return payload
 
 
 class Exclusion(BaseModel):
@@ -194,13 +350,9 @@ class Exclusion(BaseModel):
         return self._schedule
 
     @schedule.setter
+    @BaseModel._model(ExclusionSchedule)
     def schedule(self, schedule):
-        if isinstance(schedule, ExclusionSchedule):
-            self._schedule = schedule
-        elif isinstance(schedule, dict):
-            self._schedule = ExclusionSchedule.from_dict(schedule)
-        else:
-            self._schedule = None
+        self._schedule = schedule
 
 
 class ExclusionList(BaseModel):
@@ -219,62 +371,6 @@ class ExclusionList(BaseModel):
     @BaseModel._model_list(Exclusion)
     def exclusions(self, exclusions):
         self._exclusions = exclusions
-
-
-class ExclusionSchedule(BaseModel):
-
-    def __init__(
-            self,
-            enabled=None,
-            starttime=None,
-            endtime=None,
-            timezone=None,
-            rrules=None
-    ):
-        self._rrules = None
-
-        self.enabled = enabled
-        self.starttime = starttime
-        self.endtime = endtime
-        self.timezone = timezone
-        self.rrules = rrules
-
-    @property
-    def rrules(self):
-        return self._rrules
-
-    @rrules.setter
-    def rrules(self, rrules):
-        if isinstance(rrules, ExclusionRrules):
-            self._rrules = rrules
-        elif isinstance(rrules, dict):
-            self._rrules = ExclusionRrules.from_dict(rrules)
-        else:
-            self._rrules = None
-
-    def as_payload(self, filter_=None):
-        payload = super(ExclusionSchedule, self).as_payload(True)
-        if isinstance(self.rrules, ExclusionRrules):
-            payload.__setitem__('rrules', self.rrules.as_payload(True))
-        else:
-            payload.pop('rrules', None)
-        payload.pop('_rrules', None)
-        return payload
-
-
-class ExclusionRrules(BaseModel):
-
-    def __init__(
-            self,
-            freq=None,
-            interval=None,
-            byweekday=None,
-            bymonthday=None
-    ):
-        self.freq = freq
-        self.interval = interval
-        self.byweekday = byweekday
-        self.bymonthday = bymonthday
 
 
 class Folder(BaseModel):
@@ -870,13 +966,9 @@ class PolicyDetails(BaseModel):
         return self._settings
 
     @settings.setter
+    @BaseModel._model(PolicySettings)
     def settings(self, settings):
-        if isinstance(settings, PolicySettings):
-            self._settings = settings
-        elif isinstance(settings, dict):
-            self._settings = PolicySettings.from_dict(settings)
-        else:
-            self._settings = None
+        self._settings = settings
 
 
 class Scan(BaseModel):
@@ -985,6 +1077,65 @@ class ScanHost(BaseModel):
         self.score = score
 
 
+class ScanInfo(BaseModel):
+
+    def __init__(
+            self,
+            acls=None,
+            edit_allowed=None,
+            status=None,
+            policy=None,
+            pci_can_upload=None,  # API uses "pci-can-upload" which is not a valid python attribute name.
+            hasaudittrail=None,
+            scan_start=None,
+            folder_id=None,
+            targets=None,
+            timestamp=None,
+            object_id=None,
+            scanner_name=None,
+            haskb=None,
+            uuid=None,
+            hostcount=None,
+            scan_end=None,
+            name=None,
+            user_permissions=None,
+            control=None,
+    ):
+        self.acls = acls
+        self.edit_allowed = edit_allowed
+        self.status = status
+        self.policy = policy
+        self.pci_can_upload = pci_can_upload
+        self.hasaudittrail = hasaudittrail
+        self.scan_start = scan_start
+        self.folder_id = folder_id
+        self.targets = targets
+        self.timestamp = timestamp
+        self.object_id = object_id
+        self.scanner_name = scanner_name
+        self.haskb = haskb
+        self.uuid = uuid
+        self.hostcount = hostcount
+        self.scan_end = scan_end
+        self.name = name
+        self.user_permissions = user_permissions
+        self.control = control
+
+    @classmethod
+    def from_dict(cls, dict_):
+        # Because API uses "pci-can-upload" API uses "pci-can-upload" which is not a valid python attribute name.
+        if 'pci-can-upload' in dict_:
+            dict_['pci_can_upload'] = dict_.pop('pci-can-upload')
+        return super(ScanInfo, cls).from_dict(dict_)
+
+    def as_payload(self, filter_=None):
+        # Because API uses "pci-can-upload" API uses "pci-can-upload" which is not a valid python attribute name.
+        payload = self.as_payload(filter_)
+        if 'pci_can_upload' in payload:
+            payload['pci-can-upload'] = payload.pop('pci_can_upload')
+        return payload
+
+
 class ScanDetails(BaseModel):
 
     def __init__(
@@ -1018,13 +1169,9 @@ class ScanDetails(BaseModel):
         return self._info
 
     @info.setter
+    @BaseModel._model(ScanInfo)
     def info(self, info):
-        if isinstance(info, ScanInfo):
-            self._info = info
-        elif isinstance(info, dict):
-            self._info = ScanInfo.from_dict(info)
-        else:
-            self._info = None
+        self._info = info
 
     @property
     def history(self):
@@ -1164,13 +1311,9 @@ class ScanHostDetails(BaseModel):
         return self._info
 
     @info.setter
+    @BaseModel._model(ScanHostInfo)
     def info(self, info):
-        if isinstance(info, ScanHostInfo):
-            self._info = info
-        elif isinstance(info, dict):
-            self._info = ScanHostInfo.from_dict(info)
-        else:
-            self._info = None
+        self._info = info
 
     @property
     def compliance(self):
@@ -1189,65 +1332,6 @@ class ScanHostDetails(BaseModel):
     @BaseModel._model_list(ScanHostVulnerability)
     def vulnerabilities(self, vulnerabilities):
         self._vulnerabilities = vulnerabilities
-
-
-class ScanInfo(BaseModel):
-
-    def __init__(
-            self,
-            acls=None,
-            edit_allowed=None,
-            status=None,
-            policy=None,
-            pci_can_upload=None,  # API uses "pci-can-upload" which is not a valid python attribute name.
-            hasaudittrail=None,
-            scan_start=None,
-            folder_id=None,
-            targets=None,
-            timestamp=None,
-            object_id=None,
-            scanner_name=None,
-            haskb=None,
-            uuid=None,
-            hostcount=None,
-            scan_end=None,
-            name=None,
-            user_permissions=None,
-            control=None,
-    ):
-        self.acls = acls
-        self.edit_allowed = edit_allowed
-        self.status = status
-        self.policy = policy
-        self.pci_can_upload = pci_can_upload
-        self.hasaudittrail = hasaudittrail
-        self.scan_start = scan_start
-        self.folder_id = folder_id
-        self.targets = targets
-        self.timestamp = timestamp
-        self.object_id = object_id
-        self.scanner_name = scanner_name
-        self.haskb = haskb
-        self.uuid = uuid
-        self.hostcount = hostcount
-        self.scan_end = scan_end
-        self.name = name
-        self.user_permissions = user_permissions
-        self.control = control
-
-    @classmethod
-    def from_dict(cls, dict_):
-        # Because API uses "pci-can-upload" API uses "pci-can-upload" which is not a valid python attribute name.
-        if 'pci-can-upload' in dict_:
-            dict_['pci_can_upload'] = dict_.pop('pci-can-upload')
-        return super(ScanInfo, cls).from_dict(dict_)
-
-    def as_payload(self, filter_=None):
-        # Because API uses "pci-can-upload" API uses "pci-can-upload" which is not a valid python attribute name.
-        payload = self.as_payload(filter_)
-        if 'pci_can_upload' in payload:
-            payload['pci-can-upload'] = payload.pop('pci_can_upload')
-        return payload
 
 
 class ScanList(BaseModel):
@@ -1298,6 +1382,21 @@ class ScanSettings(BaseModel):
         self.text_targets = text_targets
 
 
+class ScannerLicense(BaseModel):
+
+    def __init__(
+            self,
+            type=None,
+            ips=None,
+            agents=None,
+            scanners=None
+    ):
+        self.type = type
+        self.ips = ips
+        self.agents = agents
+        self.scanners = scanners
+
+
 class Scanner(BaseModel):
 
     def __init__(
@@ -1337,13 +1436,9 @@ class Scanner(BaseModel):
         return self._license
 
     @license.setter
+    @BaseModel._model(ScannerLicense)
     def license(self, license):
-        if isinstance(license, ScannerLicense):
-            self._license = license
-        elif isinstance(license, dict):
-            self._license = ScannerLicense.from_dict(license)
-        else:
-            self._license = None
+        self._license = license
 
 
 class ScannerAwsTarget(BaseModel):
@@ -1386,21 +1481,6 @@ class ScannerAwsTargetList(BaseModel):
     @BaseModel._model_list(ScannerAwsTarget)
     def aws_targets(self, aws_targets):
         self.aws_targets = aws_targets
-
-
-class ScannerLicense(BaseModel):
-
-    def __init__(
-            self,
-            type=None,
-            ips=None,
-            agents=None,
-            scanners=None
-    ):
-        self.type = type
-        self.ips = ips
-        self.agents = agents
-        self.scanners = scanners
 
 
 class ScannerList(BaseModel):
