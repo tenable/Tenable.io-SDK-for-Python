@@ -5,6 +5,8 @@ CHANGELOG
 Unreleased
 ==========
 
+* Added: Model AgentGroup properties: agents, agents_count, pagination, and timestamp.
+* Added: Support for sort, f, ft, w, and wf parameters on agent-group details and agent-group agents API.
 * Added: Support for Filters API.
 * Added: Support for sort, f, ft, w, and wf parameters on agent list API.
 * Changed: Model AgentList.pagination is now an instance of model FilterPagination.
