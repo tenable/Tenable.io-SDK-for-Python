@@ -50,7 +50,7 @@ export PYTHONHASHSEED=0
 export PYTHONPATH=. 
 export CAT_USE_GRID=true
 
-python3 tenableio/commandline/sdk_test_container.py --create_container --python
+python3 tenableio/commandline/sdk_test_container.py --create_container --python --agents 5
 
 cd ../tenableio-sdk || exit 1
 pip3 install -r requirements.txt || exit 1
