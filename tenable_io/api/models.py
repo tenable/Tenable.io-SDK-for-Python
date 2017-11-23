@@ -1775,6 +1775,38 @@ class TargetGroupList(BaseModel):
         self._target_groups = target_groups
 
 
+class BulkOpTask(BaseModel):
+
+    STATUS_NEW = u'NEW'
+    STATUS_RUNNING = u'RUNNING'
+    STATUS_COMPLETED = u'COMPLETED'
+    STATUS_FAILED = u'FAILED'
+
+    def __init__(
+            self,
+            task_id=None,
+            container_uuid=None,
+            status=None,
+            message=None,
+            start_time=None,
+            end_time=None,
+            last_update_time=None,
+            total_work_units=None,
+            total_work_units_completed=None,
+            completion_percentage=None
+    ):
+        self.task_id = task_id
+        self.container_uuid = container_uuid
+        self.status = status
+        self.message = message
+        self.start_time = start_time
+        self.end_time = end_time
+        self.last_update_time = last_update_time
+        self.total_work_units = total_work_units
+        self.total_work_units_completed = total_work_units_completed
+        self.completion_percentage = completion_percentage
+
+
 class Template(BaseModel):
 
     def __init__(
