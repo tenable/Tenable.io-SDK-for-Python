@@ -189,6 +189,105 @@ class Agent(BaseModel):
         self.status = status
 
 
+class AgentExclusionRrules(BaseModel):
+
+    def __init__(
+            self,
+            freq=None,
+            interval=None,
+            byweekday=None,
+            bymonthday=None
+    ):
+        self.freq = freq
+        self.interval = interval
+        self.byweekday = byweekday
+        self.bymonthday = bymonthday
+
+
+class AgentExclusionSchedule(BaseModel):
+
+    def __init__(
+            self,
+            enabled=None,
+            starttime=None,
+            endtime=None,
+            timezone=None,
+            rrules=None
+    ):
+        self._rrules = None
+
+        self.enabled = enabled
+        self.starttime = starttime
+        self.endtime = endtime
+        self.timezone = timezone
+        self.rrules = rrules
+
+    @property
+    def rrules(self):
+        return self._rrules
+
+    @rrules.setter
+    @BaseModel._model(AgentExclusionRrules)
+    def rrules(self, rrules):
+        self._rrules = rrules
+
+    def as_payload(self, filter_=None):
+        payload = super(AgentExclusionSchedule, self).as_payload(True)
+        if isinstance(self.rrules, AgentExclusionRrules):
+            payload.__setitem__('rrules', self.rrules.as_payload(True))
+        else:
+            payload.pop('rrules', None)
+        payload.pop('_rrules', None)
+        return payload
+
+
+class AgentExclusion(BaseModel):
+    def __init__(
+            self,
+            id=None,
+            name=None,
+            description=None,
+            schedule=None,
+            creation_date=None,
+            last_modification_date=None,
+    ):
+        self._schedule = None
+
+        self.id = id
+        self.name = name
+        self.description = description
+        self.schedule = schedule
+        self.creation_date = creation_date
+        self.last_modification_date = last_modification_date
+
+    @property
+    def schedule(self):
+        return self._schedule
+
+    @schedule.setter
+    @BaseModel._model(AgentExclusionSchedule)
+    def schedule(self, schedule):
+        self._schedule = schedule
+
+
+class AgentExclusionList(BaseModel):
+    def __init__(
+            self,
+            exclusions=None
+    ):
+        self._exclusions = None
+        self.exclusions = exclusions
+
+    @property
+    def exclusions(self):
+        return self._exclusions
+
+    @exclusions.setter
+    @BaseModel._model_list(AgentExclusion)
+    def exclusions(self, exclusions):
+        self._exclusions = exclusions
+
+
 class AgentList(BaseModel):
 
     def __init__(
