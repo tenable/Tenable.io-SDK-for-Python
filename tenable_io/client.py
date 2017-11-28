@@ -7,6 +7,7 @@ from requests.utils import quote
 from tenable_io.config import TenableIOConfig
 from tenable_io.exceptions import TenableIOApiException
 from tenable_io.api.agent_exclusions import AgentExclusionsApi
+from tenable_io.api.agent_config import AgentConfigApi
 from tenable_io.api.agent_groups import AgentGroupsApi
 from tenable_io.api.agents import AgentsApi
 from tenable_io.api.base import BaseRequest
@@ -87,6 +88,7 @@ class TenableIOClient(object):
         Initializes all api.
         """
         self.agent_exclusions_api = AgentExclusionsApi(self)
+        self.agent_config_api = AgentConfigApi(self)
         self.agent_groups_api = AgentGroupsApi(self)
         self.agents_api = AgentsApi(self)
         self.bulk_operations_api = BulkOperationsApi(self)
