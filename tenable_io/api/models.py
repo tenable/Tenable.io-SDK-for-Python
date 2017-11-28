@@ -288,6 +288,17 @@ class AgentExclusionList(BaseModel):
         self._exclusions = exclusions
 
 
+class AgentConfig(BaseModel):
+
+    def __init__(
+            self,
+            auto_unlink=None,
+            software_update=None
+    ):
+        self.auto_unlink = auto_unlink
+        self.software_update = software_update
+
+
 class AgentList(BaseModel):
 
     def __init__(

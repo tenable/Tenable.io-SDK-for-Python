@@ -6,6 +6,7 @@ Unreleased
 ==========
 
 * Added: Support for agent-exclusions API.
+* Added: Support for agent-config API.
 * Added: Support for bulk-operations API.
 * Added: Model AgentGroup properties: agents, agents_count, pagination, and timestamp.
 * Added: Support for sort, f, ft, w, and wf parameters on agent-group details and agent-group agents API.
