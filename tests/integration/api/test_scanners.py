@@ -19,7 +19,13 @@ class TestScannersApi(BaseTest):
         scanner_list = client.scanners_api.list()
         assert len(scanner_list.scanners) > 0, u'At least one scanner.'
 
-        yield scanner_list.scanners[0]
+        test_scanner = scanner_list.scanners[0]
+
+        for scanner in scanner_list.scanners:
+            if scanner.name == 'US Cloud Scanner':
+                test_scanner = scanner
+
+        yield test_scanner
 
     @pytest.fixture(scope='class')
     def template(self, client):
@@ -52,7 +58,8 @@ class TestScannersApi(BaseTest):
 
         client.scans_api.launch(scan_id, ScanLaunchRequest())
         scan_details = client.scans_api.details(scan_id)
-        assert scan_details.info.status in [Scan.STATUS_PENDING, Scan.STATUS_RUNNING], u'Scan is in launched state.'
+        assert scan_details.info.status in [Scan.STATUS_PENDING, Scan.STATUS_INITIALIZING, Scan.STATUS_RUNNING], \
+            u'Scan is in launched state.'
 
         scan_details = self.wait_until(lambda: client.scans_api.details(scan_id),
                                        lambda details: details.info.status in [
@@ -105,10 +112,10 @@ class TestScannersApi(BaseTest):
         assert isinstance(scanner_details, Scanner), u'Get request returns type.'
 
     def test_edit(self, client, scanner):
-        with pytest.raises(TenableIOApiException) as e:
-            client.scanners_api.edit(scanner.id, ScannerEditRequest())
-        assert e.value.response.status_code != 404, u'Request cannot return with 404.'
+        response = client.scanners_api.edit(scanner.id, ScannerEditRequest())
+        assert response == True, u'Method should return True if 200 response is received.'
 
+    @pytest.mark.xfail(reason="CI-16038")
     def test_get_scanner_key(self, client, scanner):
         key = client.scanners_api.get_scanner_key(scanner.id)
         assert key, u'Get request returns valid key.'

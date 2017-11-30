@@ -892,6 +892,7 @@ class Scan(BaseModel):
     STATUS_RESUMING = u'resuming'
     STATUS_RUNNING = u'running'
     STATUS_STOPPING = u'stopping'
+    STATUS_INITIALIZING = u'initializing'
 
     def __init__(
             self,

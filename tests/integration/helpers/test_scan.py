@@ -33,6 +33,7 @@ class TestScanHelper(BaseTest):
         scan_detail = scan.details()
         assert scan_detail.info.object_id == scan.id, u'ScanRef `id` should match ID in ScanDetail.'
 
+    @pytest.mark.skip(reason="CI-16072 & CI-15053")
     def test_alt_target_launch_stop_download_import(self, app, client, scan):
         download_path = app.session_file_output('test_scan_launch_download')
 
@@ -65,6 +66,7 @@ class TestScanHelper(BaseTest):
             u'Scan is ran for at least %s seconds.' % cancel_after_seconds
         assert scan.stopped(), u'Scan is stopped.'
 
+    @pytest.mark.xfail(reason="CI-16090")
     def test_activities(self, client, scan, scan_targets):
         scan.launch().pause()
         history_id = scan.last_history().history_id
