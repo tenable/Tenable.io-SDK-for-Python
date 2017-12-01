@@ -10,7 +10,8 @@ class TestAgentsApi(BaseTest):
         try:
             client.agents_api.delete('test_agents_delete')
         except TenableIOApiException as e:
-            assert e.code is TenableIOErrorCode.BAD_REQUEST, u'Bad request for string agent_id.'
+            assert e.code in (TenableIOErrorCode.BAD_REQUEST, TenableIOErrorCode.NOT_FOUND), \
+                u'Bad request for string agent_id or agent not found.'
 
     def test_list(self, client):
         agent_list = client.agents_api.list()

@@ -66,14 +66,14 @@ def format_request(response):
                 data += [
                     u'REQUEST_BODY:',
                     response.request.body[:100000] + u'...Response Body Truncated'
-                    if len(response.request.body) > 100000 else response.request.body,
+                    if len(response.request.body) > 100000 else str(response.request.body),
                 ]
 
             if response.text:
                 data += [
                     u'RESPONSE_BODY:',
                     response.text[:100000] + u'...Response Body Truncated'
-                    if len(response.text) > 100000 else response.text,
+                    if len(response.text) > 100000 else str(response.text),
                 ]
         else:
             meta[u'response_headers'] = {k: v for k, v in six.iteritems(response.headers)

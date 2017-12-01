@@ -82,7 +82,7 @@ class TestScansApi(BaseTest):
             ScanLaunchRequest()
         )
         scan_details = client.scans_api.details(scan_id)
-        assert scan_details.info.status in [Scan.STATUS_PENDING, Scan.STATUS_RUNNING], u'Scan is in launched state.'
+        assert scan_details.info.status in [Scan.STATUS_PENDING, Scan.STATUS_INITIALIZING, Scan.STATUS_RUNNING], u'Scan is in launched state.'
 
         scan_details = self.wait_until(lambda: client.scans_api.details(scan_id),
                                        lambda details: details.info.status in [
@@ -187,6 +187,7 @@ class TestScansApi(BaseTest):
         with pytest.raises(TenableIOApiException):
             client.scans_api.details(scan.id)
 
+    @pytest.mark.xfail(reason="CI-16057")
     def test_configure(self, app, client, scan_id):
         scan_details = client.scans_api.details(scan_id)
 
