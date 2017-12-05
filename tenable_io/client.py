@@ -10,6 +10,7 @@ from tenable_io.api.agent_exclusions import AgentExclusionsApi
 from tenable_io.api.agent_config import AgentConfigApi
 from tenable_io.api.agent_groups import AgentGroupsApi
 from tenable_io.api.agents import AgentsApi
+from tenable_io.api.assets import AssetsApi
 from tenable_io.api.base import BaseRequest
 from tenable_io.api.bulk_operations import BulkOperationsApi
 from tenable_io.api.editor import EditorApi
@@ -92,6 +93,7 @@ class TenableIOClient(object):
         self.agent_config_api = AgentConfigApi(self)
         self.agent_groups_api = AgentGroupsApi(self)
         self.agents_api = AgentsApi(self)
+        self.assets_api = AssetsApi(self)
         self.bulk_operations_api = BulkOperationsApi(self)
         self.editor_api = EditorApi(self)
         self.exclusions_api = ExclusionApi(self)

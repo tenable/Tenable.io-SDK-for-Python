@@ -5,6 +5,7 @@ CHANGELOG
 Unreleased
 ==========
 
+* Added: Support for assets API.
 * Added: Support for import API.
 * Changed: Support for scanner_id parameter for agents, agent-config, agent-exclusions, agent-groups, and
 bulk-operations API.
