@@ -6,6 +6,6 @@ pipelines:
         script:
           - pip install pep8
           - pep8 tenable_io tests
-          - pip install j2cli
-          - j2 tenable_io.ini.example > tenable_io.ini
-          - tox
+#          - pip install j2cli
+#          - j2 tenable_io.ini.example > tenable_io.ini
+#          - tox

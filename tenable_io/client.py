@@ -6,12 +6,16 @@ from requests.utils import quote
 
 from tenable_io.config import TenableIOConfig
 from tenable_io.exceptions import TenableIOApiException
-from tenable_io.api.agents import AgentsApi
+from tenable_io.api.agent_exclusions import AgentExclusionsApi
+from tenable_io.api.agent_config import AgentConfigApi
 from tenable_io.api.agent_groups import AgentGroupsApi
+from tenable_io.api.agents import AgentsApi
 from tenable_io.api.base import BaseRequest
+from tenable_io.api.bulk_operations import BulkOperationsApi
 from tenable_io.api.editor import EditorApi
 from tenable_io.api.exclusions import ExclusionApi
 from tenable_io.api.file import FileApi
+from tenable_io.api.filters import FiltersApi
 from tenable_io.api.folders import FoldersApi
 from tenable_io.api.groups import GroupsApi
 from tenable_io.api.plugins import PluginsApi
@@ -83,11 +87,15 @@ class TenableIOClient(object):
         """
         Initializes all api.
         """
-        self.agents_api = AgentsApi(self)
+        self.agent_exclusions_api = AgentExclusionsApi(self)
+        self.agent_config_api = AgentConfigApi(self)
         self.agent_groups_api = AgentGroupsApi(self)
+        self.agents_api = AgentsApi(self)
+        self.bulk_operations_api = BulkOperationsApi(self)
         self.editor_api = EditorApi(self)
         self.exclusions_api = ExclusionApi(self)
         self.file_api = FileApi(self)
+        self.filters_api = FiltersApi(self)
         self.folders_api = FoldersApi(self)
         self.groups_api = GroupsApi(self)
         self.plugins_api = PluginsApi(self)
@@ -170,14 +178,14 @@ class TenableIOClient(object):
                     flatten[k] = v
         return flatten
 
-    def _request(self, method, uri, path_params=None, **kwargs):
+    def _request(self, method, uri, path_params=None, flatten_params=True, **kwargs):
         if path_params:
             # Ensure path param is encoded.
             path_params = {key: quote(str(value), safe=u'') for key, value in path_params.items()}
             uri %= path_params
 
         # Custom nested object flattening
-        if 'params' in kwargs:
+        if flatten_params and 'params' in kwargs:
             kwargs['params'] = self._flatten_param(kwargs['params'])
 
         full_uri = self._endpoint + uri

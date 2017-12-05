@@ -21,20 +21,30 @@ class AgentGroupsApi(BaseApi):
                          })
         return True
 
-    def agents(self, agent_group_id, offset=None, limit=None):
+    def agents(self, agent_group_id, offset=None, limit=None, sort=None, f=None, ft=None, w=None, wf=None):
         """Get agent list for given agent group.
 
         :param agent_group_id: The agent group ID.
         :param offset: The starting record to retrieve, defaults to 0 if not defined.
         :param limit: The number of records to retrieve, API will defaults to 50 if not defined.
+        :param sort: The sort order of the returned records.
+        :param f: Apply a filter in the format '<field_name>:<operation>:<value>'.
+        :param ft: Filter type. ("and" or "or").
+        :param w: Wildcard filter text.
+        :param wf: A comma delimited subset of wildcard_fields to search when applying the wildcard filter.
         :raise TenableIOApiException: When API error is encountered.
         :return: An instance of :class:`tenable_io.api.models.AgentList`.
         """
-        params = {}
-        if offset is not None:
-            params['offset'] = offset
-        if limit is not None:
-            params['limit'] = limit
+        params = {
+            'offset': offset,
+            'limit': limit,
+            'sort': sort,
+            'f': f,
+            'ft': ft,
+            'w': w,
+            'wf': wf
+        }
+        params = {k: v for k, v in params.items() if v is not None}
         response = self._client.get('scanners/1/agent-groups/%(agent_group_id)s/agents',
                                     path_params={'agent_group_id': agent_group_id},
                                     params=params)
@@ -90,20 +100,30 @@ class AgentGroupsApi(BaseApi):
                             })
         return True
 
-    def details(self, agent_group_id, offset=None, limit=None):
+    def details(self, agent_group_id, offset=None, limit=None, sort=None, f=None, ft=None, w=None, wf=None):
         """Get details of given agent group.
 
         :param agent_group_id: The agent group ID.
         :param offset: The starting record to retrieve, defaults to 0 if not defined.
         :param limit: The number of records to retrieve, API will defaults to 50 if not defined.
+        :param sort: The sort order of the returned records.
+        :param f: Apply a filter in the format '<field_name>:<operation>:<value>'.
+        :param ft: Filter type. ("and" or "or").
+        :param w: Wildcard filter text.
+        :param wf: A comma delimited subset of wildcard_fields to search when applying the wildcard filter.
         :raise TenableIOApiException: When API error is encountered.
         :return: An instance of :class:`tenable_io.api.models.AgentGroup`.
         """
-        params = {}
-        if offset is not None:
-            params['offset'] = offset
-        if limit is not None:
-            params['limit'] = limit
+        params = {
+            'offset': offset,
+            'limit': limit,
+            'sort': sort,
+            'f': f,
+            'ft': ft,
+            'w': w,
+            'wf': wf
+        }
+        params = {k: v for k, v in params.items() if v is not None}
         response = self._client.get('scanners/1/agent-groups/%(agent_group_id)s',
                                     path_params={'agent_group_id': agent_group_id},
                                     params=params)
