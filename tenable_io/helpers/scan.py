@@ -21,6 +21,11 @@ class ScanHelper(object):
         Scan.STATUS_EMPTY,
     ]
 
+    STATUSES_PENDING = [
+        Scan.STATUS_INITIALIZING,
+        Scan.STATUS_PENDING
+    ]
+
     def __init__(self, client):
         self._client = client
 
@@ -465,7 +470,7 @@ class ScanRef(object):
             ScanLaunchRequest(alt_targets=alt_targets)
         )
         if wait:
-            util.wait_until(lambda context: self.status(_context=context) not in Scan.STATUS_PENDING, context={})
+            util.wait_until(lambda context: self.status(_context=context) not in ScanHelper.STATUSES_PENDING , context={})
         return self
 
     def name(self, history_id=None):
