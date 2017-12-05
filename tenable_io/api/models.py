@@ -886,13 +886,13 @@ class Scan(BaseModel):
     STATUS_COMPLETED = u'completed'
     STATUS_EMPTY = u'empty'
     STATUS_IMPORTED = u'imported'
+    STATUS_INITIALIZING = u'initializing'
     STATUS_PAUSED = u'paused'
     STATUS_PAUSING = u'pausing'
     STATUS_PENDING = u'pending'
     STATUS_RESUMING = u'resuming'
     STATUS_RUNNING = u'running'
     STATUS_STOPPING = u'stopping'
-    STATUS_INITIALIZING = u'initializing'
 
     def __init__(
             self,
