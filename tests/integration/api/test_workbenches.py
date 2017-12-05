@@ -35,7 +35,7 @@ class TestWorkbenchesApi(BaseTest):
         assert len(asset.ipv4) == 0, u'Expect 0 ips to be returned.'
 
     def test_asset_vulnerabilities(self, client):
-        vulnerabilities = client.workbenches_api.asset_vulnerabilities('test_asset_vulnerabilities')
+        vulnerabilities = client.workbenches_api.asset_vulnerabilities('e1503229-c3d9-42e1-9eb3-84f3c263608f')
         assert len(vulnerabilities.vulnerabilities) == 0, u'Expected 0 vulnerabilities to be returned for invalid asset.'
 
     def test_vulnerabilities(self, client):
@@ -47,7 +47,7 @@ class TestWorkbenchesApi(BaseTest):
             client.workbenches_api.vulnerability_output('test_vulnerability_output')
             assert False, u'TenableIOApiException should have been thrown for bad ID.'
         except TenableIOApiException as e:
-            assert e.code is TenableIOErrorCode.INTERNAL_SERVER_ERROR, u'Appropriate exception thrown.'
+            assert e.code is TenableIOErrorCode.BAD_REQUEST, u'Appropriate exception thrown.'
         vulnerability_output = client.workbenches_api.vulnerability_output('11111')
         assert len(vulnerability_output.outputs) == 0, u'Expected no output for unknown vulnerability.'
 
