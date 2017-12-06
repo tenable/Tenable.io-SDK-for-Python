@@ -3,8 +3,8 @@
 @Library('tenable.common@feature/MATT_CHANGES')
 
 def projectProperties = [
-  [$class: 'BuildDiscarderProperty',strategy: [$class: 'LogRotator', numToKeepStr: '5']],disableConcurrentBuilds(),
-  [$class: 'ParametersDefinitionProperty', parameterDefinitions: [[$class: 'StringParameterDefinition', defaultValue: 'io/qa-milestone', description: '', name: 'SITE_BRANCH']]]
+    [$class: 'BuildDiscarderProperty',strategy: [$class: 'LogRotator', numToKeepStr: '5']],disableConcurrentBuilds(),
+    [$class: 'ParametersDefinitionProperty', parameterDefinitions: [[$class: 'StringParameterDefinition', defaultValue: 'io/qa-milestone', description: '', name: 'SITE_BRANCH']]]
 ]
 
 properties(projectProperties)
@@ -41,11 +41,12 @@ try {
         docker.withRegistry(global.AWS_DOCKER_REGISTRY) {
             docker.image('ci-vulnautomation-base:1.0.9').inside('-u root') {
                 stage('build auto') {
-                    timeout(time: 10, unit: 'MINUTES') {
-                        common.prepareGit()
+                    common.prepareGit()
 
-                        sshagent([global.BITBUCKETUSER]) {
-                            sh '''
+                    sshagent([global.BITBUCKETUSER]) {
+                        timeout(time: 10, unit: 'MINUTES') {
+                            try {
+                                sh '''
 cd automation || exit 1
 python3 autosetup.py catium --all --no-venv 2>&1
 export PYTHONHASHSEED=0 
@@ -58,11 +59,12 @@ cd ../tenableio-sdk || exit 1
 pip3 install -r requirements.txt || exit 1
 py.test tests --junitxml=test-results-junit.xml || exit 1
 '''
+                            }
+                            finally {
+	                        step([$class: 'JUnitResultArchiver', testResults: 'tenableio-sdk/*.xml'])
+                            }
                         }
                     }
-                }
-                finally {
-	            step([$class: 'JUnitResultArchiver', testResults: 'tenableio-sdk/*.xml'])
                 }
             }
         }
