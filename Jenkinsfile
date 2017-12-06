@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+@Library('tenable.common@feature/MATT_CHANGES')
+
 def projectProperties = [
   [$class: 'BuildDiscarderProperty',strategy: [$class: 'LogRotator', numToKeepStr: '5']],disableConcurrentBuilds(),
   [$class: 'ParametersDefinitionProperty', parameterDefinitions: [[$class: 'StringParameterDefinition', defaultValue: 'io/qa-milestone', description: '', name: 'SITE_BRANCH']]]
@@ -7,43 +9,43 @@ def projectProperties = [
 
 properties(projectProperties)
 
+import com.tenable.jenkins.Slack
+import com.tenable.jenkins.common.Common
+import com.tenable.jenkins.Constants
+
+Constants global = new Constants()
+Common common = new Common()
+Slack slack  = new Slack()
+def fmt = slack.helper()
+def auser = ''
+
 try {
-  node('docker') {
-    // Cleanup within the container as we run as root
-    docker.withRegistry('https://docker-registry.cloud.aws.tenablesecurity.com:8888/') {
-      docker.image('ci-vulnautomation-base:1.0.9').inside("-u root") {
-        stage('clean auto') {
-          sh 'chown -R 1000:1000 .'
+    node(global.DOCKERNODE) {
+        common.cleanup()
+
+        // Pull the automation framework from develop
+        stage('scm auto') {
+            dir('tenableio-sdk') {
+                checkout scm
+            }
+            dir('automation') {
+                git(branch:'develop', changelog:false, credentialsId:global.BITBUCKETUSER, poll:false, 
+                    url:'ssh://git@stash.corp.tenablesecurity.com:7999/aut/automation-tenableio.git')
+            }
+            dir('site') {
+                git(branch:params.SITE_BRANCH, changelog:false, credentialsId:global.BITBUCKETUSER, poll:false, 
+                    url:'ssh://git@stash.corp.tenablesecurity.com:7999/aut/site-configs.git')
+            }
         }
-      }
-    } 
 
-    deleteDir()
+        docker.withRegistry(global.AWS_DOCKER_REGISTRY) {
+            docker.image('ci-vulnautomation-base:1.0.9').inside('-u root') {
+                stage('build auto') {
+                    timeout(time: 10, unit: 'MINUTES') {
+                        common.prepareGit()
 
-    // Pull the automation framework from develop
-    stage('scm auto') {
-      dir("tenableio-sdk") {
-        checkout scm
-      }
-      dir("automation") {
-        git branch: 'develop', changelog: false, credentialsId: 'bitbucket-checkout', poll: false, url: 'ssh://git@stash.corp.tenablesecurity.com:7999/aut/automation-tenableio.git'
-      }
-      dir("site") {
-        git branch: "${params.SITE_BRANCH}", changelog: false, credentialsId: 'bitbucket-checkout', poll: false, url: 'ssh://git@stash.corp.tenablesecurity.com:7999/aut/site-configs.git'
-      }
-    }
-
-    docker.withRegistry('https://docker-registry.cloud.aws.tenablesecurity.com:8888/') {
-      docker.image('ci-vulnautomation-base:1.0.9').inside("-u root") {
-        stage('build auto') {
-          try {
-            timeout(time: 60, unit: 'MINUTES') {
-              sshagent(['bitbucket-checkout']) {
-                sh 'git config --global user.name "buildenginer"'
-                sh 'mkdir ~/.ssh && chmod 600 ~/.ssh'
-                sh 'ssh-keyscan -H -p 7999 stash.corp.tenablesecurity.com >> ~/.ssh/known_hosts'
-                sh 'ssh-keyscan -H -p 7999 172.25.100.131 >> ~/.ssh/known_hosts'
-                sh '''
+                        sshagent([global.BITBUCKETUSER]) {
+                            sh '''
 cd automation || exit 1
 python3 autosetup.py catium --all --no-venv 2>&1
 export PYTHONHASHSEED=0 
@@ -56,22 +58,48 @@ cd ../tenableio-sdk || exit 1
 pip3 install -r requirements.txt || exit 1
 py.test tests --junitxml=test-results-junit.xml || exit 1
 '''
-              }
+                        }
+                    }
+                }
+                finally {
+	            step([$class: 'JUnitResultArchiver', testResults: 'tenableio-sdk/*.xml'])
+                }
             }
-          }
-          finally {
-            sh 'find . -name *.xml'
-	    step([$class: 'JUnitResultArchiver', testResults: 'tenableio-sdk/*.xml'])
-          }
         }
-      }
-    } 
 
-    hipchatSend room: "T.io SDK", message: "Build Successfully: <a href=\"${env.JOB_URL}\">${env.JOB_NAME} ${env.BUILD_NUMBER}</a>", color: "GREEN", token: "584f28c72ae1648f179c4716b37dfd", notify: true
-  }
+	currentBuild.result = currentBuild.result ?: 'SUCCESS'
+    } 
 }
 catch (exc) {
-  echo "caught exception: ${exc}"
-  currentBuild.result = 'FAILURE'
-  hipchatSend room: "T.io SDK", message: "Build Failed: <a href=\"${env.JOB_URL}\">${env.JOB_NAME} ${env.BUILD_NUMBER}</a>", color: "RED", token: "584f28c72ae1648f179c4716b37dfd", notify: true
+    if (currentBuild.result == null || currentBuild.result == 'ANORTED') {
+        // Try to detect if the build was aborted
+        if (common.wasAborted(this)) {
+            currentBuild.result = 'ABORTED'
+            auser = common.jenkinsAbortUser()
+
+            if (auser) {
+               auser = '\nAborted by ' + auser
+            }
+        }
+        else {
+            currentBuild.result = 'FAILURE'
+        }
+    }
+    else {
+        currentBuild.result = 'FAILURE'
+    }
+    throw exc
+}
+finally {
+    String tests = common.jenkinsTestResults()
+    String took  = '\nTook: ' + common.jenkinsDuration()
+
+    currentBuild.result = currentBuild.result ?: 'FAILURE'
+
+    messageAttachment = fmt.getDecoratedFinishMsg(this,
+        'Tenable SDK Python build finished with result: ',
+        "Built off branch ${env.BRANCH_NAME}" + tests + took + auser)
+
+    messageAttachment.channel = '#sdk'
+    slack.postMessage(this, messageAttachment)
 }
