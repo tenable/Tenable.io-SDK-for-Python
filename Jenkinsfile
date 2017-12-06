@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-@Library('tenable.common@feature/MATT_CHANGES')
+@Library('tenable.common')
 
 def projectProperties = [
     [$class: 'BuildDiscarderProperty',strategy: [$class: 'LogRotator', numToKeepStr: '5']],disableConcurrentBuilds(),
