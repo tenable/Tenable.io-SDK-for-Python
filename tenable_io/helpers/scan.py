@@ -470,7 +470,8 @@ class ScanRef(object):
             ScanLaunchRequest(alt_targets=alt_targets)
         )
         if wait:
-            util.wait_until(lambda context: self.status(_context=context) not in ScanHelper.STATUSES_PENDING , context={})
+            util.wait_until(lambda context: self.status(_context=context) not in ScanHelper.STATUSES_PENDING,
+                            context={})
         return self
 
     def name(self, history_id=None):

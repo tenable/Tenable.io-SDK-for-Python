@@ -36,7 +36,8 @@ class TestWorkbenchesApi(BaseTest):
 
     def test_asset_vulnerabilities(self, client):
         vulnerabilities = client.workbenches_api.asset_vulnerabilities('e1503229-c3d9-42e1-9eb3-84f3c263608f')
-        assert len(vulnerabilities.vulnerabilities) == 0, u'Expected 0 vulnerabilities to be returned for invalid asset.'
+        assert len(vulnerabilities.vulnerabilities) == 0, \
+            u'Expected 0 vulnerabilities to be returned for invalid asset.'
 
     def test_vulnerabilities(self, client):
         vulnerabilities_list = client.workbenches_api.vulnerabilities()
