@@ -4,58 +4,78 @@ from tenable_io.api.models import AgentExclusion, AgentExclusionList, AgentExclu
 
 class AgentExclusionsApi(BaseApi):
 
-    def create(self, agent_exclusion_create):
+    def create(self, agent_exclusion_create, scanner_id=1):
         """Create a new exclusion
 
         :param agent_exclusion_create: An instance of :class:`AgentExclusionCreateRequest`.
+        :param scanner_id: The scanner ID.
         :raise TenableIOApiException:  When API error is encountered.
         :return: An instance of :class:`tenable_io.api.models.AgentExclusion`.
         """
-        response = self._client.post('scanners/1/agents/exclusions', agent_exclusion_create)
+        response = self._client.post('scanners/%(scanner_id)s/agents/exclusions', agent_exclusion_create,
+                                     path_params={
+                                         'scanner_id': scanner_id
+                                     })
         return AgentExclusion.from_json(response.text)
 
-    def delete(self, exclusion_id):
+    def delete(self, exclusion_id, scanner_id=1):
         """Delete an exclusion
 
         :param exclusion_id: The exclusion ID.
+        :param scanner_id: The scanner ID.
         :raise TenableIOApiException:  When API error is encountered.
         :return: True if successful.
         """
-        self._client.delete('scanners/1/agents/exclusions/%(exclusion_id)s',
-                            path_params={'exclusion_id': exclusion_id})
+        self._client.delete('scanners/%(scanner_id)s/agents/exclusions/%(exclusion_id)s',
+                            path_params={
+                                'scanner_id': scanner_id,
+                                'exclusion_id': exclusion_id
+                            })
         return True
 
-    def details(self, exclusion_id):
+    def details(self, exclusion_id, scanner_id=1):
         """Return details of given exclusion
 
         :param exclusion_id: The exclusion ID.
+        :param scanner_id: The scanner ID.
         :raise TenableIOApiException:  When API error is encountered.
         :return: An instance of :class:`tenable_io.api.models.AgentExclusion`.
         """
-        response = self._client.get('scanners/1/agents/exclusions/%(exclusion_id)s',
-                                    path_params={'exclusion_id': exclusion_id})
+        response = self._client.get('scanners/%(scanner_id)s/agents/exclusions/%(exclusion_id)s',
+                                    path_params={
+                                        'scanner_id': scanner_id,
+                                        'exclusion_id': exclusion_id
+                                    })
         return AgentExclusion.from_json(response.text)
 
-    def edit(self, exclusion_id, agent_exclusion_edit):
+    def edit(self, exclusion_id, agent_exclusion_edit, scanner_id=1):
         """Edit the given exclusion
 
         :param exclusion_id: The exclusion ID.
+        :param scanner_id: The scanner ID.
         :param agent_exclusion_edit: An instance of :class:`AgentExclusionEditRequest`.
         :raise TenableIOApiException:  When API error is encountered.
         :return: An instance of :class:`tenable_io.api.models.AgentExclusion`.
         """
-        response = self._client.put('scanners/1/agents/exclusions/%(exclusion_id)s',
+        response = self._client.put('scanners/%(scanner_id)s/agents/exclusions/%(exclusion_id)s',
                                     agent_exclusion_edit,
-                                    path_params={'exclusion_id': exclusion_id})
+                                    path_params={
+                                        'scanner_id': scanner_id,
+                                        'exclusion_id': exclusion_id
+                                    })
         return AgentExclusion.from_json(response.text)
 
-    def list(self):
+    def list(self, scanner_id=1):
         """Return the current exclusions
 
+        :param scanner_id: The scanner ID.
         :raise TenableIOApiException:  When API error is encountered.
         :return: An instance of :class:`tenable_io.api.models.AgentExclusionList`.
         """
-        response = self._client.get('scanners/1/agents/exclusions')
+        response = self._client.get('scanners/%(scanner_id)s/agents/exclusions',
+                                    path_params={
+                                        'scanner_id': scanner_id
+                                    })
         return AgentExclusionList.from_json(response.text)
 
 
