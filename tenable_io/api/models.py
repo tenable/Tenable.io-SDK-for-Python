@@ -585,6 +585,100 @@ class GroupList(BaseModel):
         self._groups = groups
 
 
+class ImportAsset(BaseModel):
+
+    def __init__(
+            self,
+            tenable_uuid=None,
+            fqdn=None,
+            ipv4=None,
+            ipv6=None,
+            netbios_name=None,
+            mac_address=None,
+            ssh_fingerprint=None,
+            operating_system=None,
+            system_type=None,
+            aws_ec2_instance_id=None,
+            aws_ec2_instance_ami_id=None,
+            aws_owner_id=None,
+            aws_availability_zone=None,
+            aws_region=None,
+            aws_vpc_id=None,
+            aws_ec2_instance_group_name=None,
+            aws_ec2_instance_state_name=None,
+            aws_ec2_instance_type=None,
+            aws_subnet_id=None,
+            aws_ec2_product_code=None,
+            aws_ec2_name=None
+    ):
+        self.tenable_uuid = tenable_uuid
+        self.fqdn = fqdn
+        self.ipv4 = ipv4
+        self.ipv6 = ipv6
+        self.netbios_name = netbios_name
+        self.mac_address = mac_address
+        self.ssh_fingerprint = ssh_fingerprint
+        self.operating_system = operating_system
+        self.system_type = system_type
+        self.aws_ec2_instance_id = aws_ec2_instance_id
+        self.aws_ec2_instance_ami_id = aws_ec2_instance_ami_id
+        self.aws_owner_id = aws_owner_id
+        self.aws_availability_zone = aws_availability_zone
+        self.aws_region = aws_region
+        self.aws_vpc_id = aws_vpc_id
+        self.aws_ec2_instance_group_name = aws_ec2_instance_group_name
+        self.aws_ec2_instance_state_name = aws_ec2_instance_state_name
+        self.aws_ec2_instance_type = aws_ec2_instance_type
+        self.aws_subnet_id = aws_subnet_id
+        self.aws_ec2_product_code = aws_ec2_product_code
+        self.aws_ec2_name = aws_ec2_name
+
+
+class ImportAssetJob(BaseModel):
+
+    def __init__(
+            self,
+            id=None,
+            user_uuid=None,
+            start_time=None,
+            end_time=None,
+            asset_count=None,
+            imported_asset_count=None,
+            failed_asset_count=None,
+            status=None,
+            error_message=None
+    ):
+        self.id = id,
+        self.user_uuid = user_uuid,
+        self.start_time = start_time,
+        self.end_time = end_time,
+        self.asset_count = asset_count,
+        self.imported_asset_count = imported_asset_count,
+        self.failed_asset_count = failed_asset_count,
+        self.status = status,
+        self.error_message = error_message
+
+
+class ImportAssetJobs(BaseModel):
+
+    def __init__(
+            self,
+            asset_import_jobs=None
+    ):
+        self._asset_import_jobs = None
+
+        self.asset_import_jobs = asset_import_jobs
+
+    @property
+    def asset_import_jobs(self):
+        return self._asset_import_jobs
+
+    @asset_import_jobs.setter
+    @BaseModel._model_list(ImportAssetJob)
+    def asset_import_jobs(self, asset_import_jobs):
+        self._asset_import_jobs = asset_import_jobs
+
+
 class Plugin(BaseModel):
 
     def __init__(

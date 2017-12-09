@@ -18,6 +18,7 @@ from tenable_io.api.file import FileApi
 from tenable_io.api.filters import FiltersApi
 from tenable_io.api.folders import FoldersApi
 from tenable_io.api.groups import GroupsApi
+from tenable_io.api.import_ import ImportApi
 from tenable_io.api.plugins import PluginsApi
 from tenable_io.api.policies import PoliciesApi
 from tenable_io.api.scans import ScansApi
@@ -98,6 +99,7 @@ class TenableIOClient(object):
         self.filters_api = FiltersApi(self)
         self.folders_api = FoldersApi(self)
         self.groups_api = GroupsApi(self)
+        self.import_api = ImportApi(self)
         self.plugins_api = PluginsApi(self)
         self.policies_api = PoliciesApi(self)
         self.scans_api = ScansApi(self)
