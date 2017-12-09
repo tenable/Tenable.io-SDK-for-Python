@@ -113,7 +113,7 @@ class TestScannersApi(BaseTest):
 
     def test_edit(self, client, scanner):
         response = client.scanners_api.edit(scanner.id, ScannerEditRequest())
-        assert response == True, u'Method should return True if 200 response is received.'
+        assert response is True, u'Method should return True if 200 response is received.'
 
     @pytest.mark.xfail(reason="CI-16038")
     def test_get_scanner_key(self, client, scanner):
