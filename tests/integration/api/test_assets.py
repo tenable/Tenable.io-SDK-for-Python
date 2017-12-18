@@ -20,4 +20,4 @@ class TestAssetsApi(BaseTest):
             client.assets_api.get('test_assets_asset_info')
             assert False, u'TenableIOApiException should have been thrown for bad ID.'
         except TenableIOApiException as e:
-            assert e.code is TenableIOErrorCode.BAD_REQUEST, u'Appropriate exception thrown.'
+            assert e.code is TenableIOErrorCode.NOT_FOUND, u'Appropriate exception thrown.'
