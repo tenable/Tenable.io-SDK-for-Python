@@ -10,6 +10,7 @@ from tenable_io.api.agent_exclusions import AgentExclusionsApi
 from tenable_io.api.agent_config import AgentConfigApi
 from tenable_io.api.agent_groups import AgentGroupsApi
 from tenable_io.api.agents import AgentsApi
+from tenable_io.api.assets import AssetsApi
 from tenable_io.api.base import BaseRequest
 from tenable_io.api.bulk_operations import BulkOperationsApi
 from tenable_io.api.editor import EditorApi
@@ -18,6 +19,7 @@ from tenable_io.api.file import FileApi
 from tenable_io.api.filters import FiltersApi
 from tenable_io.api.folders import FoldersApi
 from tenable_io.api.groups import GroupsApi
+from tenable_io.api.import_ import ImportApi
 from tenable_io.api.plugins import PluginsApi
 from tenable_io.api.policies import PoliciesApi
 from tenable_io.api.scans import ScansApi
@@ -91,6 +93,7 @@ class TenableIOClient(object):
         self.agent_config_api = AgentConfigApi(self)
         self.agent_groups_api = AgentGroupsApi(self)
         self.agents_api = AgentsApi(self)
+        self.assets_api = AssetsApi(self)
         self.bulk_operations_api = BulkOperationsApi(self)
         self.editor_api = EditorApi(self)
         self.exclusions_api = ExclusionApi(self)
@@ -98,6 +101,7 @@ class TenableIOClient(object):
         self.filters_api = FiltersApi(self)
         self.folders_api = FoldersApi(self)
         self.groups_api = GroupsApi(self)
+        self.import_api = ImportApi(self)
         self.plugins_api = PluginsApi(self)
         self.policies_api = PoliciesApi(self)
         self.scans_api = ScansApi(self)

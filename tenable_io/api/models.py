@@ -585,6 +585,100 @@ class GroupList(BaseModel):
         self._groups = groups
 
 
+class ImportAsset(BaseModel):
+
+    def __init__(
+            self,
+            tenable_uuid=None,
+            fqdn=None,
+            ipv4=None,
+            ipv6=None,
+            netbios_name=None,
+            mac_address=None,
+            ssh_fingerprint=None,
+            operating_system=None,
+            system_type=None,
+            aws_ec2_instance_id=None,
+            aws_ec2_instance_ami_id=None,
+            aws_owner_id=None,
+            aws_availability_zone=None,
+            aws_region=None,
+            aws_vpc_id=None,
+            aws_ec2_instance_group_name=None,
+            aws_ec2_instance_state_name=None,
+            aws_ec2_instance_type=None,
+            aws_subnet_id=None,
+            aws_ec2_product_code=None,
+            aws_ec2_name=None
+    ):
+        self.tenable_uuid = tenable_uuid
+        self.fqdn = fqdn
+        self.ipv4 = ipv4
+        self.ipv6 = ipv6
+        self.netbios_name = netbios_name
+        self.mac_address = mac_address
+        self.ssh_fingerprint = ssh_fingerprint
+        self.operating_system = operating_system
+        self.system_type = system_type
+        self.aws_ec2_instance_id = aws_ec2_instance_id
+        self.aws_ec2_instance_ami_id = aws_ec2_instance_ami_id
+        self.aws_owner_id = aws_owner_id
+        self.aws_availability_zone = aws_availability_zone
+        self.aws_region = aws_region
+        self.aws_vpc_id = aws_vpc_id
+        self.aws_ec2_instance_group_name = aws_ec2_instance_group_name
+        self.aws_ec2_instance_state_name = aws_ec2_instance_state_name
+        self.aws_ec2_instance_type = aws_ec2_instance_type
+        self.aws_subnet_id = aws_subnet_id
+        self.aws_ec2_product_code = aws_ec2_product_code
+        self.aws_ec2_name = aws_ec2_name
+
+
+class ImportAssetJob(BaseModel):
+
+    def __init__(
+            self,
+            id=None,
+            user_uuid=None,
+            start_time=None,
+            end_time=None,
+            asset_count=None,
+            imported_asset_count=None,
+            failed_asset_count=None,
+            status=None,
+            error_message=None
+    ):
+        self.id = id,
+        self.user_uuid = user_uuid,
+        self.start_time = start_time,
+        self.end_time = end_time,
+        self.asset_count = asset_count,
+        self.imported_asset_count = imported_asset_count,
+        self.failed_asset_count = failed_asset_count,
+        self.status = status,
+        self.error_message = error_message
+
+
+class ImportAssetJobs(BaseModel):
+
+    def __init__(
+            self,
+            asset_import_jobs=None
+    ):
+        self._asset_import_jobs = None
+
+        self.asset_import_jobs = asset_import_jobs
+
+    @property
+    def asset_import_jobs(self):
+        return self._asset_import_jobs
+
+    @asset_import_jobs.setter
+    @BaseModel._model_list(ImportAssetJob)
+    def asset_import_jobs(self, asset_import_jobs):
+        self._asset_import_jobs = asset_import_jobs
+
+
 class Plugin(BaseModel):
 
     def __init__(
@@ -2178,6 +2272,118 @@ class AssetList(BaseModel):
 
     @assets.setter
     @BaseModel._model_list(Asset)
+    def assets(self, assets):
+        self._assets = assets
+
+
+class AssetsAssetSource(BaseModel):
+
+    def __init__(
+            self,
+            name=None,
+            last_seen=None,
+            first_seen=None
+    ):
+        self.name = name
+        self.last_seen = last_seen
+        self.first_seen = first_seen
+
+
+class AssetsAsset(BaseModel):
+
+    def __init__(
+            self,
+            id=None,
+            bios_uuid=None,
+            ipv4=None,
+            ipv6=None,
+            hostname=None,
+            fqdn=None,
+            ssh_fingerprint=None,
+            mac_address=None,
+            netbios_name=None,
+            tenable_uuid=None,
+            aws_owner_id=None,
+            aws_ec2_instance_type=None,
+            aws_ec2_instance_group_name=None,
+            aws_region=None,
+            aws_ec2_name=None,
+            aws_ec2_instance_state_name=None,
+            aws_subnet_id=None,
+            aws_ec2_instance_id=None,
+            aws_availability_zone=None,
+            aws_ec2_instance_ami_id=None,
+            aws_ec2_product_code=None,
+            aws_vpc_id=None,
+            operating_system=None,
+            system_type=None,
+            sources=None,
+            updated_at=None,
+            last_authenticated_scan_date=None,
+            last_seen=None,
+            first_seen=None,
+            last_licensed_scan_date=None,
+            created_at=None
+    ):
+        self._sources = None
+        self.id = id
+        self.bios_uuid = bios_uuid
+        self.ipv4 = ipv4
+        self.ipv6 = ipv6
+        self.hostname = hostname
+        self.fqdn = fqdn
+        self.ssh_fingerprint = ssh_fingerprint
+        self.mac_address = mac_address
+        self.netbios_name = netbios_name
+        self.tenable_uuid = tenable_uuid
+        self.aws_owner_id = aws_owner_id
+        self.aws_ec2_instance_type = aws_ec2_instance_type
+        self.aws_ec2_instance_group_name = aws_ec2_instance_group_name
+        self.aws_region = aws_region
+        self.aws_ec2_name = aws_ec2_name
+        self.aws_ec2_instance_state_name = aws_ec2_instance_state_name
+        self.aws_subnet_id = aws_subnet_id
+        self.aws_ec2_instance_id = aws_ec2_instance_id
+        self.aws_availability_zone = aws_availability_zone
+        self.aws_ec2_instance_ami_id = aws_ec2_instance_ami_id
+        self.aws_ec2_product_code = aws_ec2_product_code
+        self.aws_vpc_id = aws_vpc_id
+        self.operating_system = operating_system
+        self.system_type = system_type
+        self.sources = sources
+        self.updated_at = updated_at
+        self.last_authenticated_scan_date = last_authenticated_scan_date
+        self.last_seen = last_seen
+        self.first_seen = first_seen
+        self.last_licensed_scan_date = last_licensed_scan_date
+        self.created_at = created_at
+
+    @property
+    def sources(self):
+        return self._sources
+
+    @sources.setter
+    @BaseModel._model_list(AssetsAssetSource)
+    def sources(self, sources):
+        self._sources = sources
+
+
+class AssetsAssetList(BaseModel):
+
+    def __init__(
+            self,
+            assets=None
+    ):
+        self._assets = None
+
+        self.assets = assets
+
+    @property
+    def assets(self):
+        return self._assets
+
+    @assets.setter
+    @BaseModel._model_list(AssetsAsset)
     def assets(self, assets):
         self._assets = assets
 

@@ -22,7 +22,7 @@ class TestWorkbenchesApi(BaseTest):
             client.workbenches_api.asset_activity('test_asset_activity')
             assert False, u'TenableIOApiException should have been thrown for bad ID.'
         except TenableIOApiException as e:
-            assert e.code is TenableIOErrorCode.BAD_REQUEST, u'Appropriate exception thrown.'
+            assert e.code is TenableIOErrorCode.NOT_FOUND, u'Appropriate exception thrown.'
 
     def test_asset_info(self, client):
         try:
@@ -30,13 +30,15 @@ class TestWorkbenchesApi(BaseTest):
             assert False, u'TenableIOApiException should have been thrown for an invalid ID.'
         except TenableIOApiException as e:
             assert e.code is TenableIOErrorCode.BAD_REQUEST, u'Appropriate exception thrown.'
-        asset = client.workbenches_api.asset_info('e1503229-c3d9-42e1-9eb3-84f3c263608f')
-        assert asset.first_seen is None, u'Expect no date for assets that do not exist.'
-        assert len(asset.ipv4) == 0, u'Expect 0 ips to be returned.'
+        try:
+            client.workbenches_api.asset_info('e1503229-c3d9-42e1-9eb3-84f3c2636081')
+        except TenableIOApiException as e:
+            assert e.code is TenableIOErrorCode.NOT_FOUND, u'Appropriate exception thrown.'
 
     def test_asset_vulnerabilities(self, client):
         vulnerabilities = client.workbenches_api.asset_vulnerabilities('e1503229-c3d9-42e1-9eb3-84f3c263608f')
-        assert len(vulnerabilities.vulnerabilities) == 0, u'Expected 0 vulnerabilities to be returned for invalid asset.'
+        assert len(vulnerabilities.vulnerabilities) == 0, \
+            u'Expected 0 vulnerabilities to be returned for invalid asset.'
 
     def test_vulnerabilities(self, client):
         vulnerabilities_list = client.workbenches_api.vulnerabilities()

@@ -4,24 +4,32 @@ from tenable_io.api.models import AgentConfig
 
 class AgentConfigApi(BaseApi):
 
-    def edit(self, agent_config):
+    def edit(self, agent_config, scanner_id=1):
         """Edit an agent config.
 
         :param agent_config: The agent config request.
+        :param scanner_id: The scanner ID.
         :raise TenableIOApiException: When API error is encountered.
         :return: An instance of :class:`tenable_io.api.models.AgentConfig`.
         """
         assert isinstance(agent_config, AgentConfigRequest)
-        response = self._client.put('scanners/1/agents/config', agent_config)
+        response = self._client.put('scanners/%(scanner_id)s/agents/config', agent_config,
+                                    path_params={
+                                        'scanner_id': scanner_id
+                                    })
         return AgentConfig.from_json(response.text)
 
-    def details(self):
+    def details(self, scanner_id=1):
         """Get details of an agent config.
 
+        :param scanner_id: The scanner ID.
         :raise TenableIOApiException: When API error is encountered.
         :return: An instance of :class:`tenable_io.api.models.AgentConfig`.
         """
-        response = self._client.get('scanners/1/agents/config')
+        response = self._client.get('scanners/%(scanner_id)s/agents/config',
+                                    path_params={
+                                        'scanner_id': scanner_id
+                                    })
         return AgentConfig.from_json(response.text)
 
 
