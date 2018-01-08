@@ -451,7 +451,7 @@ class ScanRef(object):
         :return: An instance of :class:`tenable_io.api.models.ScanDetailsHistory` if exists, otherwise None.
         """
         histories = self.histories()
-        return histories[-1] if len(histories) else None
+        return max(histories, key=lambda history: history.history_id) if len(histories) else None
 
     def launch(self, wait=True, alt_targets=None):
         """Launch the scan.
