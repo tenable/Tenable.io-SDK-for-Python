@@ -66,6 +66,16 @@ class TestScanHelper(BaseTest):
             u'Scan is ran for at least %s seconds.' % cancel_after_seconds
         assert scan.stopped(), u'Scan is stopped.'
 
+    def test_return_last_history(self, scan):
+        for _ in range(5):
+            scan.launch().wait_or_cancel_after(10)
+            assert scan.stopped(), u'Scan is stopped.'
+        most_recent_history = scan.last_history()
+        assert max([h.history_id for h in scan.histories()]) == most_recent_history.history_id, \
+            u'last_history should return the most recent history.'
+        assert max([h.last_modification_date for h in scan.histories()]) == most_recent_history.last_modification_date, \
+            u'last_history should return the most recent history.'
+
     @pytest.mark.xfail(reason="CI-16090")
     def test_activities(self, client, scan, scan_targets):
         scan.launch().pause()
