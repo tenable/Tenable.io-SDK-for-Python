@@ -2,13 +2,9 @@
 CHANGELOG
 =========
 
-Unreleased
+1.0.0
 ==========
 
-* Added: Support for assets API.
-* Added: Support for import API.
-* Changed: Support for scanner_id parameter for agents, agent-config, agent-exclusions, agent-groups, and
-bulk-operations API.
 * Added: Support for agent-exclusions API.
 * Added: Support for agent-config API.
 * Added: Support for bulk-operations API.
@@ -18,9 +14,14 @@ bulk-operations API.
 * Added: Support for sort, f, ft, w, and wf parameters on agent list API.
 * Changed: Model AgentList.pagination is now an instance of model FilterPagination.
 * Removed: Model Agent.token.
+* Added: Support for assets API.
+* Added: Support for import API.
+* Changed: Support for scanner_id parameter for agents, agent-config, agent-exclusions, agent-groups, and bulk-operations API.
+* Fixed: Scan Helpers last_history function.
 
 0.4.0
 =====
+
 * Added: Support for offset and limit on endpoints returning an agent list.
 
 0.3.0
