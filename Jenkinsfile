@@ -44,7 +44,7 @@ try {
                     common.prepareGit()
 
                     sshagent([global.BITBUCKETUSER]) {
-                        timeout(time: 60, unit: 'MINUTES') {
+                        timeout(time: 120, unit: 'MINUTES') {
                             try {
                                 sh '''
 cd automation || exit 1
