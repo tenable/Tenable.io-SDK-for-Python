@@ -2,6 +2,8 @@
 
 @Library('tenable.common')
 
+def startTime = System.currentTimeMillis()
+
 def projectProperties = [
     [$class: 'BuildDiscarderProperty',strategy: [$class: 'LogRotator', numToKeepStr: '5']],disableConcurrentBuilds(),
     [$class: 'ParametersDefinitionProperty', parameterDefinitions: [[$class: 'StringParameterDefinition', defaultValue: 'io/qa-milestone', description: '', name: 'SITE_BRANCH']]]
@@ -96,7 +98,7 @@ catch (exc) {
 }
 finally {
     String tests = common.jenkinsTestResults()
-    String took  = '\nTook: ' + common.jenkinsDuration()
+    String took  = '\nTook: ' + common.jenkinsDuration(startTime)
 
     currentBuild.result = currentBuild.result ?: 'FAILURE'
 
