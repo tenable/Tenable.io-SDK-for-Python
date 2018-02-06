@@ -35,6 +35,7 @@ from tenable_io.api.users import UsersApi
 from tenable_io.api.workbenches import WorkbenchesApi
 from tenable_io.helpers.file import FileHelper
 from tenable_io.helpers.folder import FolderHelper
+from tenable_io.helpers.permissions import PermissionsHelper
 from tenable_io.helpers.policy import PolicyHelper
 from tenable_io.helpers.scan import ScanHelper
 from tenable_io.helpers.workbench import WorkbenchHelper
@@ -122,6 +123,7 @@ class TenableIOClient(object):
         """
         self.file_helper = FileHelper(self)
         self.folder_helper = FolderHelper(self)
+        self.permissions_helper = PermissionsHelper(self)
         self.policy_helper = PolicyHelper(self)
         self.scan_helper = ScanHelper(self)
         self.workbench_helper = WorkbenchHelper(self)

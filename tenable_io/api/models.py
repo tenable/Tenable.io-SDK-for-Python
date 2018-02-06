@@ -679,6 +679,65 @@ class ImportAssetJobs(BaseModel):
         self._asset_import_jobs = asset_import_jobs
 
 
+class Permissions(BaseModel):
+
+    class Scan:
+        # Scan Permissions
+        PERMISSION_NO_ACCESS = 0
+        PERMISSION_CAN_VIEW = 16
+        PERMISSION_CAN_CONTROL = 32
+        PERMISSION_CAN_CONFIGURE = 64
+
+    class Policy:
+        # Policy Permissions
+        PERMISSION_NO_ACCESS = 0
+        PERMISSION_CAN_USE = 16
+        PERMISSION_CAN_EDIT = 32
+
+    class Scanner:
+        # Scanner Permissions
+        PERMISSION_NO_ACCESS = 0
+        PERMISSION_CAN_USE = 16
+        PERMISSION_CAN_MANAGE = 32
+
+    class Agent:
+        # Agent Permissions
+        PERMISSION_NO_ACCESS = 0
+        PERMISSION_CAN_USE = 16
+
+    class TargetGroup:
+        # Target Group Permissions
+        PERMISSION_NO_ACCESS = 0
+        PERMISSION_CAN_VIEW = 32
+        PERMISSION_CAN_SCAN = 64
+
+    class User:
+        # User Roles
+        PERMISSION_BASIC = 16
+        PERMISSION_STANDARD = 32
+        PERMISSION_ADMINISTRATOR = 64
+
+    class Type:
+        # Types of Permissible entity
+        DEFAULT = u'default'
+        USER = u'user'
+        GROUP = u'group'
+
+    def __init__(
+            self,
+            owner=None,
+            type=None,
+            permissions=None,
+            id=None,
+            name=None,
+    ):
+        self.owner = owner
+        self.type = type
+        self.permissions = permissions
+        self.id = id
+        self.name = name
+
+
 class Plugin(BaseModel):
 
     def __init__(
@@ -1599,6 +1658,7 @@ class ScanSettings(BaseModel):
             folder_id=None,
             policy_id=None,
             scanner_id=None,
+            acls=[],
     ):
         self.name = name
         self.description = description
@@ -1609,6 +1669,7 @@ class ScanSettings(BaseModel):
         self.policy_id = policy_id
         self.scanner_id = scanner_id
         self.text_targets = text_targets
+        self.acls = acls
 
 
 class ScannerLicense(BaseModel):
