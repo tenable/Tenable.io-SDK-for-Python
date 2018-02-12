@@ -2,6 +2,12 @@
 CHANGELOG
 =========
 
+1.1.0
+==========
+
+* Added: Permissions Helper added for more detailed permissions support.
+* Changed: ScanSettings model updated with acl.
+
 1.0.0
 ==========
 
