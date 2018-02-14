@@ -2,6 +2,11 @@
 CHANGELOG
 =========
 
+Unreleased
+==========
+
+* Added: Model TargetGroup.acls
+
 1.0.0
 ==========
 
