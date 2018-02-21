@@ -1655,6 +1655,11 @@ class ScanSettings(BaseModel):
             emails=None,
             enabled=False,
             launch=None,
+            starttime=None,
+            rrules=None,
+            timezone=None,
+            file_targets=None,
+            launch_now=None,
             folder_id=None,
             policy_id=None,
             scanner_id=None,
@@ -1665,6 +1670,11 @@ class ScanSettings(BaseModel):
         self.emails = emails
         self.enabled = enabled
         self.launch = launch
+        self.starttime = starttime
+        self.rrules = rrules
+        self.timezone = timezone
+        self.file_targets = file_targets
+        self.launch_now = launch_now
         self.folder_id = folder_id
         self.policy_id = policy_id
         self.scanner_id = scanner_id
