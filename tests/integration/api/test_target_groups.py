@@ -13,6 +13,7 @@ class TestTargetGroupsApi(BaseTest):
             name=app.session_name('test_target_groups'),
             members='tenable.com',
             type='system',
+            acls=[{"permissions": 0, "type": "default"}]
         ))
         yield target_group
         assert client.target_groups_api.delete(target_group.id), u'Target group is deleted.'
@@ -26,9 +27,11 @@ class TestTargetGroupsApi(BaseTest):
             name=app.session_name('test_create_delete'),
             members='tenable.com',
             type='system',
+            acls=[{"permissions": 0, "type": "default"}]
         ))
         assert isinstance(target_group, TargetGroup), u'The `create` method return type.'
         assert hasattr(target_group, 'id'), u'Target group has ID.'
+        assert hasattr(target_group, 'acls') and target_group.acls, u'Target group has nonempty acls.'
         assert client.target_groups_api.delete(target_group.id), u'Target group is deleted.'
 
     def test_get(self, target_group, client):

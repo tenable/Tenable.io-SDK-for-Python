@@ -2009,6 +2009,7 @@ class TargetGroup(BaseModel):
         last_modification_date=None,
         shared=None,
         user_permissions=None,
+        acls=None
     ):
         self.id = id
         self.default_group = default_group
@@ -2020,6 +2021,7 @@ class TargetGroup(BaseModel):
         self.last_modification_date = last_modification_date
         self.shared = shared
         self.user_permissions = user_permissions
+        self.acls = acls
 
 
 class TargetGroupList(BaseModel):
