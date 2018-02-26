@@ -45,7 +45,7 @@ from tenable_io.log import format_request, logging
 class TenableIOClient(object):
 
     _MAX_RETRIES = TenableIOConfig.get('max_retries')
-    _RETRY_STATUS_CODES = {429, 501, 502, 503, 504}
+    _RETRY_STATUS_CODES = {429, 500, 501, 502, 503, 504}
 
     def __init__(
             self,
