@@ -45,6 +45,7 @@ from tenable_io.log import format_request, logging
 class TenableIOClient(object):
 
     _MAX_RETRIES = TenableIOConfig.get('max_retries')
+    _TOTAL_RETRIES = _MAX_RETRIES if int(_MAX_RETRIES) < 5 else 5
     _RETRY_STATUS_CODES = {429, 500, 501, 502, 503, 504}
 
     def __init__(
@@ -68,7 +69,7 @@ class TenableIOClient(object):
         Initializes the requests session
         """
         retries = Retry(
-                    total=TenableIOClient._MAX_RETRIES,
+                    total=TenableIOClient._TOTAL_RETRIES,
                     status_forcelist=TenableIOClient._RETRY_STATUS_CODES,
                     backoff_factor=2,
                     respect_retry_after_header=True
