@@ -2,9 +2,12 @@
 CHANGELOG
 =========
 
-Unreleased
+1.1.0
 ==========
 
+* Added: 500 added to retryable error codes.
+* Added: Permissions Helper added for more detailed permissions support.
+* Changed: ScanSettings model updated with acl.
 * Added: Model TargetGroup.acls
 * Added: Model ScanSetting properties: starttime, rrules, timezone, file_targets, and launch_now
 
