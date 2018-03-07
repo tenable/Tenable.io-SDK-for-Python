@@ -2,6 +2,11 @@
 CHANGELOG
 =========
 
+1.1.1
+==========
+
+* Fixed: Retries were broken for python 2.7 users
+
 1.1.0
 ==========
 
