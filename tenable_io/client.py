@@ -69,7 +69,7 @@ class TenableIOClient(object):
         Initializes the requests session
         """
         retries = Retry(
-                    total=TenableIOClient._TOTAL_RETRIES,
+                    total=int(TenableIOClient._TOTAL_RETRIES),
                     status_forcelist=TenableIOClient._RETRY_STATUS_CODES,
                     backoff_factor=2,
                     respect_retry_after_header=True
