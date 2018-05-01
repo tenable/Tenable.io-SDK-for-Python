@@ -4,6 +4,7 @@ import random
 from tests.base import BaseTest
 from tenable_io.api.models import Permissions
 
+
 class TestPermissionsHelper(BaseTest):
 
     def test_default_scan(self, client):
