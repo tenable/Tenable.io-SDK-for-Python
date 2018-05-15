@@ -42,6 +42,7 @@ def configure_logging():
     stdout_handler.setFormatter(formatter)
     stderr_handler.setFormatter(formatter)
 
+
 configure_logging()
 
 
