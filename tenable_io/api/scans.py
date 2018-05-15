@@ -207,6 +207,16 @@ class ScansApi(BaseApi):
         self._client.post('scans/%(scan_id)s/stop', {}, path_params={'scan_id': scan_id})
         return True
 
+    def latest_status(self, scan_id):
+        """ Gets scan latest status.
+
+        :param scan_id: The scan ID.
+        :raise TenableIOApiException:  When API error is encountered.
+        :return: the scan status.
+        """
+        return self._client.get('scans/%(scan_id)s/latest-status',
+                                path_params={'scan_id': scan_id}).status
+
 
 class ScanSaveRequest(BaseRequest):
 

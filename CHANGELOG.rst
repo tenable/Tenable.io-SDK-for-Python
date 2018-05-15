@@ -2,6 +2,11 @@
 CHANGELOG
 =========
 
+Unreleased
+==========
+
+* Added: API route to get a scan's latest status (/latest-status)
+
 1.1.1
 ==========
 
