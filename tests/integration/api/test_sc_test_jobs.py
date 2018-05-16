@@ -16,7 +16,7 @@ class TestScTestJobsApi(BaseTest):
         assert isinstance(job, ScTestJob), u'The method returns type.'
 
     def test_by_image_digest(self, client, image):
-        job = client.sc_test_jobs_api.by_image(image['digest'])
+        job = client.sc_test_jobs_api.by_image_digest(image['digest'])
         assert isinstance(job, ScTestJob), u'The method returns type.'
 
     def test_list(self, client, image):
