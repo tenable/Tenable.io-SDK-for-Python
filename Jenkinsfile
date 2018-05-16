@@ -1,69 +1,78 @@
-#!/usr/bin/env groovy
-
-@Library('tenable.common')
+@Library('tenable.common@v1.0.0')
+import com.tenable.jenkins.*
+import com.tenable.jenkins.builds.*
+import com.tenable.jenkins.builds.checkmarx.*
+import com.tenable.jenkins.builds.nexusiq.*
+import com.tenable.jenkins.builds.onprem.*
+import com.tenable.jenkins.common.*
+import com.tenable.jenkins.deployments.*
+import com.tenable.jenkins.msg.*
+import com.tenable.jenkins.slack2.Slack
 
 def projectProperties = [
-    [$class: 'BuildDiscarderProperty',strategy: [$class: 'LogRotator', numToKeepStr: '5']],disableConcurrentBuilds(),
-    [$class: 'ParametersDefinitionProperty', parameterDefinitions: [[$class: 'StringParameterDefinition', defaultValue: 'io/qa-milestone', description: '', name: 'SITE_BRANCH']]]
+    [$class: 'BuildDiscarderProperty',strategy: [$class: 'LogRotator', numToKeepStr: '5']],
+    disableConcurrentBuilds(),
+    [$class: 'ParametersDefinitionProperty', parameterDefinitions:
+        [[$class: 'StringParameterDefinition', defaultValue: 'io/qa-milestone', description: '', name: 'SITE_BRANCH']]]
 ]
 
 properties(projectProperties)
 
-import com.tenable.jenkins.Slack
-import com.tenable.jenkins.common.Common
-import com.tenable.jenkins.Constants
-
-Constants global = new Constants()
-Common common = new Common()
-Slack slack  = new Slack()
-def fmt = slack.helper()
-def auser = ''
+Common common = new Common(this)
+BuildsCommon buildsCommon = new BuildsCommon(this)
 
 try {
-    node(global.DOCKERNODE) {
-        common.cleanup()
+    node(Constants.DOCKERNODE) {
+        buildsCommon.cleanup()
 
-        // Pull the automation framework from develop
         stage('scm auto') {
             dir('tenableio-sdk') {
                 checkout scm
             }
             dir('automation') {
-                git(branch:'develop', changelog:false, credentialsId:global.BITBUCKETUSER, poll:false, 
+                git(branch:'develop',
+                    changelog:false,
+                    credentialsId: Constants.BITBUCKETUSER,
+                    poll:false,
                     url:'ssh://git@stash.corp.tenablesecurity.com:7999/aut/automation-tenableio.git')
             }
             dir('site') {
-                git(branch:params.SITE_BRANCH, changelog:false, credentialsId:global.BITBUCKETUSER, poll:false, 
+                git(branch:params.SITE_BRANCH,
+                    changelog:false,
+                    credentialsId: Constants.BITBUCKETUSER,
+                    poll:false,
                     url:'ssh://git@stash.corp.tenablesecurity.com:7999/aut/site-configs.git')
             }
         }
 
-        docker.withRegistry(global.AWS_DOCKER_REGISTRY) {
-            docker.image('ci-vulnautomation-base:1.0.9').inside('-u root') {
+        docker.withRegistry(Constants.AWS_DOCKER_REGISTRY) {
+            docker.image(Constants.DOCKER_CI_VULNAUTOMATION_BASE).inside('-u root') {
                 stage('build auto') {
-                    common.prepareGit()
+                    buildsCommon.prepareGit()
 
-                    sshagent([global.BITBUCKETUSER]) {
-                        timeout(time: 240, unit: 'MINUTES') {
+                    sshagent([Constants.BITBUCKETUSER]) {
+                        timeout(time: 24, unit: Constants.HOURS) {
                             try {
                                 sh '''
-cd automation || exit 1
-export JENKINS_NODE_COOKIE=
-unset JENKINS_NODE_COOKIE
-python3 autosetup.py catium --all --no-venv 2>&1
-export PYTHONHASHSEED=0 
-export PYTHONPATH=. 
-export CAT_USE_GRID=true
+                                cd automation || exit 1
+                                export JENKINS_NODE_COOKIE=
+                                unset JENKINS_NODE_COOKIE
 
-python3 tenableio/commandline/sdk_test_container.py --create_container --python --agents 5
+                                python3 autosetup.py catium --all --no-venv 2>&1
 
-cd ../tenableio-sdk || exit 1
-pip3 install -r requirements.txt || exit 1
-py.test tests --junitxml=test-results-junit.xml || exit 1
-'''
+                                export PYTHONHASHSEED=0
+                                export PYTHONPATH=.
+                                export CAT_USE_GRID=true
+
+                                python3 tenableio/commandline/sdk_test_container.py --create_container --python --agents 5
+
+                                cd ../tenableio-sdk || exit 1
+                                pip3 install -r requirements.txt || exit 1
+                                py.test tests --junitxml=test-results-junit.xml || exit 1
+                                '''.stripIndent()
                             }
                             finally {
-	                        step([$class: 'JUnitResultArchiver', testResults: 'tenableio-sdk/*.xml'])
+	                           step([$class: 'JUnitResultArchiver', testResults: 'tenableio-sdk/*.xml'])
                             }
                         }
                     }
@@ -71,39 +80,26 @@ py.test tests --junitxml=test-results-junit.xml || exit 1
             }
         }
 
-	currentBuild.result = currentBuild.result ?: 'SUCCESS'
+    common.setResultIfNotSet(Constants.JSUCCESS)
     } 
 }
-catch (exc) {
-    if (currentBuild.result == null || currentBuild.result == 'ANORTED') {
-        // Try to detect if the build was aborted
-        if (common.wasAborted(this)) {
-            currentBuild.result = 'ABORTED'
-            auser = common.jenkinsAbortUser()
-
-            if (auser) {
-               auser = '\nAborted by ' + auser
-            }
-        }
-        else {
-            currentBuild.result = 'FAILURE'
-        }
-    }
-    else {
-        currentBuild.result = 'FAILURE'
-    }
-    throw exc
+catch (ex) {
+    common.logException(ex)
+    common.setResultAbortedOrFailure()
 }
 finally {
-    String tests = common.jenkinsTestResults()
-    String took  = '\nTook: ' + common.jenkinsDuration()
+    common.setResultIfNotSet(Constants.JFAILURE)
 
-    currentBuild.result = currentBuild.result ?: 'FAILURE'
+    String auser = common.getAbortingUsername()
+    String tests = common.getTestResults()
+    String took  = '\nTook: ' + common.getDuration()
 
-    messageAttachment = fmt.getDecoratedFinishMsg(this,
+    Slack slack = new Slack(this)
+
+    messageAttachment = slack.helper.getDecoratedFinishMsg(
         'Tenable SDK Python build finished with result: ',
         "Built off branch ${env.BRANCH_NAME}" + tests + took + auser)
-
     messageAttachment.channel = '#sdk'
-    slack.postMessage(this, messageAttachment)
+
+    slack.postMessage(messageAttachment)
 }
