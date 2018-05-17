@@ -55,8 +55,24 @@ def example(test_name, test_file, test_targets):
     Note: The `download` method blocks until the scan is completed and the report is downloaded.
     '''
     scan.launch().download(test_pdf_file)
+    first_scan_history_id = min([int(history.history_id) for history in scan.histories()])
     assert os.path.isfile(test_pdf_file)
     os.remove(test_pdf_file)
+
+    '''
+    Get hosts returned from scan
+    '''
+    host_id = scan.details().hosts[0].host_id
+    host_details = client.scans_api.host_details(scan.id, host_id=host_id).info.as_payload()
+    assert host_details['host-fqdn'] == test_targets
+
+    '''
+    Check if a target has recently been scanned (including running scans).
+    '''
+    # Host IP is being used here because it is a more reliable field to search on.
+    activities = client.scan_helper.activities(ipv4s=[host_details['host-ip']])
+    last_history_id = scan.last_history().history_id
+    assert last_history_id in [a.history_id for a in activities]
 
     '''
     Launch a scan, pause it, resume it, then stop it.
@@ -97,7 +113,7 @@ def example(test_name, test_file, test_targets):
     '''
     Export a scan into a NESSUS file.
     '''
-    scan.download(test_nessus_file, format=ScanExportRequest.FORMAT_NESSUS)
+    scan.download(test_nessus_file, history_id=first_scan_history_id, format=ScanExportRequest.FORMAT_NESSUS)
     assert os.path.isfile(test_nessus_file)
 
     '''
@@ -112,13 +128,6 @@ def example(test_name, test_file, test_targets):
     Note: Use with caution as this will stop all ongoing scans (including any automated test).
     '''
     # client.scan_helper.stop_all()
-
-    '''
-    Check if a target has recently been scanned (including running scans).
-    '''
-    activities = client.scan_helper.activities(test_targets)
-    last_history_id = scan.last_history().history_id
-    assert [a for a in activities if last_history_id == a.history_id]
 
     '''
     Delete scans.

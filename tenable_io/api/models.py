@@ -1418,7 +1418,7 @@ class ScanInfo(BaseModel):
 
     def as_payload(self, filter_=None):
         # Because API uses "pci-can-upload" API uses "pci-can-upload" which is not a valid python attribute name.
-        payload = self.as_payload(filter_)
+        payload = super(ScanInfo, self).as_payload(filter_)
         if 'pci_can_upload' in payload:
             payload['pci-can-upload'] = payload.pop('pci_can_upload')
         return payload

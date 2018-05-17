@@ -2,6 +2,12 @@
 CHANGELOG
 =========
 
+1.2.0
+==========
+
+* Added: Route to get a scan's latest status (/latest-status)
+* Fixed: Recursion error in ScanInfo model
+
 1.1.1
 ==========
 
@@ -15,7 +21,6 @@ CHANGELOG
 * Changed: ScanSettings model updated with acl.
 * Added: Model TargetGroup.acls
 * Added: Model ScanSetting properties: starttime, rrules, timezone, file_targets, and launch_now
-* Added: Route to get a scan's latest status (/latest-status)
 
 1.0.0
 ==========
