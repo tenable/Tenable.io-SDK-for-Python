@@ -2,6 +2,14 @@
 CHANGELOG
 =========
 
+1.2.0
+==========
+
+* Added: Route to get a scan's latest status (/latest-status)
+* Added: X-Tio-Retry-Count header sent with each retry
+* Changed: Replace urllib3.Retry with custom retry logic in TenableIOClient.
+* Fixed: Recursion error in ScanInfo model
+
 1.1.1
 ==========
 

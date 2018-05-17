@@ -9,7 +9,8 @@ class PermissionsHelper(object):
     def default_scan(self, access_level):
         """Generates a Permission object for the default role.
 
-        :param access_level: The access level the default user group should be granted for a scan (0, 16, 32, 64). See `Permissions.Scan`.
+        :param access_level: The access level the default user group should be granted for a scan
+               (0, 16, 32, 64). See `Permissions.Scan`.
         :return: A Permissions instance
         """
         return Permissions(type=Permissions.Type.DEFAULT,
@@ -19,7 +20,8 @@ class PermissionsHelper(object):
         """Generates a Permission object for the given user id with the given permissions
 
         :param user_id: Numeric User Id
-        :param access_level: The access level the default user group should be granted for a scan (0, 16, 32, 64). See `Permissions.Scan`.
+        :param access_level: The access level the default user group should be granted for a scan
+               (0, 16, 32, 64). See `Permissions.Scan`.
         :return: A Permissions instance
         """
         user = self._client.users_api.get(user_id)
