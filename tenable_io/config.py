@@ -13,6 +13,7 @@ base_config = {
     'logging_level': environ.get('TENABLEIO_LOGGING_LEVEL', 'WARNING'),
     'polling_interval': environ.get('TENABLEIO_POLLING_INTERVAL', '10'),
     'max_retries': environ.get('TENABLEIO_MAX_RETRIES', '3'),
+    'retry_sleep_milliseconds': environ.get('TENABLEIO_RETRY_SLEEP_MILLISECONDS', '500'),
 }
 
 # Read tenable_io.ini config. Default to environment variables if exist.
