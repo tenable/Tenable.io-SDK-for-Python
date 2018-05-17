@@ -214,8 +214,9 @@ class ScansApi(BaseApi):
         :raise TenableIOApiException:  When API error is encountered.
         :return: the scan status.
         """
-        return self._client.get('scans/%(scan_id)s/latest-status',
-                                path_params={'scan_id': scan_id}).status
+        response = self._client.get('scans/%(scan_id)s/latest-status',
+                                path_params={'scan_id': scan_id})
+        return loads(response.text).get('status', '')
 
 
 class ScanSaveRequest(BaseRequest):
