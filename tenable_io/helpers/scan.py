@@ -470,8 +470,7 @@ class ScanRef(object):
             ScanLaunchRequest(alt_targets=alt_targets)
         )
         if wait:
-            util.wait_until(lambda context: self.status(_context=context) not in ScanHelper.STATUSES_PENDING,
-                            context={})
+            util.wait_until(lambda: self.status() not in ScanHelper.STATUSES_PENDING)
         return self
 
     def name(self, history_id=None):
@@ -520,7 +519,7 @@ class ScanRef(object):
         """
         self._client.scans_api.pause(self.id)
         if wait:
-            util.wait_until(lambda context: self.status(_context=context) != Scan.STATUS_PAUSING, context={})
+            util.wait_until(lambda: self.status() != Scan.STATUS_PAUSING)
         return self
 
     def resume(self, wait=True):
@@ -532,28 +531,19 @@ class ScanRef(object):
         """
         self._client.scans_api.resume(self.id)
         if wait:
-            util.wait_until(lambda context: self.status(_context=context) != Scan.STATUS_RESUMING, context={})
+            util.wait_until(lambda: self.status() != Scan.STATUS_RESUMING)
         return self
 
-    def status(self, history_id=None, _context=None):
+    def status(self, history_id=None):
         """Get the scan's status.
 
-        :param history_id: The scan history to get status for, None for most recent. Default to None.
+        :param history_id: The scan history to get status for, None for latest. Default to None.
         :return: The same ScanRef instance.
         """
-        # _context allows caller to keep the context for subsequent calls, this is a temporary workaround to the cheaper
-        # status API requires a history_id, which is not always available during the pending phases when a scan is
-        # starting.
-        if _context is not None and history_id is None:
-            history_id = _context.get('history_id')
-
         if history_id is not None:
             status = self._client.scans_api.history(self.id, history_id=history_id).status
         else:
-            details = self.details(history_id=history_id)
-            if _context and len(details.history) > 0:
-                _context['history_id'] = details.history[0].history_id
-            status = details.info.status
+            status = self._client.scans_api.latest_status(self.id)
         return status
 
     def stop(self, wait=True):
@@ -567,13 +557,13 @@ class ScanRef(object):
             self.wait_until_stopped()
         return self
 
-    def stopped(self, history_id=None, _context=None):
+    def stopped(self, history_id=None):
         """Check if the scan is stopped.
 
         :param history_id: The scan history to check, None for most recent. Default to None.
         :return: True if stopped, False otherwise.
         """
-        return self.status(history_id=history_id, _context=_context) in ScanHelper.STATUSES_STOPPED
+        return self.status(history_id=history_id) in ScanHelper.STATUSES_STOPPED
 
     def wait_or_cancel_after(self, seconds):
         """Blocks until the scan is stopped, or cancel if it isn't stopped within the specified seconds.
@@ -593,5 +583,5 @@ class ScanRef(object):
         :param history_id: The scan history to wait for, None for most recent. Default to None.
         :return: The same ScanRef instance.
         """
-        util.wait_until(lambda context: self.stopped(history_id=history_id, _context=context), context={})
+        util.wait_until(lambda: self.stopped(history_id=history_id))
         return self

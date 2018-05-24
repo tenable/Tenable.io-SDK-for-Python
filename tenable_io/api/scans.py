@@ -215,7 +215,7 @@ class ScansApi(BaseApi):
         :return: the scan status.
         """
         response = self._client.get('scans/%(scan_id)s/latest-status',
-                                path_params={'scan_id': scan_id})
+                                    path_params={'scan_id': scan_id})
         return loads(response.text).get('status', '')
 
 
