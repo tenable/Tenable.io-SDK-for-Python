@@ -4,7 +4,11 @@ from tests.config import TenableIOTestConfig
 
 class TestExamples(BaseTest):
 
-    def test_files(self, app):
+    def test_exports(self, app):
+        from examples.exports import example
+        example(app.session_file_output)
+
+    def test_file(self, app):
         from examples.files import example
         example(app.session_file_output)
 

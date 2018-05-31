@@ -63,19 +63,27 @@ def format_request(response):
             meta[u'response_headers'] = dict(response.headers)
             data.append(json.dumps(meta))
 
-            if response.request.body:
+            if u'Content-Type' in response.request.headers and \
+                    u'json' in response.request.headers[u'Content-Type'] and response.request.body:
                 data += [
                     u'REQUEST_BODY:',
-                    response.request.body[:100000] + u'...Response Body Truncated'
+                    response.request.body[:100000] + u'...Request Body Truncated'
                     if len(response.request.body) > 100000 else str(response.request.body),
                 ]
+            elif u'Content-Type' in response.request.headers:
+                data += [u'REQUEST_BODY: Skip logging for Content-Type: ' +
+                         response.request.headers.get(u'Content-Type', u'None')]
 
-            if response.text:
+            if u'Content-Type' in response.headers and \
+                    u'json' in response.headers[u'Content-Type'] and response.text:
                 data += [
                     u'RESPONSE_BODY:',
                     response.text[:100000] + u'...Response Body Truncated'
                     if len(response.text) > 100000 else str(response.text),
                 ]
+            elif u'Content-Type' in response.headers:
+                data += [u'RESPONSE_BODY: Skip logging for Content-Type: ' +
+                         response.headers.get(u'Content-Type', u'None')]
         else:
             meta[u'response_headers'] = {k: v for k, v in six.iteritems(response.headers)
                                          if k in [u'X-Request-Uuid', u'X-Gateway-Site-ID']}

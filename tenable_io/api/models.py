@@ -2576,3 +2576,20 @@ class VulnerabilityOutputList(BaseModel):
     @BaseModel._model_list(VulnerabilityPluginOutput)
     def outputs(self, outputs):
         self._outputs = outputs
+
+
+class VulnsExportStatus(BaseModel):
+
+    STATUS_FINISHED = u'FINISHED'
+
+    def __init__(
+            self,
+            status=None,
+            chunks_available=None,
+            chunks_failed=None,
+            chunks_cancelled=None
+    ):
+        self.status = status
+        self.chunks_available = chunks_available
+        self.chunks_failed = chunks_failed
+        self.chunks_cancelled = chunks_cancelled

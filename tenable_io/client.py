@@ -15,6 +15,7 @@ from tenable_io.api.base import BaseRequest
 from tenable_io.api.bulk_operations import BulkOperationsApi
 from tenable_io.api.editor import EditorApi
 from tenable_io.api.exclusions import ExclusionApi
+from tenable_io.api.exports import ExportsApi
 from tenable_io.api.file import FileApi
 from tenable_io.api.filters import FiltersApi
 from tenable_io.api.folders import FoldersApi
@@ -33,6 +34,7 @@ from tenable_io.api.session import SessionApi
 from tenable_io.api.target_groups import TargetGroupsApi
 from tenable_io.api.users import UsersApi
 from tenable_io.api.workbenches import WorkbenchesApi
+from tenable_io.helpers.export import ExportHelper
 from tenable_io.helpers.file import FileHelper
 from tenable_io.helpers.folder import FolderHelper
 from tenable_io.helpers.permissions import PermissionsHelper
@@ -104,6 +106,7 @@ class TenableIOClient(object):
         self.bulk_operations_api = BulkOperationsApi(self)
         self.editor_api = EditorApi(self)
         self.exclusions_api = ExclusionApi(self)
+        self.exports_api = ExportsApi(self)
         self.file_api = FileApi(self)
         self.filters_api = FiltersApi(self)
         self.folders_api = FoldersApi(self)
@@ -127,6 +130,7 @@ class TenableIOClient(object):
         """
         Initializes all helpers.
         """
+        self.export_helper = ExportHelper(self)
         self.file_helper = FileHelper(self)
         self.folder_helper = FolderHelper(self)
         self.permissions_helper = PermissionsHelper(self)
