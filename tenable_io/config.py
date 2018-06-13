@@ -14,6 +14,8 @@ base_config = {
     'polling_interval': environ.get('TENABLEIO_POLLING_INTERVAL', '10'),
     'max_retries': environ.get('TENABLEIO_MAX_RETRIES', '3'),
     'retry_sleep_milliseconds': environ.get('TENABLEIO_RETRY_SLEEP_MILLISECONDS', '500'),
+    'http_proxy': environ.get('TENABLEIO_HTTP_PROXY'),
+    'https_proxy': environ.get('TENABLEIO_HTTPS_PROXY'),
 }
 
 # Read tenable_io.ini config. Default to environment variables if exist.

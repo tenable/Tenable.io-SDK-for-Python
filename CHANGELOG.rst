@@ -2,6 +2,11 @@
 CHANGELOG
 =========
 
+Unreleased
+==========
+
+* Added: Support for explicit proxy configuration.
+
 1.2.1
 ==========
 
