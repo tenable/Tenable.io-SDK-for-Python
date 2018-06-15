@@ -8,6 +8,9 @@ secret_key={{SECRET_KEY}}
 ;polling_interval={{POLLING_INTERVAL}}
 ; Maximum retries on calling the endpoint. (Default: 3)
 ;max_retries={{MAX_RETRIES}}
+; Configure proxy variables
+;http_proxy={{HTTP_PROXY}}
+;https_proxy={{HTTPS_PROXY}}
 
 [tenable_io-test]
 ; Amount of seconds to wait for a test condition before timing out. (Default: 300)

@@ -41,6 +41,13 @@ from tenable_io.helpers.scan import ScanHelper
 from tenable_io.helpers.workbench import WorkbenchHelper
 from tenable_io.log import format_request, logging
 
+DEFAULT_PROXIES = {
+    proto: proxy for proto, proxy in {
+        'http': TenableIOConfig.get('http_proxy'),
+        'https': TenableIOConfig.get('https_proxy')
+    }.items()
+    if proxy is not None
+}
 
 class TenableIOClient(object):
 
@@ -54,11 +61,13 @@ class TenableIOClient(object):
             access_key=TenableIOConfig.get('access_key'),
             secret_key=TenableIOConfig.get('secret_key'),
             endpoint=TenableIOConfig.get('endpoint'),
+            proxies=DEFAULT_PROXIES,
             impersonate=None,
     ):
         self._access_key = access_key
         self._secret_key = secret_key
         self._endpoint = endpoint
+        self._proxies = proxies
         self._impersonate = impersonate
 
         self._init_session()
@@ -74,6 +83,10 @@ class TenableIOClient(object):
             u'X-ApiKeys': u'accessKey=%s; secretKey=%s;' % (self._access_key, self._secret_key),
             u'User-Agent': u'TenableIOSDK Python/%s' % ('.'.join([str(i) for i in sys.version_info][0:3]))
         })
+
+        if self._proxies:
+            self._session.proxies.update(self._proxies)
+
         if self._impersonate:
             self._session.headers.update({
                 u'X-Impersonate': u'username=%s' % self._impersonate
