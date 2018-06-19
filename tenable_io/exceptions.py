@@ -26,6 +26,10 @@ class TenableIORetryableApiException (TenableIOApiException):
     pass
 
 
+class TenableIOTimeoutApiException (TenableIOApiException):
+    pass
+
+
 class ErrorCode(object):
 
     _HTTP_CODES = {}

@@ -6,6 +6,10 @@ Unreleased
 ==========
 
 * Added: Support for explicit proxy configuration.
+* Added: Support for vulns exports API.
+* Added: Export helper to download vulnerabilities.
+* Added: Support for assets exports API.
+* Added: Export helper to download assets.
 
 1.2.1
 ==========
