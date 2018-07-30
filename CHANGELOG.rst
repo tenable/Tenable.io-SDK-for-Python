@@ -2,6 +2,11 @@
 CHANGELOG
 =========
 
+1.4.0
+==========
+
+* Added: Support for retrieving additional plugin families.
+
 1.3.0
 ==========
 
