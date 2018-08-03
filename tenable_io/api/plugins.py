@@ -4,13 +4,15 @@ from tenable_io.api.models import PluginDetails, PluginFamilyDetails, PluginFami
 
 class PluginsApi(BaseApi):
 
-    def families(self):
+    def families(self, include_all=None):
         """Return list of plugin families.
 
+        :param include_all: Whether or not to include all plugins. Defaults to be less inclusive.
         :raise TenableIOApiException:  When API error is encountered.
         :return: An instance of :class:`tenable_io.api.models.PluginFamilyList`.
         """
-        response = self._client.get('plugins/families')
+        params = {'all': include_all}
+        response = self._client.get('plugins/families', params={k: v for (k, v) in params.items() if v})
         return PluginFamilyList.from_json(response.text)
 
     def family_details(self, family_id):
