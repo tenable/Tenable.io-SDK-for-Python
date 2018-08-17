@@ -8,14 +8,14 @@ else:
 
 base_config = {
     'endpoint': environ.get('TENABLEIO_ENDPOINT', 'https://cloud.tenable.com/'),
-    'access_key': environ.get('TENABLEIO_ACCESS_KEY'),
-    'secret_key': environ.get('TENABLEIO_SECRET_KEY'),
+    'access_key': environ.get('TENABLEIO_ACCESS_KEY', ''),
+    'secret_key': environ.get('TENABLEIO_SECRET_KEY', ''),
     'logging_level': environ.get('TENABLEIO_LOGGING_LEVEL', 'WARNING'),
     'polling_interval': environ.get('TENABLEIO_POLLING_INTERVAL', '10'),
     'max_retries': environ.get('TENABLEIO_MAX_RETRIES', '3'),
     'retry_sleep_milliseconds': environ.get('TENABLEIO_RETRY_SLEEP_MILLISECONDS', '500'),
-    'http_proxy': environ.get('TENABLEIO_HTTP_PROXY'),
-    'https_proxy': environ.get('TENABLEIO_HTTPS_PROXY'),
+    'http_proxy': environ.get('TENABLEIO_HTTP_PROXY', ''),
+    'https_proxy': environ.get('TENABLEIO_HTTPS_PROXY', ''),
 }
 
 # Read tenable_io.ini config. Default to environment variables if exist.
