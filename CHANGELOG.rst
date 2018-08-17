@@ -2,6 +2,12 @@
 CHANGELOG
 =========
 
+1.4.1
+==========
+
+* Added: SDK version details to User-Agent header.
+* Fixed: TenableIOClient config issue in python 3.7.
+
 1.4.0
 ==========
 
