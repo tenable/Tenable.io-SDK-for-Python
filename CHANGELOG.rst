@@ -2,6 +2,11 @@
 CHANGELOG
 =========
 
+Unreleased
+==========
+
+* Added: Support for tagging API
+
 1.4.1
 ==========
 

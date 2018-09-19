@@ -2606,3 +2606,169 @@ class VulnerabilityOutputList(BaseModel):
     @BaseModel._model_list(VulnerabilityPluginOutput)
     def outputs(self, outputs):
         self._outputs = outputs
+
+
+class AssetTagAssignment(BaseModel):
+
+    def __init__(
+            self,
+            value_uuid=None,
+            category_name=None,
+            container_uuid=None,
+            asset_uuid=None,
+            created_at=None,
+            source=None,
+            value=None,
+            created_by=None,
+            category_uuid=None
+    ):
+        self.value_uuid = value_uuid
+        self.category_name = category_name
+        self.container_uuid = container_uuid
+        self.asset_uuid = asset_uuid
+        self.created_at = created_at
+        self.source = source
+        self.value = value
+        self.created_by = created_by
+        self.category_uuid = category_uuid
+
+
+class AssetTagAssignmentList(BaseModel):
+
+    def __init__(
+            self,
+            tags=None
+    ):
+        self._tags = None
+        self.tags = tags
+
+    @property
+    def tags(self):
+        return self._tags
+
+    @tags.setter
+    @BaseModel._model_list(AssetTagAssignment)
+    def tags(self, tags):
+        self._tags = tags
+
+
+class TagCategory(BaseModel):
+
+    def __init__(
+            self,
+            container_uuid=None,
+            uuid=None,
+            name=None,
+            description=None,
+            created_at=None,
+            created_by=None,
+            updated_at=None,
+            updated_by=None,
+            reserved=None,
+            model_name=None
+    ):
+        self.container_uuid = container_uuid
+        self.uuid = uuid
+        self.name = name
+        self.description = description
+        self.created_at = created_at
+        self.created_by = created_by
+        self.updated_at = updated_at
+        self.updated_by = updated_by
+        self.reserved = reserved
+        self.model_name = model_name
+
+
+class TagCategoryList(BaseModel):
+
+    def __init__(
+            self,
+            categories=None,
+            pagination=None
+    ):
+        self._categories = None
+        self.categories = categories
+        self._pagination = None
+        self.pagination = pagination
+
+    @property
+    def categories(self):
+        return self._categories
+
+    @categories.setter
+    @BaseModel._model_list(TagCategory)
+    def categories(self, categories):
+        self._categories = categories
+
+    @property
+    def pagination(self):
+        return self._pagination
+
+    @pagination.setter
+    @BaseModel._model(FilterPagination)
+    def pagination(self, pagination):
+        self._pagination = pagination
+
+
+class TagValue(BaseModel):
+
+    def __init__(
+            self,
+            container_uuid=None,
+            uuid=None,
+            value=None,
+            description=None,
+            type=None,
+            category_uuid=None,
+            category_name=None,
+            category_description=None,
+            created_at=None,
+            created_by=None,
+            updated_at=None,
+            updated_by=None,
+            model_name=None
+    ):
+        self.container_uuid = container_uuid
+        self.uuid = uuid
+        self.value = value
+        self.description = description
+        self.type = type
+        self.category_uuid = category_uuid
+        self.category_name = category_name
+        self.category_description = category_description
+        self.created_at = created_at
+        self.created_by = created_by
+        self.updated_at = updated_at
+        self.updated_by = updated_by
+        self.model_name = model_name
+
+
+class TagValueList(BaseModel):
+
+    def __init__(
+            self,
+            values=None,
+            pagination=None
+    ):
+        self._values = None
+        self.values = values
+        self._pagination = None
+        self.pagination = pagination
+
+    @property
+    def values(self):
+        return self._values
+
+    @values.setter
+    @BaseModel._model_list(TagValue)
+    def values(self, values):
+        self._values = values
+
+    @property
+    def pagination(self):
+        return self._pagination
+
+    @pagination.setter
+    @BaseModel._model(FilterPagination)
+    def pagination(self, pagination):
+        self._pagination = pagination
