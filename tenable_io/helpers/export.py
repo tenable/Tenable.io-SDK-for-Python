@@ -8,12 +8,12 @@ class ExportHelper(object):
     def __init__(self, client):
         self._client = client
 
-    def download_vulns(self, path, num_assets=None, severity=None, state=None, plugin_family=None, since=None,
+    def download_vulns(self, path=None, num_assets=50, severity=None, state=None, plugin_family=None, since=None,
                        file_open_mode='wb'):
-        """Request the vulns export chunks, poll for status, and download them when it's available. The chunks will be
-            downloaded in no particular order.
+        """Request the vulns export chunks, poll for status, and download them to disk or load to memory when it's
+            available. The chunks will be retrieved in no particular order.
 
-        :param path: The file path to save the report to.
+        :param path: The file path to save the report to. Will load to memory if equals `None`
         :param num_assets: Specifies the number of assets per exported chunk. Default is 50. Range is 50-5000. If you
             specify a value outside of that range, the system uses lower or upper bound value.
         :param severity: Defaults to all severity levels. Supported values are [info, low, medium, high,
@@ -28,7 +28,7 @@ class ExportHelper(object):
         :return: The list of `chunk_id`s.
         """
         # If not parameterized for chunk ID.
-        if path % {'chunk_id': 1} == path:
+        if path is not None and path % {'chunk_id': 1} == path:
             path += '_%(chunk_id)s'
 
         export_uuid = self._client.exports_api.vulns_request_export(
@@ -49,22 +49,28 @@ class ExportHelper(object):
 
         status = self._client.exports_api.vulns_export_status(export_uuid)
 
-        # Download chunks
+        # Retrieve chunks
+        vulns = []
         for chunk_id in status.chunks_available:
-            iter_content = self._client.exports_api.vulns_download_chunk(export_uuid, chunk_id)
-            with open(path % {'chunk_id': chunk_id}, file_open_mode) as fd:
-                for chunk in iter_content:
-                    fd.write(chunk)
+            if path is None:
+                vulns += self._client.exports_api.vulns_chunk(export_uuid, chunk_id)
+            else:
+                iter_content = self._client.exports_api.vulns_download_chunk(export_uuid, chunk_id)
+                with open(path % {'chunk_id': chunk_id}, file_open_mode) as fd:
+                    for chunk in iter_content:
+                        fd.write(chunk)
 
-        return status.chunks_available
+        return vulns if path is None else status.chunks_available
 
-    def download_assets(self, path, chunk_size, created_at=None, updated_at=None, terminated_at=None, deleted_at=None,
-                        first_scan_time=None, last_authenticated_scan_time=None, last_assessed=None,
+    def download_assets(self, path=None, chunk_size=100, created_at=None, updated_at=None, terminated_at=None,
+                        deleted_at=None, first_scan_time=None, last_authenticated_scan_time=None, last_assessed=None,
                         servicenow_sysid=None,  sources=None, has_plugin_results=None, file_open_mode='wb'):
         """Request the vulns export chunks, poll for status, and download them when it's available. The chunks will be
-            downloaded in no particular order.
+            retrieved in no particular order.
 
-        :param path: The file path to save the report to.
+        :param path: The file path to save the report to. Will load in memory if equals `None`
+        :param chunk_size: Specifies the number of assets per exported chunk. Default is 100. Range is 100-10000. If you
+            specify a value outside of that range, a 400 error is returned.
         :param created_at: Returns all assets created later than the date specified. The specified date must be in the
             Unix timestamp format.
         :param updated_at: Returns all assets updated later than the date specified. The specified date must be in the
@@ -88,10 +94,10 @@ class ExportHelper(object):
         :param has_plugin_results: If true, returns all assets that have plugin results. If false, returns all assets
             that do not have plugin results. An asset may not have plugin results if the asset details originated from a
             connector, an API import, or a discovery scan, rather than a vulnerabilities scan.
-        :return: The list of `chunk_id`s.
+        :return: The list of exported assets if path is `None` else the list of `chunk_id`s.
         """
         # If not parameterized for chunk ID.
-        if path % {'chunk_id': 1} == path:
+        if path is not None and path % {'chunk_id': 1} == path:
             path += '_%(chunk_id)s'
 
         export_uuid = self._client.exports_api.assets_request_export(
@@ -119,10 +125,14 @@ class ExportHelper(object):
         status = self._client.exports_api.assets_export_status(export_uuid)
 
         # Download chunks
+        assets = []
         for chunk_id in status.chunks_available:
-            iter_content = self._client.exports_api.assets_download_chunk(export_uuid, chunk_id)
-            with open(path % {'chunk_id': chunk_id}, file_open_mode) as fd:
-                for chunk in iter_content:
-                    fd.write(chunk)
+            if path is None:
+                assets += self._client.exports_api.assets_chunk(export_uuid, chunk_id)
+            else:
+                iter_content = self._client.exports_api.assets_download_chunk(export_uuid, chunk_id)
+                with open(path % {'chunk_id': chunk_id}, file_open_mode) as fd:
+                    for chunk in iter_content:
+                        fd.write(chunk)
 
-        return status.chunks_available
+        return assets if path is None else status.chunks_available
