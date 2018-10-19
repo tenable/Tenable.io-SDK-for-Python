@@ -2,6 +2,11 @@
 CHANGELOG
 =========
 
+Unreleased
+==========
+
+* Added: Support for graceful back-off
+
 1.4.1
 ==========
 

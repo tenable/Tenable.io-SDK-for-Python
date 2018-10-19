@@ -64,6 +64,8 @@ try {
                                 export PYTHONPATH=.
                                 export CAT_USE_GRID=true
 
+                                export TENABLEIO_MAX_POLLING_INTERVAL=60
+
                                 python3 tenableio/commandline/sdk_test_container.py --create_container --python --agents 5
 
                                 cd ../tenableio-sdk || exit 1
