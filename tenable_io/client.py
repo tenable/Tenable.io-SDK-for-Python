@@ -85,8 +85,8 @@ class TenableIOClient(object):
         self._session = requests.Session()
         self._session.headers.update({
             u'X-ApiKeys': u'accessKey=%s; secretKey=%s;' % (self._access_key, self._secret_key),
-            u'User-Agent': u'TenableIOSDK Python/%s/%s'
-                           % ('.'.join([str(i) for i in sys.version_info][0:3]), __version__)
+            u'User-Agent': u'TenableIOSDK Python/%s/%s' % ('.'.join([str(i) for i in sys.version_info][0:3]),
+                                                           __version__)
         })
 
         if self._proxies:

@@ -1,7 +1,7 @@
 from json import loads
 
 from tenable_io.api.base import BaseApi, BaseRequest
-from tenable_io.api.models import ExportsAssetsStatus, ExportsVulnsStatus
+from tenable_io.api.models import AssetsExport, ExportsAssetsStatus, ExportsVulnsStatus, VulnsExport
 from tenable_io.util import payload_filter
 
 
@@ -28,6 +28,18 @@ class ExportsApi(BaseApi):
         response = self._client.get('vulns/export/%(export_uuid)s/status',
                                     path_params={'export_uuid': export_uuid})
         return ExportsVulnsStatus.from_json(response.text)
+
+    def vulns_chunk(self, export_uuid, chunk_id):
+        """Retrieve vulnerability chunk by ID.
+
+        :param export_uuid: The export request UUID.
+        :param chunk_id: The chunk ID.
+        :raise TenableIOApiException:  When API error is encountered.
+        :return: A list of :class:`tenable_io.api.models.VulnsExport` instances.
+        """
+        response = self._client.get('vulns/export/%(export_uuid)s/chunks/%(chunk_id)s',
+                                    path_params={'export_uuid': export_uuid, 'chunk_id': chunk_id})
+        return VulnsExport.from_json_list(response.text)
 
     def vulns_download_chunk(self, export_uuid, chunk_id, stream=True, chunk_size=1024):
         """Download vulnerability chunk by ID.
@@ -62,6 +74,19 @@ class ExportsApi(BaseApi):
         response = self._client.get('assets/export/%(export_uuid)s/status',
                                     path_params={'export_uuid': export_uuid})
         return ExportsAssetsStatus.from_json(response.text)
+
+    def assets_chunk(self, export_uuid, chunk_id):
+        """Retrieve chunk by id. Chunks are available for export for up to 24 hours after they have been created. A
+            404 is returned for expired chunks.
+
+        :param export_uuid: The UUID for the export request.
+        :param chunk_id: The ID of the asset chunk you want to export.
+        :raise TenableIOApiException:  When API error is encountered.
+        :return: A list of :class:`tenable_io.api.models.AssetsExport` instances.
+        """
+        response = self._client.get('assets/export/%(export_uuid)s/chunks/%(chunk_id)s',
+                                    path_params={'export_uuid': export_uuid, 'chunk_id': chunk_id})
+        return AssetsExport.from_json_list(response.text)
 
     def assets_download_chunk(self, export_uuid, chunk_id, stream=True, chunk_size=1024):
         """Download chunk by id. Chunks are available for download for up to 24 hours after they have been created. A
