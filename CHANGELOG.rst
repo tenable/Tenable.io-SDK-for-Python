@@ -6,6 +6,7 @@ Unreleased
 ==========
 
 * Added: Support for reading vulns and asset exports into memory
+* Added: Support for graceful back-off
 
 1.4.1
 ==========

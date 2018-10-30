@@ -136,12 +136,7 @@ class TestScansApi(BaseTest):
             ScanLaunchRequest()
         )
         self.wait_until(lambda: client.scans_api.details(scan_id),
-                        lambda details: details.info.status in [Scan.STATUS_COMPLETED, Scan.STATUS_RUNNING])
-
-        # Stop the running scan.
-        client.scans_api.stop(scan_id)
-        self.wait_until(lambda: client.scans_api.details(scan_id),
-                        lambda details: details.info.status in [Scan.STATUS_CANCELED])
+                        lambda details: details.info.status in [Scan.STATUS_COMPLETED])
 
         file_id = client.scans_api.export_request(
             scan_id,
