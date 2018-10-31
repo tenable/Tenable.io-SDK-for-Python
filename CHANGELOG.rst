@@ -2,7 +2,7 @@
 CHANGELOG
 =========
 
-Unreleased
+1.5.0
 ==========
 
 * Added: Support for reading vulns and asset exports into memory
