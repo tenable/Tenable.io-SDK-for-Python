@@ -12,6 +12,7 @@ base_config = {
     'secret_key': environ.get('TENABLEIO_SECRET_KEY', ''),
     'logging_level': environ.get('TENABLEIO_LOGGING_LEVEL', 'WARNING'),
     'polling_interval': environ.get('TENABLEIO_POLLING_INTERVAL', '10'),
+    'max_polling_interval': environ.get('TENABLEIO_MAX_POLLING_INTERVAL', '300'),
     'max_retries': environ.get('TENABLEIO_MAX_RETRIES', '3'),
     'retry_sleep_milliseconds': environ.get('TENABLEIO_RETRY_SLEEP_MILLISECONDS', '500'),
     'http_proxy': environ.get('TENABLEIO_HTTP_PROXY', ''),

@@ -2474,6 +2474,155 @@ class ExportsAssetsStatus(BaseModel):
         self.chunks_available = chunks_available
 
 
+class AssetTag(BaseModel):
+
+    def __init__(
+            self,
+            uuid=None,
+            key=None,
+            value=None,
+            added_by=None,
+            added_at=None
+    ):
+        self.uuid = uuid
+        self.key = key
+        self.value = value
+        self.added_by = added_by
+        self.added_at = added_at
+
+
+class AssetsExport(BaseModel):
+
+    def __init__(
+            self,
+            id=None,
+            has_agent=None,
+            has_plugin_results=None,
+            created_at=None,
+            terminated_at=None,
+            terminated_by=None,
+            updated_at=None,
+            deleted_at=None,
+            deleted_by=None,
+            first_seen=None,
+            last_seen=None,
+            first_scan_time=None,
+            last_scan_time=None,
+            last_authenticated_scan_date=None,
+            last_licensed_scan_date=None,
+            azure_vm_id=None,
+            azure_resource_id=None,
+            aws_ec2_instance_ami_id=None,
+            aws_ec2_instance_id=None,
+            agent_uuid=None,
+            bios_uuid=None,
+            environment_id=None,
+            aws_owner_id=None,
+            aws_availability_zone=None,
+            aws_region=None,
+            aws_vpc_id=None,
+            aws_ec2_instance_group_name=None,
+            aws_ec2_instance_state_name=None,
+            aws_ec2_instance_type=None,
+            aws_subnet_id=None,
+            aws_ec2_product_code=None,
+            aws_ec2_name=None,
+            mcafee_epo_guid=None,
+            mcafee_epo_agent_guid=None,
+            servicenow_sysid=None,
+            agent_names=None,
+            ipv4s=None,
+            ipv6s=None,
+            fqdns=None,
+            mac_addresses=None,
+            netbios_names=None,
+            operating_systems=None,
+            system_types=None,
+            hostnames=None,
+            ssh_fingerprints=None,
+            qualys_asset_ids=None,
+            qualys_host_ids=None,
+            manufacturer_tpm_ids=None,
+            symantec_ep_hardware_keys=None,
+            sources=None,
+            tags=None,
+            network_interfaces=None
+    ):
+        self._sources = None
+        self._tags = None
+
+        self.id = id
+        self.has_agent = has_agent
+        self.has_plugin_results = has_plugin_results
+        self.created_at = created_at
+        self.terminated_at = terminated_at
+        self.terminated_by = terminated_by
+        self.updated_at = updated_at
+        self.deleted_at = deleted_at
+        self.deleted_by = deleted_by
+        self.first_seen = first_seen
+        self.last_seen = last_seen
+        self.first_scan_time = first_scan_time
+        self.last_scan_time = last_scan_time
+        self.last_authenticated_scan_date = last_authenticated_scan_date
+        self.last_licensed_scan_date = last_licensed_scan_date
+        self.azure_vm_id = azure_vm_id
+        self.azure_resource_id = azure_resource_id
+        self.aws_ec2_instance_ami_id = aws_ec2_instance_ami_id
+        self.aws_ec2_instance_id = aws_ec2_instance_id
+        self.agent_uuid = agent_uuid
+        self.bios_uuid = bios_uuid
+        self.environment_id = environment_id
+        self.aws_owner_id = aws_owner_id
+        self.aws_availability_zone = aws_availability_zone
+        self.aws_region = aws_region
+        self.aws_vpc_id = aws_vpc_id
+        self.aws_ec2_instance_group_name = aws_ec2_instance_group_name
+        self.aws_ec2_instance_state_name = aws_ec2_instance_state_name
+        self.aws_ec2_instance_type = aws_ec2_instance_type
+        self.aws_subnet_id = aws_subnet_id
+        self.aws_ec2_product_code = aws_ec2_product_code
+        self.aws_ec2_name = aws_ec2_name
+        self.mcafee_epo_guid = mcafee_epo_guid
+        self.mcafee_epo_agent_guid = mcafee_epo_agent_guid
+        self.servicenow_sysid = servicenow_sysid
+        self.agent_names = agent_names
+        self.ipv4s = ipv4s
+        self.ipv6s = ipv6s
+        self.fqdns = fqdns
+        self.mac_addresses = mac_addresses
+        self.netbios_names = netbios_names
+        self.operating_systems = operating_systems
+        self.system_types = system_types
+        self.hostnames = hostnames
+        self.ssh_fingerprints = ssh_fingerprints
+        self.qualys_asset_ids = qualys_asset_ids
+        self.qualys_host_ids = qualys_host_ids
+        self.manufacturer_tpm_ids = manufacturer_tpm_ids
+        self.symantec_ep_hardware_keys = symantec_ep_hardware_keys
+        self.sources = sources
+        self.tags = tags
+        self.network_interfaces = network_interfaces
+
+    @property
+    def sources(self):
+        return self._sources
+
+    @sources.setter
+    @BaseModel._model_list(AssetsAssetSource)
+    def sources(self, sources):
+        self._sources = sources
+
+    @property
+    def tags(self):
+        return self._tags
+
+    @tags.setter
+    @BaseModel._model_list(AssetTag)
+    def tags(self, tags):
+        self._tags = tags
+
+
 class ExportsVulnsStatus(BaseModel):
 
     STATUS_FINISHED = u'FINISHED'
@@ -2489,6 +2638,156 @@ class ExportsVulnsStatus(BaseModel):
         self.chunks_available = chunks_available
         self.chunks_failed = chunks_failed
         self.chunks_cancelled = chunks_cancelled
+
+
+class VulnsAsset(BaseModel):
+
+    def __init__(
+            self,
+            hostname=None,
+            uuid=None,
+            ipv4=None,
+            last_unauthenticated_results=None,
+            netbios_name=None,
+            tracked=None
+    ):
+        self.hostname = hostname
+        self.uuid = uuid
+        self.ipv4 = ipv4
+        self.last_unauthenticated_results = last_unauthenticated_results
+        self.netbios_name = netbios_name
+        self.tracked = tracked
+
+
+class VulnsPlugin(BaseModel):
+
+    def __init__(
+            self,
+            description=None,
+            family=None,
+            family_id=None,
+            has_patch=None,
+            id=None,
+            name=None,
+            modification_date=None,
+            publication_date=None,
+            risk_factor=None,
+            solution=None,
+            synopsis=None,
+            type=None,
+            version=None
+    ):
+        self.description = description
+        self.family = family
+        self.family_id = family_id
+        self.has_patch = has_patch
+        self.id = id
+        self.name = name
+        self.modification_date = modification_date
+        self.publication_date = publication_date
+        self.risk_factor = risk_factor
+        self.solution = solution
+        self.synopsis = synopsis
+        self.type = type
+        self.version = version
+
+
+class VulnsPort(BaseModel):
+
+    def __init__(
+            self,
+            port=None,
+            protocol=None
+    ):
+        self.port = port
+        self.protocol = protocol
+
+
+class VulnsScan(BaseModel):
+
+    def __init__(
+            self,
+            completed_at=None,
+            schedule_uuid=None,
+            started_at=None,
+            uuid=None,
+    ):
+        self.completed_at = completed_at
+        self.schedule_uuid = schedule_uuid
+        self.started_at = started_at
+        self.uuid = uuid
+
+
+class VulnsExport(BaseModel):
+
+    def __init__(
+            self,
+            asset=None,
+            output=None,
+            plugin=None,
+            port=None,
+            scan=None,
+            severity=None,
+            severity_id=None,
+            severity_default_id=None,
+            severity_modification_type=None,
+            first_found=None,
+            last_found=None,
+            state=None
+    ):
+        self._asset = None
+        self._plugin = None
+        self._port = None
+        self._scan = None
+
+        self.asset = asset
+        self.output = output
+        self.plugin = plugin
+        self.port = port
+        self.scan = scan
+        self.severity = severity
+        self.severity_id = severity_id
+        self.severity_default_id = severity_default_id
+        self.severity_modification_type = severity_modification_type
+        self.first_found = first_found
+        self.last_found = last_found
+        self.state = state
+
+    @property
+    def asset(self):
+        return self._asset
+
+    @asset.setter
+    @BaseModel._model(VulnsAsset)
+    def asset(self, asset):
+        self._asset = asset
+
+    @property
+    def plugin(self):
+        return self._plugin
+
+    @plugin.setter
+    @BaseModel._model(VulnsPlugin)
+    def plugin(self, plugin):
+        self._plugin = plugin
+
+    @property
+    def port(self):
+        return self._port
+
+    @port.setter
+    @BaseModel._model(VulnsPort)
+    def port(self, port):
+        self._port = port
+
+    @property
+    def scan(self):
+        return self._scan
+
+    @scan.setter
+    @BaseModel._model(VulnsScan)
+    def scan(self, scan):
+        self._scan = scan
 
 
 class Vulnerability(BaseModel):

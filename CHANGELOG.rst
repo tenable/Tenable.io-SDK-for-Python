@@ -2,9 +2,11 @@
 CHANGELOG
 =========
 
-Unreleased
+1.5.0
 ==========
 
+* Added: Support for reading vulns and asset exports into memory
+* Added: Support for graceful back-off
 * Added: Support for tagging API
 
 1.4.1

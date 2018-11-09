@@ -7,7 +7,7 @@ else:
     import ConfigParser as configparser
 
 base_config = {
-    'wait_timeout': environ.get('TENABLEIOTEST_WAIT_TIMEOUT', '300'),
+    'wait_timeout': environ.get('TENABLEIOTEST_WAIT_TIMEOUT', '800'),
     'scan_template_name': environ.get('TENABLEIOTEST_SCAN_TEMPLATE_NAME', 'basic'),
     'registry_host': environ.get('TENABLEIOTEST_REGISTRY_HOST', 'https://registry.cloud.tenable.com'),
 }

@@ -6,6 +6,7 @@ import time
 from tenable_io.config import TenableIOConfig
 
 POLLING_INTERVAL = int(TenableIOConfig.get('polling_interval'))
+MAX_POLLING_INTERVAL = int(TenableIOConfig.get('max_polling_interval'))
 RE_MAC = re.compile('[0-9a-f]{2}([-:])[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$')
 
 
@@ -53,9 +54,14 @@ def wait_until(condition, context=None):
         :param context: If it is not None, it is passed to every call to the condition function.
         :return: True when the condition function evaluates to True.
     """
+    interval = POLLING_INTERVAL
+    count = 0
     while True:
+        count += 1
+
         if context is not None and condition(context):
             return True
         elif context is None and condition():
             return True
-        time.sleep(POLLING_INTERVAL)
+        time.sleep(interval if interval < MAX_POLLING_INTERVAL else MAX_POLLING_INTERVAL)
+        interval += count * 10
