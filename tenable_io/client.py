@@ -32,6 +32,7 @@ from tenable_io.api.sc_reports import ScReportsApi
 from tenable_io.api.sc_test_jobs import ScTestJobsApi
 from tenable_io.api.server import ServerApi
 from tenable_io.api.session import SessionApi
+from tenable_io.api.tags import TagsApi
 from tenable_io.api.target_groups import TargetGroupsApi
 from tenable_io.api.users import UsersApi
 from tenable_io.api.workbenches import WorkbenchesApi
@@ -125,6 +126,7 @@ class TenableIOClient(object):
         self.sc_test_jobs_api = ScTestJobsApi(self)
         self.server_api = ServerApi(self)
         self.session_api = SessionApi(self)
+        self.tags_api = TagsApi(self)
         self.target_groups_api = TargetGroupsApi(self)
         self.users_api = UsersApi(self)
         self.workbenches_api = WorkbenchesApi(self)
