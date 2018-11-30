@@ -2,6 +2,11 @@
 CHANGELOG
 =========
 
+Unreleased
+==========
+
+* Added: Support for access groups
+
 1.5.0
 ==========
 
