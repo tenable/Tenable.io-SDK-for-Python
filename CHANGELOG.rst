@@ -2,10 +2,6 @@
 CHANGELOG
 =========
 
-Unreleased
-==========
-
-* Added: Support for access groups
 
 1.5.0
 ==========
@@ -13,6 +9,7 @@ Unreleased
 * Added: Support for reading vulns and asset exports into memory
 * Added: Support for graceful back-off
 * Added: Support for tagging API
+* Added: Support for access groups API
 
 1.4.1
 ==========
