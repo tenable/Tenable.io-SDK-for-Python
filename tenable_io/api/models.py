@@ -3071,3 +3071,141 @@ class TagValueList(BaseModel):
     @BaseModel._model(FilterPagination)
     def pagination(self, pagination):
         self._pagination = pagination
+
+
+class AssetFilter(BaseModel):
+
+    def __init__(
+            self,
+            field=None,
+            operator=None,
+            value=None
+    ):
+        self.field = field
+        self.operator = operator
+        self.value = value
+
+
+class AssetRule(BaseModel):
+
+    def __init__(
+            self,
+            type=None,
+            operator=None,
+            terms=None
+    ):
+        self.type = type
+        self.operator = operator
+        self.terms = terms
+
+
+class AssetRuleFilter(Filter):
+
+    def __init__(
+            self,
+            placeholder=None,
+    ):
+        self.placeholder = placeholder
+
+
+class AssetRulePrincipal(BaseModel):
+
+    def __init__(
+            self,
+            type=None,
+            principal_id=None,
+            principal_name=None
+    ):
+        self.type = type
+        self.principal_id = principal_id
+        self.principal_name = principal_name
+
+
+class AccessGroup(BaseModel):
+
+    def __init__(
+            self,
+            container_uuid=None,
+            created_at=None,
+            updated_at=None,
+            id=None,
+            name=None,
+            all_assets=None,
+            all_users=None,
+            status=None,
+            rules=None,
+            principals=None,
+            version=None,
+            created_by_uuid=None,
+            updated_by_uuid=None,
+            updated_by_name=None,
+            created_by_name=None,
+            processing_percent_complete=None
+    ):
+        self._rules = None
+        self._principals = None
+        self.container_uuid = container_uuid
+        self.created_at = created_at
+        self.updated_at = updated_at
+        self.id = id
+        self.name = name
+        self.all_assets = all_assets
+        self.all_users = all_users
+        self.status = status
+        self.rules = rules
+        self.principals = principals
+        self.version = version
+        self.created_by_uuid = created_by_uuid
+        self.updated_by_uuid = updated_by_uuid
+        self.updated_by_name = updated_by_name
+        self.created_by_name = created_by_name
+        self.processing_percent_complete = processing_percent_complete
+
+    @property
+    def rules(self):
+        return self._rules
+
+    @rules.setter
+    @BaseModel._model_list(AssetRule)
+    def rules(self, rules):
+        self._rules = rules
+
+    @property
+    def principals(self):
+        return self._principals
+
+    @principals.setter
+    @BaseModel._model_list(AssetRulePrincipal)
+    def principals(self, principals):
+        self._principals = principals
+
+
+class AccessGroupList(BaseModel):
+
+    def __init__(
+            self,
+            access_groups=None,
+            pagination=None
+    ):
+        self._access_groups = None
+        self._pagination = None
+        self.access_groups = access_groups
+        self.pagination = pagination
+
+    @property
+    def access_groups(self):
+        return self._access_groups
+
+    @access_groups.setter
+    @BaseModel._model_list(AccessGroup)
+    def access_groups(self, access_groups):
+        self._access_groups = access_groups
+
+    @property
+    def pagination(self):
+        return self._pagination
+
+    @pagination.setter
+    @BaseModel._model(FilterPagination)
+    def pagination(self, pagination):
+        self._pagination = pagination

@@ -7,6 +7,7 @@ from requests.utils import quote
 from tenable_io import __version__
 from tenable_io.config import TenableIOConfig
 from tenable_io.exceptions import TenableIOApiException, TenableIORetryableApiException
+from tenable_io.api.access_groups import AccessGroupsApi
 from tenable_io.api.agent_exclusions import AgentExclusionsApi
 from tenable_io.api.agent_config import AgentConfigApi
 from tenable_io.api.agent_groups import AgentGroupsApi
@@ -102,6 +103,7 @@ class TenableIOClient(object):
         """
         Initializes all api.
         """
+        self.access_groups_api = AccessGroupsApi(self)
         self.agent_exclusions_api = AgentExclusionsApi(self)
         self.agent_config_api = AgentConfigApi(self)
         self.agent_groups_api = AgentGroupsApi(self)
