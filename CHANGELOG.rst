@@ -2,6 +2,10 @@
 CHANGELOG
 =========
 
+1.6.0
+==========
+
+* Added: Support for new export API filters
 
 1.5.0
 ==========

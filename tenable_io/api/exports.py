@@ -148,6 +148,9 @@ class ExportsAssetsRequest(BaseRequest):
             assets that do not have plugin results. An asset may not have plugin results if the asset details originated
             from a connector, an API import, or a discovery scan, rather than a vulnerabilities scan.
         :type filters.has_plugin_results: bool
+        :param filters.tag.<category>: Returns all assets with the specified tags. The filter is defined as "tag",
+            a period ("."), and the tag category name. The value of the filter is a list of tag values.
+        :type filters.tag.<category>: list<str>
         """
         self.chunk_size = chunk_size
         self.filters = filters
@@ -181,7 +184,22 @@ class ExportsVulnsRequest(BaseRequest):
         :param filters.since: The start date (in Unix time) for the range of new or updated vulnerability data you want
             to export. If your request omits this parameter, exported data includes all vulnerabilities, regardless of
             date.
-        :type filters.since: long
+        :type filters.since: int
+        :param filters.tag.<category>: Returns all assets with the specified tags. The filter is defined as "tag",
+            a period ("."), and the tag category name. The value of the filter is a list of tag values.
+        :type filters.tag.<category>: list<str>
+        :param cidr_range: Restricts search for vulnerabilities to assets assigned an IP address within the specified
+            CIDR range. For example, 0.0.0.0/0 restricts the search to 0.0.0.1 and 255.255.255.254.
+        :type filters.cidr_range: str
+        :param first_found: The start date (in Unix time) for the range of vulnerability data you want to export,
+            based on when a scan first found a vulnerability on an asset.
+        :type filters.first_found: int
+        :param last_found: The start date (in Unix time) for the range of vulnerability data you want to export,
+            based on when a scan last found a vulnerability on an asset.
+        :type filters.last_found: int
+        :param last_fixed: 	The start date (in Unix time) for the range of vulnerability data you want to export,
+            based on when the vulnerability state was changed to fixed.
+        :type filters.last_fixed: int
         """
         if filters and u'severity' in filters and filters[u'severity']:
             for severity in filters[u'severity']:
