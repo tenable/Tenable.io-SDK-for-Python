@@ -1664,6 +1664,7 @@ class ScanSettings(BaseModel):
             policy_id=None,
             scanner_id=None,
             acls=[],
+            asset_lists=[],
     ):
         self.name = name
         self.description = description
@@ -1680,6 +1681,7 @@ class ScanSettings(BaseModel):
         self.scanner_id = scanner_id
         self.text_targets = text_targets
         self.acls = acls
+        self.asset_lists = asset_lists
 
 
 class ScannerLicense(BaseModel):
