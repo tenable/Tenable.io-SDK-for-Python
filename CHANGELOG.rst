@@ -6,6 +6,7 @@ CHANGELOG
 ==========
 
 * Added: Support for new export API filters
+* Added: Support for assets lists in scan settings
 
 1.5.0
 ==========
