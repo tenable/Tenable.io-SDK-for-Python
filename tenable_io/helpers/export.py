@@ -9,6 +9,7 @@ class ExportHelper(object):
         self._client = client
 
     def download_vulns(self, path=None, num_assets=50, severity=None, state=None, plugin_family=None, since=None,
+                       tags=None, cidr_range=None, first_found=None, last_found=None, last_fixed=None,
                        file_open_mode='wb'):
         """Request the vulns export chunks, poll for status, and download them to disk or load to memory when it's
             available. The chunks will be retrieved in no particular order.
@@ -24,6 +25,16 @@ class ExportHelper(object):
         :param since: The start date (in Unix time) for the range of new or updated vulnerability data you want
             to export. If your request omits this parameter, exported data includes all vulnerabilities, regardless of
             date.
+        :param tags: Returns all assets with the specified tags. The filter is defined as "tag",
+            a period ("."), and the tag category name. Should be specified as a dict of {tag_category_name:[tag_value(s)]}
+        :param cidr_range: Restricts search for vulnerabilities to assets assigned an IP address within the specified
+            CIDR range. For example, 0.0.0.0/0 restricts the search to 0.0.0.1 and 255.255.255.254.
+        :param first_found: The start date (in Unix time) for the range of vulnerability data you want to export,
+            based on when a scan first found a vulnerability on an asset.
+        :param last_found: The start date (in Unix time) for the range of vulnerability data you want to export,
+            based on when a scan last found a vulnerability on an asset.
+        :param last_fixed: 	The start date (in Unix time) for the range of vulnerability data you want to export,
+            based on when the vulnerability state was changed to fixed.
         :param file_open_mode: The open mode to the file output. Default to "wb".
         :return: The list of `chunk_id`s.
         """
@@ -31,15 +42,26 @@ class ExportHelper(object):
         if path is not None and path % {'chunk_id': 1} == path:
             path += '_%(chunk_id)s'
 
-        export_uuid = self._client.exports_api.vulns_request_export(
-            ExportsVulnsRequest(
-                num_assets=num_assets,
-                filters={
+        filters = {
                     u'severity': severity,
                     u'state': state,
                     u'plugin_family': plugin_family,
-                    u'since': since
+                    u'since': since,
+                    u'cidr_range': cidr_range,
+                    u'first_found': first_found,
+                    u'last_found': last_found,
+                    u'last_fixed': last_fixed
                 }
+
+        # Parse tag filters
+        if tags is not None:
+            tags = {u'tag.{}'.format(k): v for k, v in tags.items()}
+            filters.update(tags)
+
+        export_uuid = self._client.exports_api.vulns_request_export(
+            ExportsVulnsRequest(
+                num_assets=num_assets,
+                filters=filters
             )
         )
 
@@ -64,7 +86,7 @@ class ExportHelper(object):
 
     def download_assets(self, path=None, chunk_size=100, created_at=None, updated_at=None, terminated_at=None,
                         deleted_at=None, first_scan_time=None, last_authenticated_scan_time=None, last_assessed=None,
-                        servicenow_sysid=None,  sources=None, has_plugin_results=None, file_open_mode='wb'):
+                        servicenow_sysid=None,  sources=None, has_plugin_results=None, tags=None, file_open_mode='wb'):
         """Request the vulns export chunks, poll for status, and download them when it's available. The chunks will be
             retrieved in no particular order.
 
@@ -94,16 +116,16 @@ class ExportHelper(object):
         :param has_plugin_results: If true, returns all assets that have plugin results. If false, returns all assets
             that do not have plugin results. An asset may not have plugin results if the asset details originated from a
             connector, an API import, or a discovery scan, rather than a vulnerabilities scan.
+        :param tags: Returns all assets with the specified tags. The filter is defined as "tag",
+            a period ("."), and the tag category name. Should be specified as a dict of {tag_category_name:[tag_value(s)]}
+        :param file_open_mode: The open mode to the file output. Default to "wb".
         :return: The list of exported assets if path is `None` else the list of `chunk_id`s.
         """
         # If not parameterized for chunk ID.
         if path is not None and path % {'chunk_id': 1} == path:
             path += '_%(chunk_id)s'
 
-        export_uuid = self._client.exports_api.assets_request_export(
-            ExportsAssetsRequest(
-                chunk_size=chunk_size,
-                filters={
+        filters = {
                     u'created_at': created_at,
                     u'updated_at': updated_at,
                     u'terminated_at': terminated_at,
@@ -113,8 +135,18 @@ class ExportHelper(object):
                     u'last_assessed': last_assessed,
                     u'servicenow_sysid': servicenow_sysid,
                     u'sources': sources,
-                    u'has_plugin_results': has_plugin_results,
+                    u'has_plugin_results': has_plugin_results
                 }
+
+        # Parse tag filters
+        if tags is not None:
+            tags = {u'tag.{}'.format(k): v for k, v in tags.items()}
+            filters.update(tags)
+
+        export_uuid = self._client.exports_api.assets_request_export(
+            ExportsAssetsRequest(
+                chunk_size=chunk_size,
+                filters=filters
             )
         )
 
