@@ -2,6 +2,10 @@
 CHANGELOG
 =========
 
+UNRELEASED
+==========
+* Added missing scan export chapters
+
 1.6.0
 ==========
 
