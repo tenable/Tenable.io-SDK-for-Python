@@ -168,13 +168,16 @@ class ScansApi(BaseApi):
                                      path_params={'scan_id': scan_id})
         return loads(response.text).get('scan_uuid')
 
-    def list(self, folder_id=None):
+    def list(self, folder_id=None, last_modification_date=None):
         """Return the scan list.
 
+        :param folder_id: The folder ID (optional).
+        :param last_modification_date: Limit the results to those that have only changed since this time (optional).
         :raise TenableIOApiException:  When API error is encountered.
         :return: An instance of :class:`tenable_io.api.models.ScanList`.
         """
-        response = self._client.get('scans', params={'folder_id': folder_id} if folder_id else {})
+        params = {'folder_id': folder_id, 'last_modification_date': last_modification_date}
+        response = self._client.get('scans', params={k: v for (k, v) in params.items() if v})
         return ScanList.from_json(response.text)
 
     def pause(self, scan_id):
