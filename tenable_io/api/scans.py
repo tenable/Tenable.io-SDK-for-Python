@@ -261,9 +261,12 @@ class ScanConfigureRequest(ScanSaveRequest):
 
 class ScanExportRequest(BaseRequest):
 
+    CHAPTER_COMPLIANCE = u'compliance'
+    CHAPTER_COMPLIANCE_EXEC = u'compliance_exec'
     CHAPTER_CUSTOM_VULN_BY_HOST = u'vuln_by_host'
     CHAPTER_CUSTOM_VULN_BY_PLUGIN = u'vuln_by_plugin'
     CHAPTER_EXECUTIVE_SUMMARY = u'vuln_hosts_summary'
+    CHAPTER_REMEDIATIONS = u'remediations'
 
     FORMAT_CSV = u'csv'
     FORMAT_DB = u'db'
@@ -286,9 +289,12 @@ class ScanExportRequest(BaseRequest):
         ]
         assert chapters in [
             None,
+            ScanExportRequest.CHAPTER_COMPLIANCE,
+            ScanExportRequest.CHAPTER_COMPLIANCE_EXEC,
             ScanExportRequest.CHAPTER_CUSTOM_VULN_BY_HOST,
             ScanExportRequest.CHAPTER_CUSTOM_VULN_BY_PLUGIN,
             ScanExportRequest.CHAPTER_EXECUTIVE_SUMMARY,
+            ScanExportRequest.CHAPTER_REMEDIATIONS,
         ]
         self.format = format
         self.password = password
