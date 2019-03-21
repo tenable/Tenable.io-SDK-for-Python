@@ -54,6 +54,18 @@ class ExclusionApi(BaseApi):
         response = self._client.get('exclusions')
         return ExclusionList.from_json(response.text)
 
+    def import_exclusion(self, file):
+        """Imports an exclusion from csv using the file upload API.
+        To use this API you must first import the file using the File upload API.
+        Your file file should be a csv file formatted as:
+            id,name,description,members,creation_date,last_modification_date
+            <int>,<string>,<string>,<comma separated IPv4s or hostnames>,<date in unix format>,<date in unix format>
+
+        :param file: Name of the import file.
+        :raise TenableIOApiException:  When API error is encountered.
+        """
+        self._client.post('exclusions/import', {'file': file})
+
 
 class ExclusionSaveBaseRequest(BaseRequest):
 
