@@ -29,15 +29,16 @@ class ScanHelper(object):
     def __init__(self, client):
         self._client = client
 
-    def scans(self, name_regex=None, name=None, folder_id=None):
+    def scans(self, name_regex=None, name=None, folder_id=None, last_modification_date=None):
         """Get scans.
 
         :param name: A string to match scans with, default to None. Ignored if the `name_regex` argument is passed.
         :param name_regex: A regular expression to match scans' names with, default to None.
         :param folder_id: Only scans in the folder identified by `folder_id`, default to None.
+        :param last_modification_date: Limit the results to those that have only changed since this time, default to None.
         :return: A list of ScanRef.
         """
-        scans = self._client.scans_api.list(folder_id=folder_id).scans
+        scans = self._client.scans_api.list(folder_id=folder_id, last_modification_date=last_modification_date).scans
         if name_regex:
             name_regex = re.compile(name_regex)
             scans = [scan for scan in scans if name_regex.match(scan.name)]

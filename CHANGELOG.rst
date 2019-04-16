@@ -2,6 +2,12 @@
 CHANGELOG
 =========
 
+1.7.0
+==========
+* Added: Support for all scan export chapters
+* Added: Last Modification Date parameter to scan list method
+* Added: Import endpoint to exclusions API
+
 1.6.0
 ==========
 
