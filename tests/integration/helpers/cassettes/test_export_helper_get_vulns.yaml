@@ -1,0 +1,425 @@
+interactions:
+- request:
+    body: '{"num_assets": 50}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '18'
+      Content-Type:
+      - application/json
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: POST
+    uri: https://cloud.tenable.com/vulns/export
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA6tWSq0oyC8qiS8tzUxRslIyTzQzTbIwT9E1NU421zUxMEjWtUg0NtFNNrBMMTA1
+        STI2s7RQqgUAXaHF+zYAAAA=
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Jul 2019 22:33:43 GMT
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-a-prod-us-west-1
+      X-Request-Uuid:
+      - e4000f59abe69255218adb305047536b
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: GET
+    uri: https://cloud.tenable.com/vulns/export/7a65b87d-53c7-400c-8a34-c09d054b3698/status
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA6tWKi5JLCktVrJSCgx1DXV1UdJRSs4ozcsujk8sS8zMSUzKSVWyio6Fi6YBBVNT
+        UISSE/OSU3OgorUAYwLvsFIAAAA=
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Jul 2019 22:33:44 GMT
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-a-prod-us-west-1
+      X-Request-Uuid:
+      - 7ed590b9acc4a969f3a9538385818bb4
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: GET
+    uri: https://cloud.tenable.com/vulns/export/7a65b87d-53c7-400c-8a34-c09d054b3698/status
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA6tWKi5JLCktVrJScvP08wz2cHVR0lFKzijNyy6OTyxLzMxJTMpJVbKKNoyFC6cB
+        RVNTgGIIoeTEvOTUHKhoLQCvgevEVQAAAA==
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Jul 2019 22:33:54 GMT
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-a-prod-us-west-1
+      X-Request-Uuid:
+      - 4c06f3792f1b1e4ea955738beb1f804f
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: GET
+    uri: https://cloud.tenable.com/vulns/export/7a65b87d-53c7-400c-8a34-c09d054b3698/status
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA6tWKi5JLCktVrJScvP08wz2cHVR0lFKzijNyy6OTyxLzMxJTMpJVbKKNoyFC6cB
+        RVNTgGIIoeTEvOTUHKhoLQCvgevEVQAAAA==
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Jul 2019 22:33:54 GMT
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-a-prod-us-west-1
+      X-Request-Uuid:
+      - a4c08b7c1ded2ab15bdbcebf7c7554c1
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: GET
+    uri: https://cloud.tenable.com/vulns/export/7a65b87d-53c7-400c-8a34-c09d054b3698/chunks/1
+  response:
+    body:
+      string: '[{"asset":{"agent_uuid":"abaadd1b88314a86a27070de97f6b637","bios_uuid":"423D1676-1111-7928-8B8D-190989DFC6C3","device_type":"general-purpose","hostname":"10.10.10.1","uuid":"d55ac6a1-cb50-4fb4-978b-d25e90311261","ipv4":"10.10.10.1","last_authenticated_results":"2017-03-09T21:32:07Z","mac_address":"00:50:56:bd:2d:11","operating_system":["Linux
+        Kernel 3.10.0-327.22.2.el7.x86_64 on CentOS Linux release 7.2.1511 (Core)"],"network_id":"00000000-0000-0000-0000-000000000000","tracked":true},"output":"\nRemote
+        package installed : kernel-3.10.0-514.2.2.el7\nShould be                :
+        kernel-3.10.0-514.10.2.el7\n\nRemote package installed : kernel-tools-3.10.0-514.2.2.el7\nShould
+        be                : kernel-tools-3.10.0-514.10.2.el7\n\nRemote package installed
+        : kernel-tools-libs-3.10.0-514.2.2.el7\nShould be                : kernel-tools-libs-3.10.0-514.10.2.el7\n\nRemote
+        package installed : python-perf-3.10.0-514.2.2.el7\nShould be                :
+        python-perf-3.10.0-514.10.2.el7\n\nNOTE: The vulnerability information above
+        was derived by checking the\npackage versions of the affected packages from
+        this advisory. This\nscan is unable to rely on Red Hat''s own security checks,
+        which\nconsider channels and products in their vulnerability determinations.","plugin":{"cpe":["p-cpe:/a:redhat:enterprise_linux:kernel-tools","p-cpe:/a:redhat:enterprise_linux:kernel-debug-debuginfo","p-cpe:/a:redhat:enterprise_linux:kernel-debug","cpe:/o:redhat:enterprise_linux:7","p-cpe:/a:redhat:enterprise_linux:perf-debuginfo","p-cpe:/a:redhat:enterprise_linux:kernel-debug-devel","p-cpe:/a:redhat:enterprise_linux:kernel-kdump","cpe:/o:redhat:enterprise_linux:7.3","p-cpe:/a:redhat:enterprise_linux:kernel-tools-debuginfo","p-cpe:/a:redhat:enterprise_linux:kernel-devel","p-cpe:/a:redhat:enterprise_linux:perf","p-cpe:/a:redhat:enterprise_linux:kernel-tools-libs","p-cpe:/a:redhat:enterprise_linux:kernel-tools-libs-devel","p-cpe:/a:redhat:enterprise_linux:kernel-headers","p-cpe:/a:redhat:enterprise_linux:kernel-kdump-debuginfo","p-cpe:/a:redhat:enterprise_linux:python-perf","p-cpe:/a:redhat:enterprise_linux:python-perf-debuginfo","p-cpe:/a:redhat:enterprise_linux:kernel-debuginfo-common-s390x","p-cpe:/a:redhat:enterprise_linux:kernel","p-cpe:/a:redhat:enterprise_linux:kernel-debuginfo-common-x86_64","p-cpe:/a:redhat:enterprise_linux:kernel-doc","p-cpe:/a:redhat:enterprise_linux:kernel-debuginfo","p-cpe:/a:redhat:enterprise_linux:kernel-abi-whitelists","p-cpe:/a:redhat:enterprise_linux:kernel-kdump-devel"],"cve":["CVE-2016-9084","CVE-2016-9083","CVE-2016-8655","CVE-2016-8630"],"cvss3_base_score":7.8,"cvss3_temporal_score":7.4,"cvss3_temporal_vector":{"exploitability":"Proof-of-concept","remediation_level":"Not-defined","report_confidence":"Confirmed","raw":"E:P/RL:X/RC:C"},"cvss3_vector":{"access_complexity":"Low","access_vector":"Local-access","availability_impact":"High","confidentiality_impact":"High","integrity_impact":"High","raw":"AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"},"cvss_base_score":7.2,"cvss_temporal_score":6.5,"cvss_temporal_vector":{"exploitability":"Proof-of-concept","remediation_level":"Not-defined","report_confidence":"Confirmed","raw":"E:POC/RL:ND/RC:C"},"cvss_vector":{"access_complexity":"Low","access_vector":"Local-access","authentication":"None
+        required","availability_impact":"Complete","confidentiality_impact":"Complete","integrity_impact":"Complete","raw":"AV:L/AC:L/Au:N/C:C/I:C/A:C"},"description":"An
+        update for kernel is now available for Red Hat Enterprise Linux 7.\n\nRed
+        Hat Product Security has rated this update as having a security impact of
+        Important. A Common Vulnerability Scoring System (CVSS) base score, which
+        gives a detailed severity rating, is available for each vulnerability from
+        the CVE link(s) in the References section.\n\nThe kernel packages contain
+        the Linux kernel, the core of any Linux operating system.\n\nSecurity Fix(es)
+        :\n\n* Linux kernel built with the Kernel-based Virtual Machine (CONFIG_KVM)
+        support is vulnerable to a NULL pointer dereference flaw.\nIt could occur
+        on x86 platform, when emulating an undefined instruction. An attacker could
+        use this flaw to crash the host kernel resulting in DoS. (CVE-2016-8630, Important)\n\n*
+        A race condition issue leading to a use-after-free flaw was found in the way
+        the raw packet sockets implementation in the Linux kernel networking subsystem
+        handled synchronization while creating the TPACKET_V3 ring buffer. A local
+        user able to open a raw packet socket (requires the CAP_NET_RAW capability)
+        could use this flaw to elevate their privileges on the system. (CVE-2016-8655,
+        Important)\n\n* A flaw was discovered in the Linux kernel''s implementation
+        of VFIO.\nAn attacker issuing an ioctl can create a situation where memory
+        is corrupted and modify memory outside of the expected area. This may overwrite
+        kernel memory and subvert kernel execution. (CVE-2016-9083, Important)\n\n*
+        The use of a kzalloc with an integer multiplication allowed an integer overflow
+        condition to be reached in vfio_pci_intrs.c. This combined with CVE-2016-9083
+        may allow an attacker to craft an attack and use unallocated memory, potentially
+        crashing the machine.\n(CVE-2016-9084, Moderate)\n\nRed Hat would like to
+        thank Philip Pettersson for reporting CVE-2016-8655.\n\nAdditional Changes
+        :\n\nSpace precludes documenting all of the bug fixes and enhancements included
+        in this advisory. To see the complete list of bug fixes and enhancements,
+        refer to the following KnowledgeBase article:\nhttps://access.redhat.com/articles/2940041
+        .","exploit_available":true,"exploit_framework_core":true,"exploitability_ease":"Exploits
+        are available","exploited_by_malware":true,"family":"Red Hat Local Security
+        Checks","family_id":1,"has_patch":true,"id":97509,"name":"RHEL 7 : kernel
+        (RHSA-2017:0386)","patch_publication_date":"2017-03-02T00:00:00Z","modification_date":"2017-03-07T00:00:00Z","publication_date":"2017-03-03T00:00:00Z","risk_factor":"High","see_also":["https://www.redhat.com/security/data/cve/CVE-2016-8630.html","https://www.redhat.com/security/data/cve/CVE-2016-8655.html","https://www.redhat.com/security/data/cve/CVE-2016-9083.html","https://www.redhat.com/security/data/cve/CVE-2016-9084.html","https://access.redhat.com/articles/2940041","http://rhn.redhat.com/errata/RHSA-2017-0386.html"],"solution":"Andrew
+        Scott is the man!","synopsis":"The remote Red Hat host is missing one or more
+        security updates.","type":"local","version":"$Revision: 3.2 $","xrefs":[{"type":"OSVDB","id":"146370"},{"type":"OSVDB","id":"148164"},{"type":"OSVDB","id":"146377"},{"type":"OSVDB","id":"147015"},{"type":"RHSA","id":"2017:0386"}],"vpr":{"score":8.9,"drivers":{"age_of_vuln":{"lower_bound":731},"exploit_code_maturity":"HIGH","cvss_impact_score_predicted":false,"cvss3_impact_score":5.9,"threat_intensity_last28":"VERY_LOW","threat_recency":{"lower_bound":366},"threat_sources_last28":["No
+        recorded events"],"product_coverage":"LOW"},"updated":"2019-06-13T10:09:15Z"}},"port":{"port":0,"protocol":"TCP"},"scan":{"completed_at":"2019-07-15T22:21:55Z","schedule_uuid":"4b4f6ecb-40d0-6c47-c9f9-cd76d8cacb8ee23d7f08d182822d","started_at":"2019-07-15T22:21:55Z","uuid":"8c75de97-096e-454b-48af-28d2bb199275957a390aa7ca40aa"},"severity":"high","severity_id":3,"severity_default_id":3,"severity_modification_type":"NONE","first_found":"2019-07-15T22:21:55Z","last_found":"2019-07-15T22:21:55Z","state":"OPEN"},{"asset":{"agent_uuid":"ef4dc7c576c84663afa6e6382769c8b2","bios_uuid":"422678EC-2222-1EA5-3A8C-0551D91C0C02","device_type":"general-purpose","hostname":"10.10.10.2","uuid":"f3277331-8c77-425a-a68c-1a16f81af5a5","ipv4":"10.10.10.2","last_authenticated_results":"2017-03-09T21:33:32Z","mac_address":"00:50:56:a6:0a:22","operating_system":["Linux
+        Kernel 3.10.0-514.2.2.el7.x86_64 on Red Hat Enterprise Linux Server release
+        7.3 (Maipo)"],"network_id":"00000000-0000-0000-0000-000000000000","tracked":true},"output":"\nRemote
+        package installed : kernel-3.10.0-514.2.2.el7\nShould be                :
+        kernel-3.10.0-514.10.2.el7\n\nRemote package installed : kernel-tools-3.10.0-514.2.2.el7\nShould
+        be                : kernel-tools-3.10.0-514.10.2.el7\n\nRemote package installed
+        : kernel-tools-libs-3.10.0-514.2.2.el7\nShould be                : kernel-tools-libs-3.10.0-514.10.2.el7\n\nRemote
+        package installed : python-perf-3.10.0-514.2.2.el7\nShould be                :
+        python-perf-3.10.0-514.10.2.el7\n\nNOTE: The vulnerability information above
+        was derived by checking the\npackage versions of the affected packages from
+        this advisory. This\nscan is unable to rely on Red Hat''s own security checks,
+        which\nconsider channels and products in their vulnerability determinations.","plugin":{"cpe":["p-cpe:/a:redhat:enterprise_linux:kernel-tools","p-cpe:/a:redhat:enterprise_linux:kernel-debug-debuginfo","p-cpe:/a:redhat:enterprise_linux:kernel-debug","cpe:/o:redhat:enterprise_linux:7","p-cpe:/a:redhat:enterprise_linux:perf-debuginfo","p-cpe:/a:redhat:enterprise_linux:kernel-debug-devel","p-cpe:/a:redhat:enterprise_linux:kernel-kdump","cpe:/o:redhat:enterprise_linux:7.3","p-cpe:/a:redhat:enterprise_linux:kernel-tools-debuginfo","p-cpe:/a:redhat:enterprise_linux:kernel-devel","p-cpe:/a:redhat:enterprise_linux:perf","p-cpe:/a:redhat:enterprise_linux:kernel-tools-libs","p-cpe:/a:redhat:enterprise_linux:kernel-tools-libs-devel","p-cpe:/a:redhat:enterprise_linux:kernel-headers","p-cpe:/a:redhat:enterprise_linux:kernel-kdump-debuginfo","p-cpe:/a:redhat:enterprise_linux:python-perf","p-cpe:/a:redhat:enterprise_linux:python-perf-debuginfo","p-cpe:/a:redhat:enterprise_linux:kernel-debuginfo-common-s390x","p-cpe:/a:redhat:enterprise_linux:kernel","p-cpe:/a:redhat:enterprise_linux:kernel-debuginfo-common-x86_64","p-cpe:/a:redhat:enterprise_linux:kernel-doc","p-cpe:/a:redhat:enterprise_linux:kernel-debuginfo","p-cpe:/a:redhat:enterprise_linux:kernel-abi-whitelists","p-cpe:/a:redhat:enterprise_linux:kernel-kdump-devel"],"cve":["CVE-2016-9084","CVE-2016-9083","CVE-2016-8655","CVE-2016-8630"],"cvss3_base_score":7.8,"cvss3_temporal_score":7.4,"cvss3_temporal_vector":{"exploitability":"Proof-of-concept","remediation_level":"Not-defined","report_confidence":"Confirmed","raw":"E:P/RL:X/RC:C"},"cvss3_vector":{"access_complexity":"Low","access_vector":"Local-access","availability_impact":"High","confidentiality_impact":"High","integrity_impact":"High","raw":"AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"},"cvss_base_score":7.2,"cvss_temporal_score":6.5,"cvss_temporal_vector":{"exploitability":"Proof-of-concept","remediation_level":"Not-defined","report_confidence":"Confirmed","raw":"E:POC/RL:ND/RC:C"},"cvss_vector":{"access_complexity":"Low","access_vector":"Local-access","authentication":"None
+        required","availability_impact":"Complete","confidentiality_impact":"Complete","integrity_impact":"Complete","raw":"AV:L/AC:L/Au:N/C:C/I:C/A:C"},"description":"An
+        update for kernel is now available for Red Hat Enterprise Linux 7.\n\nRed
+        Hat Product Security has rated this update as having a security impact of
+        Important. A Common Vulnerability Scoring System (CVSS) base score, which
+        gives a detailed severity rating, is available for each vulnerability from
+        the CVE link(s) in the References section.\n\nThe kernel packages contain
+        the Linux kernel, the core of any Linux operating system.\n\nSecurity Fix(es)
+        :\n\n* Linux kernel built with the Kernel-based Virtual Machine (CONFIG_KVM)
+        support is vulnerable to a NULL pointer dereference flaw.\nIt could occur
+        on x86 platform, when emulating an undefined instruction. An attacker could
+        use this flaw to crash the host kernel resulting in DoS. (CVE-2016-8630, Important)\n\n*
+        A race condition issue leading to a use-after-free flaw was found in the way
+        the raw packet sockets implementation in the Linux kernel networking subsystem
+        handled synchronization while creating the TPACKET_V3 ring buffer. A local
+        user able to open a raw packet socket (requires the CAP_NET_RAW capability)
+        could use this flaw to elevate their privileges on the system. (CVE-2016-8655,
+        Important)\n\n* A flaw was discovered in the Linux kernel''s implementation
+        of VFIO.\nAn attacker issuing an ioctl can create a situation where memory
+        is corrupted and modify memory outside of the expected area. This may overwrite
+        kernel memory and subvert kernel execution. (CVE-2016-9083, Important)\n\n*
+        The use of a kzalloc with an integer multiplication allowed an integer overflow
+        condition to be reached in vfio_pci_intrs.c. This combined with CVE-2016-9083
+        may allow an attacker to craft an attack and use unallocated memory, potentially
+        crashing the machine.\n(CVE-2016-9084, Moderate)\n\nRed Hat would like to
+        thank Philip Pettersson for reporting CVE-2016-8655.\n\nAdditional Changes
+        :\n\nSpace precludes documenting all of the bug fixes and enhancements included
+        in this advisory. To see the complete list of bug fixes and enhancements,
+        refer to the following KnowledgeBase article:\nhttps://access.redhat.com/articles/2940041
+        .","exploit_available":true,"exploit_framework_core":true,"exploitability_ease":"Exploits
+        are available","exploited_by_malware":true,"family":"Red Hat Local Security
+        Checks","family_id":1,"has_patch":true,"id":97509,"name":"RHEL 7 : kernel
+        (RHSA-2017:0386)","patch_publication_date":"2017-03-02T00:00:00Z","modification_date":"2017-03-07T00:00:00Z","publication_date":"2017-03-03T00:00:00Z","risk_factor":"High","see_also":["https://www.redhat.com/security/data/cve/CVE-2016-8630.html","https://www.redhat.com/security/data/cve/CVE-2016-8655.html","https://www.redhat.com/security/data/cve/CVE-2016-9083.html","https://www.redhat.com/security/data/cve/CVE-2016-9084.html","https://access.redhat.com/articles/2940041","http://rhn.redhat.com/errata/RHSA-2017-0386.html"],"solution":"Andrew
+        Scott is the man!","synopsis":"The remote Red Hat host is missing one or more
+        security updates.","type":"local","version":"$Revision: 3.2 $","xrefs":[{"type":"OSVDB","id":"146370"},{"type":"OSVDB","id":"148164"},{"type":"OSVDB","id":"146377"},{"type":"OSVDB","id":"147015"},{"type":"RHSA","id":"2017:0386"}],"vpr":{"score":8.9,"drivers":{"age_of_vuln":{"lower_bound":731},"exploit_code_maturity":"HIGH","cvss_impact_score_predicted":false,"cvss3_impact_score":5.9,"threat_intensity_last28":"VERY_LOW","threat_recency":{"lower_bound":366},"threat_sources_last28":["No
+        recorded events"],"product_coverage":"LOW"},"updated":"2019-06-13T10:09:15Z"}},"port":{"port":0,"protocol":"TCP"},"scan":{"completed_at":"2019-07-15T22:21:55Z","schedule_uuid":"4b4f6ecb-40d0-6c47-c9f9-cd76d8cacb8ee23d7f08d182822d","started_at":"2019-07-15T22:21:55Z","uuid":"8c75de97-096e-454b-48af-28d2bb199275957a390aa7ca40aa"},"severity":"high","severity_id":3,"severity_default_id":3,"severity_modification_type":"NONE","first_found":"2019-07-15T22:21:55Z","last_found":"2019-07-15T22:21:55Z","state":"OPEN"},{"asset":{"agent_uuid":"abaadd1b88314a86a27070de97f6b644","bios_uuid":"423D1676-3333-7928-8B8D-190989DFC6C3","device_type":"general-purpose","hostname":"10.10.10.3","uuid":"6b50793a-9ac1-4b7a-ac51-4aa05d8252ea","ipv4":"10.10.10.3","last_authenticated_results":"2017-03-09T21:32:07Z","mac_address":"00:50:56:11:2d:33","operating_system":["Linux
+        Kernel 3.10.0-327.22.2.el7.x86_64 on CentOS Linux release 7.2.1511 (Core)"],"network_id":"00000000-0000-0000-0000-000000000000","tracked":true},"output":"\nRemote
+        package installed : kernel-3.10.0-514.2.2.el7\nShould be                :
+        kernel-3.10.0-514.10.2.el7\n\nRemote package installed : kernel-tools-3.10.0-514.2.2.el7\nShould
+        be                : kernel-tools-3.10.0-514.10.2.el7\n\nRemote package installed
+        : kernel-tools-libs-3.10.0-514.2.2.el7\nShould be                : kernel-tools-libs-3.10.0-514.10.2.el7\n\nRemote
+        package installed : python-perf-3.10.0-514.2.2.el7\nShould be                :
+        python-perf-3.10.0-514.10.2.el7\n\nNOTE: The vulnerability information above
+        was derived by checking the\npackage versions of the affected packages from
+        this advisory. This\nscan is unable to rely on Red Hat''s own security checks,
+        which\nconsider channels and products in their vulnerability determinations.","plugin":{"cpe":["p-cpe:/a:redhat:enterprise_linux:kernel-tools","p-cpe:/a:redhat:enterprise_linux:kernel-debug-debuginfo","p-cpe:/a:redhat:enterprise_linux:kernel-debug","cpe:/o:redhat:enterprise_linux:7","p-cpe:/a:redhat:enterprise_linux:perf-debuginfo","p-cpe:/a:redhat:enterprise_linux:kernel-debug-devel","p-cpe:/a:redhat:enterprise_linux:kernel-kdump","cpe:/o:redhat:enterprise_linux:7.3","p-cpe:/a:redhat:enterprise_linux:kernel-tools-debuginfo","p-cpe:/a:redhat:enterprise_linux:kernel-devel","p-cpe:/a:redhat:enterprise_linux:perf","p-cpe:/a:redhat:enterprise_linux:kernel-tools-libs","p-cpe:/a:redhat:enterprise_linux:kernel-tools-libs-devel","p-cpe:/a:redhat:enterprise_linux:kernel-headers","p-cpe:/a:redhat:enterprise_linux:kernel-kdump-debuginfo","p-cpe:/a:redhat:enterprise_linux:python-perf","p-cpe:/a:redhat:enterprise_linux:python-perf-debuginfo","p-cpe:/a:redhat:enterprise_linux:kernel-debuginfo-common-s390x","p-cpe:/a:redhat:enterprise_linux:kernel","p-cpe:/a:redhat:enterprise_linux:kernel-debuginfo-common-x86_64","p-cpe:/a:redhat:enterprise_linux:kernel-doc","p-cpe:/a:redhat:enterprise_linux:kernel-debuginfo","p-cpe:/a:redhat:enterprise_linux:kernel-abi-whitelists","p-cpe:/a:redhat:enterprise_linux:kernel-kdump-devel"],"cve":["CVE-2016-9084","CVE-2016-9083","CVE-2016-8655","CVE-2016-8630"],"cvss3_base_score":7.8,"cvss3_temporal_score":7.4,"cvss3_temporal_vector":{"exploitability":"Proof-of-concept","remediation_level":"Not-defined","report_confidence":"Confirmed","raw":"E:P/RL:X/RC:C"},"cvss3_vector":{"access_complexity":"Low","access_vector":"Local-access","availability_impact":"High","confidentiality_impact":"High","integrity_impact":"High","raw":"AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"},"cvss_base_score":7.2,"cvss_temporal_score":6.5,"cvss_temporal_vector":{"exploitability":"Proof-of-concept","remediation_level":"Not-defined","report_confidence":"Confirmed","raw":"E:POC/RL:ND/RC:C"},"cvss_vector":{"access_complexity":"Low","access_vector":"Local-access","authentication":"None
+        required","availability_impact":"Complete","confidentiality_impact":"Complete","integrity_impact":"Complete","raw":"AV:L/AC:L/Au:N/C:C/I:C/A:C"},"description":"An
+        update for kernel is now available for Red Hat Enterprise Linux 7.\n\nRed
+        Hat Product Security has rated this update as having a security impact of
+        Important. A Common Vulnerability Scoring System (CVSS) base score, which
+        gives a detailed severity rating, is available for each vulnerability from
+        the CVE link(s) in the References section.\n\nThe kernel packages contain
+        the Linux kernel, the core of any Linux operating system.\n\nSecurity Fix(es)
+        :\n\n* Linux kernel built with the Kernel-based Virtual Machine (CONFIG_KVM)
+        support is vulnerable to a NULL pointer dereference flaw.\nIt could occur
+        on x86 platform, when emulating an undefined instruction. An attacker could
+        use this flaw to crash the host kernel resulting in DoS. (CVE-2016-8630, Important)\n\n*
+        A race condition issue leading to a use-after-free flaw was found in the way
+        the raw packet sockets implementation in the Linux kernel networking subsystem
+        handled synchronization while creating the TPACKET_V3 ring buffer. A local
+        user able to open a raw packet socket (requires the CAP_NET_RAW capability)
+        could use this flaw to elevate their privileges on the system. (CVE-2016-8655,
+        Important)\n\n* A flaw was discovered in the Linux kernel''s implementation
+        of VFIO.\nAn attacker issuing an ioctl can create a situation where memory
+        is corrupted and modify memory outside of the expected area. This may overwrite
+        kernel memory and subvert kernel execution. (CVE-2016-9083, Important)\n\n*
+        The use of a kzalloc with an integer multiplication allowed an integer overflow
+        condition to be reached in vfio_pci_intrs.c. This combined with CVE-2016-9083
+        may allow an attacker to craft an attack and use unallocated memory, potentially
+        crashing the machine.\n(CVE-2016-9084, Moderate)\n\nRed Hat would like to
+        thank Philip Pettersson for reporting CVE-2016-8655.\n\nAdditional Changes
+        :\n\nSpace precludes documenting all of the bug fixes and enhancements included
+        in this advisory. To see the complete list of bug fixes and enhancements,
+        refer to the following KnowledgeBase article:\nhttps://access.redhat.com/articles/2940041
+        .","exploit_available":true,"exploit_framework_core":true,"exploitability_ease":"Exploits
+        are available","exploited_by_malware":true,"family":"Red Hat Local Security
+        Checks","family_id":1,"has_patch":true,"id":97509,"name":"RHEL 7 : kernel
+        (RHSA-2017:0386)","patch_publication_date":"2017-03-02T00:00:00Z","modification_date":"2017-03-07T00:00:00Z","publication_date":"2017-03-03T00:00:00Z","risk_factor":"High","see_also":["https://www.redhat.com/security/data/cve/CVE-2016-8630.html","https://www.redhat.com/security/data/cve/CVE-2016-8655.html","https://www.redhat.com/security/data/cve/CVE-2016-9083.html","https://www.redhat.com/security/data/cve/CVE-2016-9084.html","https://access.redhat.com/articles/2940041","http://rhn.redhat.com/errata/RHSA-2017-0386.html"],"solution":"Andrew
+        Scott is the man!","synopsis":"The remote Red Hat host is missing one or more
+        security updates.","type":"local","version":"$Revision: 3.2 $","xrefs":[{"type":"OSVDB","id":"146370"},{"type":"OSVDB","id":"148164"},{"type":"OSVDB","id":"146377"},{"type":"OSVDB","id":"147015"},{"type":"RHSA","id":"2017:0386"}],"vpr":{"score":8.9,"drivers":{"age_of_vuln":{"lower_bound":731},"exploit_code_maturity":"HIGH","cvss_impact_score_predicted":false,"cvss3_impact_score":5.9,"threat_intensity_last28":"VERY_LOW","threat_recency":{"lower_bound":366},"threat_sources_last28":["No
+        recorded events"],"product_coverage":"LOW"},"updated":"2019-06-13T10:09:15Z"}},"port":{"port":0,"protocol":"TCP"},"scan":{"completed_at":"2019-07-15T22:21:55Z","schedule_uuid":"4b4f6ecb-40d0-6c47-c9f9-cd76d8cacb8ee23d7f08d182822d","started_at":"2019-07-15T22:21:55Z","uuid":"8c75de97-096e-454b-48af-28d2bb199275957a390aa7ca40aa"},"severity":"high","severity_id":3,"severity_default_id":3,"severity_modification_type":"NONE","first_found":"2019-07-15T22:21:55Z","last_found":"2019-07-15T22:21:55Z","state":"OPEN"}]'
+    headers:
+      Accept-Ranges:
+      - bytes
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Disposition:
+      - attachment; filename=7a65b87d-53c7-400c-8a34-c09d054b3698-1-vulndoc.json
+      Content-Length:
+      - '22221'
+      Content-Type:
+      - application/octet-stream
+      Date:
+      - Mon, 15 Jul 2019 22:33:55 GMT
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-a-prod-us-west-1
+      X-Request-Uuid:
+      - 8583fdb65d438f1c4c4e9af0f700cef0
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

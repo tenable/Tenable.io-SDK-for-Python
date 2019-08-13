@@ -4,11 +4,10 @@ from tenable_io.client import TenableIOClient
 from tenable_io.exceptions import TenableIOApiException
 
 
-def example(test_name, test_file):
+def example():
 
-    # Generate unique file.
-    policy_name = test_name(u'my test policy')
-    test_file_output = test_file(u'my_exported_policy.tenable_io')
+    policy_name = u'my test policy'
+    test_file_output = u'my_exported_policy.tenable_io'
 
     '''
     Instantiate an instance of the TenableIOClient.

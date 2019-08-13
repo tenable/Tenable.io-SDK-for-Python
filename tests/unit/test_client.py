@@ -1,6 +1,6 @@
-from unittest.mock import Mock
-
 import pytest
+
+from unittest.mock import Mock
 
 from tenable_io.client import TenableIOClient, TenableIOApiException, TenableIORetryableApiException
 from tests.base import BaseTest
@@ -8,7 +8,7 @@ from tests.base import BaseTest
 
 class TestClient(BaseTest):
 
-    def test_client_retries(self, client):
+    def test_client_retries(self):
         mock_error = Mock(side_effect=TenableIORetryableApiException(Mock()))
         retry_mock_error = TenableIOClient._retry(mock_error)
         retry_header = {u'X-Tio-Retry-Count': '3'}

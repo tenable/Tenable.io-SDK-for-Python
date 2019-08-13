@@ -33,6 +33,15 @@ class App:
     def tear_down(self):
         shutil.rmtree(self._output_dir)
 
+@pytest.fixture(scope='module')
+def vcr_config():
+    return {
+        'filter_headers': [
+            ('X-APIKeys', 'accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY'),
+            ('x-request-uuid', 'ffffffffffffffffffffffffffffffff'),
+        ]
+    }
+
 
 @pytest.fixture(scope='session')
 def app():

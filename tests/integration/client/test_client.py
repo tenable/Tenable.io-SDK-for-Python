@@ -1,3 +1,5 @@
+import pytest
+
 from tenable_io.client import TenableIOClient
 from tenable_io.exceptions import TenableIOApiException, TenableIOErrorCode
 from tests.base import BaseTest
@@ -5,6 +7,7 @@ from tests.base import BaseTest
 
 class TestTenableIOClient(BaseTest):
 
+    @pytest.mark.vcr()
     def test_client_bad_keys(self):
         try:
             TenableIOClient('bad', 'key').session_api.get()

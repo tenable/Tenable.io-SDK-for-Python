@@ -1,0 +1,566 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Auth fffffffffffffffffffffffffffffffffffffffffffffffffff
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://cloud.tenable.com/container-security-registry/v2/token?service=tenable.io
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAxXMOQ7CQAwF0Lu4JsjjRbOcg4oGefCPhJCgSKgQdweq17037c87HjRIShXobM4Z
+        sylMEpgcYAvj/MHIqs3DU7sEX9eGKdyr2GoOOtBt217IS+z/jktfuC7FT6JDZbAdXduZPl8PJJDL
+        cwAAAA==
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Jul 2019 23:32:04 GMT
+      Docker-Distribution-Api-Version:
+      - registry/2.0
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Gateway-Site-ID:
+      - nginx-router-c-prod-us-west-1
+      X-Request-Uuid:
+      - 3986c3b4a8970516ca7c08bd65725db4
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Auth fffffffffffffffffffffffffffffffffffffffffffffffffff
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://cloud.tenable.com/container-security-registry/v2/test_sc_test_jobs_by_image/blobs/uploads/
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Content-Type:
+      - text/plain; charset=UTF-8
+      Date:
+      - Mon, 15 Jul 2019 23:32:08 GMT
+      Docker-Distribution-Api-Version:
+      - registry/2.0
+      Docker-Upload-Uuid:
+      - a03a748f-7e87-4c83-9eab-2212e9797167
+      Location:
+      - https://registry.cloud.tenable.com/v2/test_sc_test_jobs_by_image/blobs/uploads/a03a748f-7e87-4c83-9eab-2212e9797167
+      Range:
+      - bytes=0-0
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-c-prod-us-west-1
+      X-Request-Uuid:
+      - dfffbedc630d549a2aa0c55eaea3b095
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 202
+      message: Accepted
+- request:
+    body: !!binary |
+      H4sICKjmdlkAA2hlbGxvLnRhcgDtWltv2zYU9vN+hcC9bIBj8yJSpIA9ZEmAFmiXoc06YGkQULzE
+      WmXJkORihuH/viPFSR1nsbvE8ZZNnw2ZN/FyLjznkMaUa2kIYZRJwRlhxkfEY001VkoJFtKEc8wt
+      1YZJ6rHCyjvGDGYqVFYlg9+rIu9tBiYYizDs4Wus/9Io5D0CQ4ccRyRiPUwxw6wX4C397gTTqtYl
+      TOWp/awv7oVgjnRpRmntTD0tHYqRHlsRoj4yRe7TKxTP0auiqnM9biqh/LgY6zT/kv+lcuV16rCu
+      tRm9r22ao9jrrHIrZcW0vl/oyvK28Kye3aZPJy6/20+bO82Nuy05yT+j+Bz9fHj26ofhtCqHWWF0
+      NqySNI9X8rfZLxVt4joLD3TRR0dj2/Q1HLksK5qCw/KqOqmMnjioqMspjPd6rK+aJVcjTbmIE8pV
+      4on1PPRGJtQRLnwiIpsYpZyKqJUy8tJ54hQmoE2aKiaJcEJ5bq0Cen0osunYVSjOp1nWR78W5ac0
+      vzpOl+Q8yetyNinSvL5pcZr/OE0ze5N9oxOXLV9ftAyrgTMtNyhRFJQ6SjQmznKmNMGOQ5JaUPWI
+      4RAnloSMYCUSJZTWlKkktJhTZSkmaKW7y7+UhNUR/uNSAdlhNYKlHBh4fPtdXky+DyB19PY4OP+4
+      lJqP6OLFCc580YhN6XTdzBYB36MDHB1QckZZzHCM2QD2bUkJZuQ36NgW5hPIw2dXVmkBXEAkggYD
+      fAAM6KNRWtVFCew6n2/slA5gm+ccvmHT6bLpZQJv3tA6ODDBks6Hx8eBTzMXE08pxUJTw6z2VMFH
+      ghyHOlIqUpglERBIKkOa+sR4Lg2VlBowW1CLVZDmwTBAi/7m2a0tecvsgnsy0EduPKlnl5meNRrQ
+      iMAC5KIAcqMszad/QIuyKGrf0B/Vs0kjGm3jqqFw6v1laqtG7pbyQrH01GrGcbugUChrtFeSw9JD
+      0GsZKuPAhGtriVQCyGQF5iQkwmDNBUMXi8WG/T+Bd4SlkXWUWclcAtIWMQHiJjT4A6GnkZRcWeeY
+      ixzmHAaVkjqw/UREWA6/wsZg2G6A3Q/Z/zZ9x/6TCMSjF/BdGblN+J/b/yfz/8PJu/evT3/aNMYW
+      /w/A1v0/wTr/by8ggxcz1Q7PgCfr/w7iP8rEuv6HEen0fx+Yo7RxhJ4qBuhvOZJdqNKFKo8IVTbH
+      H92BxUth5vLA4oGDp5VQaVPg0mEneLL9b2PXQWNDH8QW+x/ei/8ohK+4s//7QLuDPPMY2+O/lfN/
+      Tpr2VIiO//tA7ar6m396Eh06dOjQYe8Y6zz1YAO+5h7/sdhm/xkhd+4CMATrmHb2fx84n6OjZeCM
+      8C7+CwIR3Ds3Kc70VXuL1fqXcaYbP6MJVN9cX3VBze4iD3SxuOh8mMehBF5VaV2Uqauea4xt+k8Y
+      Xtd/wTv93wvm1xraHJstlXQHh8GLRaeOHTp06PAvx5+v3EudACwAAA==
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Auth fffffffffffffffffffffffffffffffffffffffffffffffffff
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1123'
+      Content-Type:
+      - application/vnd.docker.image.rootfs.diff.tar.gzip
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - python-requests/2.22.0
+    method: PUT
+    uri: https://registry.cloud.tenable.com/v2/test_sc_test_jobs_by_image/blobs/uploads/a03a748f-7e87-4c83-9eab-2212e9797167?digest=sha256%3A96626451b6947696c15b96333de54fd329f8f8cb5073163ef881153b37aafe7d
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Content-Type:
+      - text/plain; charset=UTF-8
+      Date:
+      - Mon, 15 Jul 2019 23:32:09 GMT
+      Docker-Content-Digest:
+      - sha256:96626451b6947696c15b96333de54fd329f8f8cb5073163ef881153b37aafe7d
+      Docker-Distribution-Api-Version:
+      - registry/2.0
+      Location:
+      - /v2/test_sc_test_jobs_by_image/blobs/sha256:96626451b6947696c15b96333de54fd329f8f8cb5073163ef881153b37aafe7d
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-d-prod-us-west-1
+      X-Request-Uuid:
+      - 164b5d50c72e63e955010e82c6559ad2
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 201
+      message: Created
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Auth fffffffffffffffffffffffffffffffffffffffffffffffffff
+      Connection:
+      - keep-alive
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - python-requests/2.22.0
+    method: HEAD
+    uri: https://cloud.tenable.com/container-security-registry/v2/test_sc_test_jobs_by_image/blobs/sha256:96626451b6947696c15b96333de54fd329f8f8cb5073163ef881153b37aafe7d
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1123'
+      Date:
+      - Mon, 15 Jul 2019 23:32:09 GMT
+      Docker-Content-Digest:
+      - sha256:96626451b6947696c15b96333de54fd329f8f8cb5073163ef881153b37aafe7d
+      Docker-Distribution-Api-Version:
+      - registry/2.0
+      Etag:
+      - sha256:96626451b6947696c15b96333de54fd329f8f8cb5073163ef881153b37aafe7d
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-c-prod-us-west-1
+      X-Request-Uuid:
+      - a131afa699cc06e819ef761c513a7b77
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Auth fffffffffffffffffffffffffffffffffffffffffffffffffff
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://cloud.tenable.com/container-security-registry/v2/test_sc_test_jobs_by_image/blobs/uploads/
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Content-Type:
+      - text/plain; charset=UTF-8
+      Date:
+      - Mon, 15 Jul 2019 23:32:09 GMT
+      Docker-Distribution-Api-Version:
+      - registry/2.0
+      Docker-Upload-Uuid:
+      - e12bfa44-8749-48e7-828e-2e6125c1ef4c
+      Location:
+      - https://registry.cloud.tenable.com/v2/test_sc_test_jobs_by_image/blobs/uploads/e12bfa44-8749-48e7-828e-2e6125c1ef4c
+      Range:
+      - bytes=0-0
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-c-prod-us-west-1
+      X-Request-Uuid:
+      - a826273e6f866c6f189b84eef9c63313
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 202
+      message: Accepted
+- request:
+    body: '{"architecture": "amd64", "config": {}, "created": "1970-01-01T00:00:01Z",
+      "os": "linux", "history": [{"created": "1970-01-01T00:00:01Z"}], "rootfs": {"type":
+      "layers", "diff_ids": ["sha256:188307c3217788f441fa8a31e1bdbc4b4286a12b12da90038a8b1e22241176c5"]}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Auth fffffffffffffffffffffffffffffffffffffffffffffffffff
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '258'
+      Content-Type:
+      - application/vnd.docker.container.image.v1+json
+      Cookie:
+      - nginx-cloud-site-id=us-2b; nginx-cloud-site-id=us-2b
+      User-Agent:
+      - python-requests/2.22.0
+    method: PUT
+    uri: https://registry.cloud.tenable.com/v2/test_sc_test_jobs_by_image/blobs/uploads/e12bfa44-8749-48e7-828e-2e6125c1ef4c?digest=sha256%3Acf8462c9e061a5697ed7f4c2a6a993dcc102f68e03a7acb932999f3894a5378b
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Content-Type:
+      - text/plain; charset=UTF-8
+      Date:
+      - Mon, 15 Jul 2019 23:32:10 GMT
+      Docker-Content-Digest:
+      - sha256:cf8462c9e061a5697ed7f4c2a6a993dcc102f68e03a7acb932999f3894a5378b
+      Docker-Distribution-Api-Version:
+      - registry/2.0
+      Location:
+      - /v2/test_sc_test_jobs_by_image/blobs/sha256:cf8462c9e061a5697ed7f4c2a6a993dcc102f68e03a7acb932999f3894a5378b
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-d-prod-us-west-1
+      X-Request-Uuid:
+      - 6aff997b29a8bc45e5805b407fa926df
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 201
+      message: Created
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Auth fffffffffffffffffffffffffffffffffffffffffffffffffff
+      Connection:
+      - keep-alive
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - python-requests/2.22.0
+    method: HEAD
+    uri: https://cloud.tenable.com/container-security-registry/v2/test_sc_test_jobs_by_image/blobs/sha256:cf8462c9e061a5697ed7f4c2a6a993dcc102f68e03a7acb932999f3894a5378b
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '258'
+      Date:
+      - Mon, 15 Jul 2019 23:32:10 GMT
+      Docker-Content-Digest:
+      - sha256:cf8462c9e061a5697ed7f4c2a6a993dcc102f68e03a7acb932999f3894a5378b
+      Docker-Distribution-Api-Version:
+      - registry/2.0
+      Etag:
+      - sha256:cf8462c9e061a5697ed7f4c2a6a993dcc102f68e03a7acb932999f3894a5378b
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-c-prod-us-west-1
+      X-Request-Uuid:
+      - 1bf2ca0da50b9f5bd1d631313e5bab4e
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"schemaVersion": 2, "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+      "config": {"mediaType": "application/vnd.docker.container.image.v1+json", "size":
+      258, "digest": "sha256:cf8462c9e061a5697ed7f4c2a6a993dcc102f68e03a7acb932999f3894a5378b"},
+      "layers": [{"mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "size": 1123, "digest": "sha256:96626451b6947696c15b96333de54fd329f8f8cb5073163ef881153b37aafe7d"}]}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Auth fffffffffffffffffffffffffffffffffffffffffffffffffff
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '441'
+      Content-Type:
+      - application/vnd.docker.distribution.manifest.v2+json
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - python-requests/2.22.0
+    method: PUT
+    uri: https://cloud.tenable.com/container-security-registry/v2/test_sc_test_jobs_by_image/manifests/test_sc_test_jobs_by_image
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Content-Type:
+      - application/vnd.docker.distribution.manifest.v2+json
+      Date:
+      - Mon, 15 Jul 2019 23:32:10 GMT
+      Docker-Content-Digest:
+      - sha256:c2b3b01f3f171309fbb44a057c0def279ba706764cc17f3438672030dad3d286
+      Docker-Distribution-Api-Version:
+      - registry/2.0
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-c-prod-us-west-1
+      X-Request-Uuid:
+      - e31030df8a6152ea3c1d9d8b0e0015cd
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 201
+      message: Created
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: GET
+    uri: https://cloud.tenable.com/container-security/api/v1/jobs/image_status?image_id=cf8462c9e061
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA32MuxKCMBRE/yW1MPcBuYTvsLJh8lQsghNC5fjvht6x2zl7dt/qubllDWpWnZmQ
+        ScNk1EX5LVe75lh+dOdir7Yee2vKkfOa7w0fr2BrDIutDROg6UA6HK/EM9MM0KPA7bwu8Y+H2APS
+        6cVSttKUFsN6j/up7w9Lo549OXaAiRMKMpjk3DBYGMVDiInEOCugRQ/eoyQeeNJCwBBs4ECTVp8v
+        /gc+x/gAAAA=
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Jul 2019 23:32:11 GMT
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-c-prod-us-west-1
+      X-Request-Uuid:
+      - 30f109b8daa718397b23945e7fa52cce
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

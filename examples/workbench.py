@@ -3,10 +3,10 @@ import os
 from tenable_io.client import TenableIOClient
 
 
-def example(test_file):
+def example():
 
-    test_asset_file = test_file(u'asset.nessus')
-    test_vulnerability_file = test_file(u'vulnerability.nessus')
+    test_asset_file = u'asset.nessus'
+    test_vulnerability_file = u'vulnerability.nessus'
 
     date_range = 7
 

@@ -4,11 +4,11 @@ from tenable_io.client import TenableIOClient
 from tenable_io.api.models import AssetsExport, VulnsExport
 
 
-def example(test_file):
+def example():
 
     # Generate unique name and file.
-    test_vulns_json_file = test_file(u'example_export_vulns_%(chunk_id)s.json')
-    test_assets_json_file = test_file(u'example_export_assets_%(chunk_id)s.json')
+    test_vulns_json_file = u'example_export_vulns_%(chunk_id)s.json'
+    test_assets_json_file = u'example_export_assets_%(chunk_id)s.json'
 
     '''
     Instantiate an instance of the TenableIOClient.

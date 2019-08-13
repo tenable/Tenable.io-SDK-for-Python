@@ -1,0 +1,141 @@
+interactions:
+- request:
+    body: '{"name": "test_exclusion_name7921", "members": "fake.tenable.com,fake2.tenable.com",
+      "description": "test description", "schedule": {"enabled": true, "starttime":
+      "2019-07-15 22:07:27", "endtime": "2019-07-15 23:07:27", "timezone": "UTC",
+      "rrules": {"freq": "ONETIME", "interval": 1}}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '285'
+      Content-Type:
+      - application/json
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: POST
+    uri: https://cloud.tenable.com/exclusions
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA3VQQU7DMBD8SrTnpEpcSoivqIcegEs5R669Ua06Dl1vAFH176yhSD2UPVirmZ0Z
+        jU+Q7B7dHBD0CTA69qOsoOqmq+q2alaFWuq61aqFUnizC+hAM81YApHoUhYOhEdRvTyvt5untVz6
+        yEjvJoBuziVk068pZuPX7aPQiQ3xjSh1iRJNRP6Y6NB7iYP6MtWN52/ENpjE/Tg5P3hr2E+xd4Yl
+        o1ndL5XquruHEizhf9SI4w5JCsFgDrjg37oLO41lkRF1DUmcw2TJv2U30TAmLq4h6WB+Gmamx08b
+        5pSDM9p2qsnfJOXU+RvogvDthQEAAA==
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Jul 2019 22:32:28 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - ''
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-c-prod-us-west-1
+      X-Request-Uuid:
+      - 3a43f2366f08ced8da33bb67b7416fb7
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "test_exclusion_name_edited", "members": "fake.tenable.com, fake2.tenable.com"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '88'
+      Content-Type:
+      - application/json
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: PUT
+    uri: https://cloud.tenable.com/exclusions/2
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA3VQQU7DMBD8SrTnpEpcSoivqIcegEs5W669Ua0mDl1vAFH176yhSD2UPaysGc+M
+        Zk+Q3B79PCDoE2D0HEZ5gqqbrqrbqlkVaqnrVqsWSuHtbkAPmmnGEohEl7KwJzyK6uV5vd08reVn
+        iIz0bgfQzbmEbPo1xWz8un0UOrElvhGlLlGiicgfEx1MkDioL1PdWH8jtoNNbMbJhz44y2GKxluW
+        jGZ1v1Sq6+4eSnCE/1EjjjskKQS9PeCCf+su3DSWRUbUNSRxHpOj8JbdRMOYuLiGpIP9aZgZg59u
+        mFMOzqhBH1guKZeSfur8DYjmge6IAQAA
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Jul 2019 22:32:28 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - ''
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-c-prod-us-west-1
+      X-Request-Uuid:
+      - 0b315fb614e7764b26d142254a506d5e
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

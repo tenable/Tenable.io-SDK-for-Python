@@ -1,0 +1,60 @@
+interactions:
+- request:
+    body: '{"name": "test_groups_7329"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '28'
+      Content-Type:
+      - application/json
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: POST
+    uri: https://cloud.tenable.com/groups
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAy2NywrDIBAA/2XPWVBXE83PiI+1eIgJMZ5K/70Wep5h5g1j1Aw7MLGVQkvMpVjU
+        yhYMQhGmtMbCKgvjFCzQwsHTfrg//nWf4+p+I+Umufg+au/1bB12sUA62xNq49v/D9rIGNNm0UWV
+        UKdCGEUwSGvm7GiL1uTZ+bny8wVnagKnmAAAAA==
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Jul 2019 22:32:34 GMT
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Gateway-Site-ID:
+      - nginx-router-c-prod-us-west-1
+      X-Request-Uuid:
+      - 6adee2e6d60f3d94cc7c55662e2a4c40
+    status:
+      code: 200
+      message: OK
+version: 1

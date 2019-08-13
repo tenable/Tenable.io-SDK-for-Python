@@ -1,0 +1,74 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: GET
+    uri: https://cloud.tenable.com/scans
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA91VuW7cMBD9FYP1MuAlkdwqQOAyTZIuCIQhObSF6FhIFIyN4X/PaC1vnGOBFHbj
+        Shwej/PeG47uWR67hNPM9l/v2TJMCKmJ4zIUthc7Fpe5jP1pmDDD0pWmwM0pLscDsj0rE8y3bMcG
+        6Nfwyxa2ie31w+5PSHkZkpY2yB7a4Rfix+PV5wjDTDMrqPkb9FmeBHIhz43JOdGCc2k27o0y1m74
+        /oXwH6GbVZYGU1s2eCkfvu3YfCK0Kt7hDcQj22foZtyxA059O8/tuC5L5Z40GZau27HVnPPWDohA
+        P6Y2txEKnWgSFLJAVrVWymtZkdZ04sLSXKAsdAlr+8M4FUyU4LKsCjMXbZXQWy58jdxUJnDjIHPl
+        kgpBeq9s5SsL2gsAG8HQh07PtzARzBOVZSb6f/MZ7wac6BIY0oR37+f0/d043azH4y2mpcNmy8IE
+        k2uMdLdIgtfRWB599jwmWycXIQaHqHSyWbgknXJKrRxK2+OPcSAhNs0mwiSejxGxnsq65WkCBwjd
+        s6zjOJRp7M4strK+VtdXnzCS5JuP9Vom/+NWmRby9ZJZa+n+7hHNnK3B/lCOZ182Bi+rsk0pC2E0
+        2SwS95gq7oXOvAZnYw4CnfIxauVFkNJm6VHnF1T5UZ1N5A/j4Xg15qvT01yfSONrLzbB1ambvAHF
+        C7na0Uul51SbEAwNIFCV6+w4VDnzEISzIYGqdKq09bFyQYIzKFG9lvT/lly+NclFLR2AytzqgLxy
+        GTg6aiwISgalgqnBqBRqDR6Npo1U9a8vua20f6ryav09rA2KmkB/OHdz793DT6OJtQKrBwAA
+    headers:
+      Accept-Ranges:
+      - bytes
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Length:
+      - '624'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Jul 2019 22:33:18 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - ''
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-a-prod-us-west-1
+      X-Request-Uuid:
+      - aa3d7f207498c89122ef0d83526feed5
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

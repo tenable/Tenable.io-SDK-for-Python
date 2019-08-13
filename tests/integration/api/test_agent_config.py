@@ -3,57 +3,37 @@ import pytest
 from tenable_io.api.agent_config import AgentConfigRequest
 from tenable_io.api.models import AgentConfig
 
-from tests.base import BaseTest
+@pytest.mark.vcr()
+def test_agent_config_get_details(client):
+    config = client.agent_config_api.details()
+    assert isinstance(config, AgentConfig), u'The `details` method did not return type `AgentConfig`.'
 
 
-class TestAgentConfigApi(BaseTest):
+@pytest.mark.vcr()
+def test_agent_config_edit(client):
+    config = client.agent_config_api.details()
+    assert isinstance(config, AgentConfig), u'The `details` method did not return type `AgentConfig`.'
 
-    def test_details_edit(self, client):
-        # Get agent config details.
-        previous_config = client.agent_config_api.details()
-        assert isinstance(previous_config, AgentConfig), u'Details request returns type AgentConfig.'
+    # Edit agent config to new value.
+    previous_expiration = config.auto_unlink['expiration']
+    new_expiration = 10 if config.auto_unlink['expiration'] >= 365 else config.auto_unlink['expiration'] + 1
 
-        # Edit agent config to new value.
-        previous_expiration = previous_config.auto_unlink['expiration']
-        new_expiration = 10 if previous_expiration >= 365 else previous_expiration + 1
+    edit_config = client.agent_config_api.edit(AgentConfigRequest(
+        software_update=not config.software_update,
+        auto_unlink={
+            'enabled': not config.auto_unlink['enabled'],
+            'expiration': new_expiration
+        }
+    ))
+    assert isinstance(edit_config, AgentConfig), u'The `edit` method did not return type `AgentConfig`.'
 
-        self._edit_config(client, AgentConfigRequest(
-            software_update=not previous_config.software_update,
-            auto_unlink={
-                'enabled': not previous_config.auto_unlink['enabled'],
-                'expiration': new_expiration
-            }
-        ))
-
-        # Edit agent config to previous value.
-        self._edit_config(client, AgentConfigRequest(
-            software_update=previous_config.software_update,
-            auto_unlink={
-                'enabled': previous_config.auto_unlink['enabled'],
-                'expiration': previous_expiration
-            }
-        ))
-
-        # Get agent config details to test if values reverted back.
-        reverted_config = client.agent_config_api.details()
-        self._assert_response(
-            expected=previous_config,
-            response=reverted_config,
-            error_text=u'Edit config response returns correct values.'
-        )
-
-    def _edit_config(self, client, agent_config_request):
-        edit_response = client.agent_config_api.edit(agent_config_request)
-        self._assert_response(
-            expected=agent_config_request,
-            response=edit_response,
-            error_text=u'Edit config response returns correct values.'
-        )
-
-    @staticmethod
-    def _assert_response(expected, response, error_text):
-        assert isinstance(response, AgentConfig), u'Response returns type AgentConfig.'
-        assert response.software_update == expected.software_update \
-            and response.auto_unlink['enabled'] == expected.auto_unlink['enabled'] \
-            and response.auto_unlink['expiration'] == expected.auto_unlink['expiration'], \
-            error_text
+    # Edit agent config to previous value.
+    final_config = client.agent_config_api.edit(AgentConfigRequest(
+        software_update=config.software_update,
+        auto_unlink={
+            'enabled': config.auto_unlink['enabled'],
+            'expiration': previous_expiration
+        }
+    ))
+    assert isinstance(final_config, AgentConfig), u'The `edit` method did not return type `AgentConfig`.'
+    assert final_config.auto_unlink == config.auto_unlink, u'Final config should match original config.'

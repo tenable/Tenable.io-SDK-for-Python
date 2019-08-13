@@ -638,25 +638,29 @@ class ImportAssetJob(BaseModel):
 
     def __init__(
             self,
-            id=None,
-            user_uuid=None,
+            job_id=None,
+            container_id=None,
+            source=None,
+            batches=None,
+            uploaded_assets=None,
+            failed_assets=None,
             start_time=None,
+            last_update_time=None,
             end_time=None,
-            asset_count=None,
-            imported_asset_count=None,
-            failed_asset_count=None,
             status=None,
-            error_message=None
+            status_message=None
     ):
-        self.id = id,
-        self.user_uuid = user_uuid,
+        self.job_id = job_id,
+        self.container_id = container_id,
+        self.source = source,
+        self.batches = batches,
+        self.uploaded_assets = uploaded_assets,
+        self.failed_assets = failed_assets,
         self.start_time = start_time,
-        self.end_time = end_time,
-        self.asset_count = asset_count,
-        self.imported_asset_count = imported_asset_count,
-        self.failed_asset_count = failed_asset_count,
-        self.status = status,
-        self.error_message = error_message
+        self.last_update_time = last_update_time,
+        self.end_time = end_time
+        self.status = status
+        self.status_message = status_message
 
 
 class ImportAssetJobs(BaseModel):
@@ -714,7 +718,9 @@ class Permissions(BaseModel):
     class User:
         # User Roles
         PERMISSION_BASIC = 16
+        PERMISSION_SCAN_OPERATOR = 24
         PERMISSION_STANDARD = 32
+        PERMISSION_SCAN_MANAGER = 40
         PERMISSION_ADMINISTRATOR = 64
 
     class Type:

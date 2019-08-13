@@ -9,12 +9,12 @@ from tenable_io.client import TenableIOClient
 from tenable_io.exceptions import TenableIOApiException
 
 
-def example(test_name, test_file, test_targets):
+def example(test_targets):
 
     # Generate unique name and file.
-    scan_name = test_name(u'example scan')
-    test_nessus_file = test_file(u'example_report.nessus')
-    test_pdf_file = test_file(u'example_report.pdf')
+    scan_name = u'example scan'
+    test_nessus_file = u'example_report.nessus'
+    test_pdf_file = u'example_report.pdf'
 
     '''
     Instantiate an instance of the TenableIOClient.

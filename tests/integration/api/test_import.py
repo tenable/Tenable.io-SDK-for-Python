@@ -1,29 +1,23 @@
-from tests.base import BaseTest
+import pytest
 
-from tenable_io.api.import_ import ImportAssetsRequest
-from tenable_io.api.models import ImportAsset, ImportAssetJob, ImportAssetJobs
-from tenable_io.exceptions import TenableIOErrorCode, TenableIOApiException
+from tenable_io.api.models import ImportAssetJob, ImportAssetJobs
 
 
-class TestImportApi(BaseTest):
+@pytest.mark.vcr()
+def test_import_assets(import_asset):
+    assert import_asset, u'The `assets` method returns a valid export UUID'
 
-    def test_assets(self, client):
-        try:
-            client.import_api.assets(ImportAssetsRequest(assets=[], source=None))
-            assert False, u'TenableIOApiException should have been thrown for bad ID.'
-        except TenableIOApiException as e:
-            assert e.code is TenableIOErrorCode.BAD_REQUEST, u'Appropriate exception thrown.'
 
-    def test_asset_jobs(self, client):
-        import_asset_jobs = client.import_api.asset_jobs()
-        assert isinstance(import_asset_jobs, ImportAssetJobs), u'List request returns type.'
-        for i in import_asset_jobs.asset_import_jobs:
-            assert isinstance(i, ImportAssetJob)
+@pytest.mark.vcr()
+def test_import_asset_jobs(client):
+    import_asset_jobs = client.import_api.asset_jobs()
+    assert isinstance(import_asset_jobs, ImportAssetJobs), u'The `asset_jobs` method did not return type `ImportAssetJobs`.'
 
-    def test_asset_job(self, client):
-        try:
-            client.import_api.asset_job('test_import_asset_job')
-            assert False, u'TenableIOApiException should have been thrown for bad ID.'
-        except TenableIOApiException as e:
-            assert e.code in (TenableIOErrorCode.BAD_REQUEST, TenableIOErrorCode.NOT_FOUND), \
-                u'Bad request for string agent_id or agent not found.'
+
+@pytest.mark.vcr()
+def test_import_asset_job(client, import_asset):
+    job_uuid = import_asset
+    job_details = client.import_api.asset_job(job_uuid)
+    assert isinstance(job_details, ImportAssetJob), u'Should be a list of `ImportAssetJob` objects.'
+    assert job_details.job_id == job_uuid, u'Job uuid should match results.'
+    assert job_details.batches == 1, u'Expected a single batch to be created'
