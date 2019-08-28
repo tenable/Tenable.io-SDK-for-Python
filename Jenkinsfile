@@ -66,12 +66,12 @@ try {
 
                                 export TENABLEIO_MAX_POLLING_INTERVAL=60
 
-                                python3 tenableio/commandline/sdk_test_container.py --create_container --python --agents=10 --scanners=2 --import_scan
+                                python3 tenableio/commandline/sdk_test_container.py --create_container --python --agents 10 --scanners 2 --import_scan
 
                                 cd ../tenableio-sdk || exit 1
                                 pip3 install -r requirements.txt || exit 1
                                 pip3 install -r requirements-build.txt || exit 1
-                                sed -i '' '/endpoint/d' ./tenable_io.ini
+                                sed -i '/endpoint/d' tenable_io.ini
                                 pytest -nauto tests --junitxml=test-results-junit.xml || exit 1
                                 '''.stripIndent()
                             }
