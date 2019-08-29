@@ -66,7 +66,7 @@ try {
 
                                 export TENABLEIO_MAX_POLLING_INTERVAL=60
 
-                                python3 tenableio/commandline/sdk_test_container.py --create_container --python --agents 10 --scanners 2 --import_scan
+                                python3 tenableio/commandline/sdk_test_container.py --create_container --python --agents 10 --scanners 2
 
                                 cd ../tenableio-sdk || exit 1
                                 pip3 install -r requirements.txt || exit 1

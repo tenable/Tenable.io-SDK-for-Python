@@ -22,6 +22,7 @@ class TestImpersonation(BaseTest):
         yield user
         client.users_api.delete(user_id)
 
+    @pytest.mark.vcr()
     def test_impersonation(self, client, user):
         impersonating_client = client.impersonate(user.username)
         impersonating_user = impersonating_client.session_api.get()

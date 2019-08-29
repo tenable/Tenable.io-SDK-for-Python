@@ -17,9 +17,9 @@ interactions:
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAAxXMOQ7CQAwF0Lu4JsjjRbOcg4oGefCPhJCgSKgQdweq17037c87HjRIShXobM4Z
-        sylMEpgcYAvj/MHIqs3DU7sEX9eGKdyr2GoOOtBt217IS+z/jktfuC7FT6JDZbAdXduZPl8PJJDL
-        cwAAAA==
+        H4sIAAAAAAAAAw3MMQ7CMAwF0Lt4psjfduM45+jEgppgJIQEQ8uEuDudn/S+tL+f+aJGzMbRrYYj
+        01KkJtRnUdMaMIUVlREl1pERbt29HG73OYd1JJ3osW2fvF3X/eiEERPXSWKBNtSmODvjQr8/M2Cg
+        onMAAAA=
     headers:
       Cache-Control:
       - no-cache
@@ -30,7 +30,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 15 Jul 2019 23:32:04 GMT
+      - Thu, 29 Aug 2019 13:18:31 GMT
       Docker-Distribution-Api-Version:
       - registry/2.0
       Server:
@@ -47,9 +47,9 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Gateway-Site-ID:
-      - nginx-router-c-prod-us-west-1
+      - nginx-router-d-prod-ca-central-1
       X-Request-Uuid:
-      - 3986c3b4a8970516ca7c08bd65725db4
+      - 1498e4108aa2c4e2cfa6de93768134a3
     status:
       code: 200
       message: OK
@@ -85,13 +85,13 @@ interactions:
       Content-Type:
       - text/plain; charset=UTF-8
       Date:
-      - Mon, 15 Jul 2019 23:32:08 GMT
+      - Thu, 29 Aug 2019 13:18:33 GMT
       Docker-Distribution-Api-Version:
       - registry/2.0
       Docker-Upload-Uuid:
-      - a03a748f-7e87-4c83-9eab-2212e9797167
+      - 9f8bb632-6d4c-4495-9c9f-783d59b9bd1b
       Location:
-      - https://registry.cloud.tenable.com/v2/test_sc_test_jobs_by_image/blobs/uploads/a03a748f-7e87-4c83-9eab-2212e9797167
+      - https://registry.cloud.tenable.com/v2/test_sc_test_jobs_by_image/blobs/uploads/9f8bb632-6d4c-4495-9c9f-783d59b9bd1b
       Range:
       - bytes=0-0
       Server:
@@ -108,9 +108,9 @@ interactions:
       X-Frame-Options:
       - DENY
       X-Gateway-Site-ID:
-      - nginx-router-c-prod-us-west-1
+      - nginx-router-d-prod-ca-central-1
       X-Request-Uuid:
-      - dfffbedc630d549a2aa0c55eaea3b095
+      - 2156c899971ced812dfc8888c9a3373b
       X-Xss-Protection:
       - 1; mode=block
     status:
@@ -156,7 +156,7 @@ interactions:
       User-Agent:
       - python-requests/2.22.0
     method: PUT
-    uri: https://registry.cloud.tenable.com/v2/test_sc_test_jobs_by_image/blobs/uploads/a03a748f-7e87-4c83-9eab-2212e9797167?digest=sha256%3A96626451b6947696c15b96333de54fd329f8f8cb5073163ef881153b37aafe7d
+    uri: https://registry.cloud.tenable.com/v2/test_sc_test_jobs_by_image/blobs/uploads/9f8bb632-6d4c-4495-9c9f-783d59b9bd1b?digest=sha256%3A96626451b6947696c15b96333de54fd329f8f8cb5073163ef881153b37aafe7d
   response:
     body:
       string: ''
@@ -170,7 +170,7 @@ interactions:
       Content-Type:
       - text/plain; charset=UTF-8
       Date:
-      - Mon, 15 Jul 2019 23:32:09 GMT
+      - Thu, 29 Aug 2019 13:18:33 GMT
       Docker-Content-Digest:
       - sha256:96626451b6947696c15b96333de54fd329f8f8cb5073163ef881153b37aafe7d
       Docker-Distribution-Api-Version:
@@ -181,7 +181,6 @@ interactions:
       - tenable.io
       Set-Cookie:
       - nginx-cloud-site-id=us-2b; path=/; HttpOnly
-      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
       Vary:
@@ -191,9 +190,9 @@ interactions:
       X-Frame-Options:
       - DENY
       X-Gateway-Site-ID:
-      - nginx-router-d-prod-us-west-1
+      - nginx-router-c-prod-us-east-1
       X-Request-Uuid:
-      - 164b5d50c72e63e955010e82c6559ad2
+      - 841390d5afe9d4fd3ac0f748e6bfb0f6
       X-Xss-Protection:
       - 1; mode=block
     status:
@@ -227,7 +226,7 @@ interactions:
       Content-Length:
       - '1123'
       Date:
-      - Mon, 15 Jul 2019 23:32:09 GMT
+      - Thu, 29 Aug 2019 13:18:34 GMT
       Docker-Content-Digest:
       - sha256:96626451b6947696c15b96333de54fd329f8f8cb5073163ef881153b37aafe7d
       Docker-Distribution-Api-Version:
@@ -246,9 +245,9 @@ interactions:
       X-Frame-Options:
       - DENY
       X-Gateway-Site-ID:
-      - nginx-router-c-prod-us-west-1
+      - nginx-router-d-prod-ca-central-1
       X-Request-Uuid:
-      - a131afa699cc06e819ef761c513a7b77
+      - 1a77e170ff144b8ebfb5978f1dd2af60
       X-Xss-Protection:
       - 1; mode=block
     status:
@@ -288,13 +287,13 @@ interactions:
       Content-Type:
       - text/plain; charset=UTF-8
       Date:
-      - Mon, 15 Jul 2019 23:32:09 GMT
+      - Thu, 29 Aug 2019 13:18:34 GMT
       Docker-Distribution-Api-Version:
       - registry/2.0
       Docker-Upload-Uuid:
-      - e12bfa44-8749-48e7-828e-2e6125c1ef4c
+      - fbce22ed-139e-4197-b938-89127f7411e2
       Location:
-      - https://registry.cloud.tenable.com/v2/test_sc_test_jobs_by_image/blobs/uploads/e12bfa44-8749-48e7-828e-2e6125c1ef4c
+      - https://registry.cloud.tenable.com/v2/test_sc_test_jobs_by_image/blobs/uploads/fbce22ed-139e-4197-b938-89127f7411e2
       Range:
       - bytes=0-0
       Server:
@@ -311,9 +310,9 @@ interactions:
       X-Frame-Options:
       - DENY
       X-Gateway-Site-ID:
-      - nginx-router-c-prod-us-west-1
+      - nginx-router-d-prod-ca-central-1
       X-Request-Uuid:
-      - a826273e6f866c6f189b84eef9c63313
+      - 489a2f3c4b81d849dd6c9b07f4b520bb
       X-Xss-Protection:
       - 1; mode=block
     status:
@@ -341,7 +340,7 @@ interactions:
       User-Agent:
       - python-requests/2.22.0
     method: PUT
-    uri: https://registry.cloud.tenable.com/v2/test_sc_test_jobs_by_image/blobs/uploads/e12bfa44-8749-48e7-828e-2e6125c1ef4c?digest=sha256%3Acf8462c9e061a5697ed7f4c2a6a993dcc102f68e03a7acb932999f3894a5378b
+    uri: https://registry.cloud.tenable.com/v2/test_sc_test_jobs_by_image/blobs/uploads/fbce22ed-139e-4197-b938-89127f7411e2?digest=sha256%3Acf8462c9e061a5697ed7f4c2a6a993dcc102f68e03a7acb932999f3894a5378b
   response:
     body:
       string: ''
@@ -355,7 +354,7 @@ interactions:
       Content-Type:
       - text/plain; charset=UTF-8
       Date:
-      - Mon, 15 Jul 2019 23:32:10 GMT
+      - Thu, 29 Aug 2019 13:18:34 GMT
       Docker-Content-Digest:
       - sha256:cf8462c9e061a5697ed7f4c2a6a993dcc102f68e03a7acb932999f3894a5378b
       Docker-Distribution-Api-Version:
@@ -366,7 +365,6 @@ interactions:
       - tenable.io
       Set-Cookie:
       - nginx-cloud-site-id=us-2b; path=/; HttpOnly
-      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
       Vary:
@@ -376,9 +374,9 @@ interactions:
       X-Frame-Options:
       - DENY
       X-Gateway-Site-ID:
-      - nginx-router-d-prod-us-west-1
+      - nginx-router-c-prod-us-east-1
       X-Request-Uuid:
-      - 6aff997b29a8bc45e5805b407fa926df
+      - 195e13a53faee0e04ecd079058d3ad7f
       X-Xss-Protection:
       - 1; mode=block
     status:
@@ -412,7 +410,7 @@ interactions:
       Content-Length:
       - '258'
       Date:
-      - Mon, 15 Jul 2019 23:32:10 GMT
+      - Thu, 29 Aug 2019 13:18:35 GMT
       Docker-Content-Digest:
       - sha256:cf8462c9e061a5697ed7f4c2a6a993dcc102f68e03a7acb932999f3894a5378b
       Docker-Distribution-Api-Version:
@@ -431,9 +429,9 @@ interactions:
       X-Frame-Options:
       - DENY
       X-Gateway-Site-ID:
-      - nginx-router-c-prod-us-west-1
+      - nginx-router-d-prod-ca-central-1
       X-Request-Uuid:
-      - 1bf2ca0da50b9f5bd1d631313e5bab4e
+      - e5c51057fc235bf15ad81926e5bebc6d
       X-Xss-Protection:
       - 1; mode=block
     status:
@@ -477,7 +475,7 @@ interactions:
       Content-Type:
       - application/vnd.docker.distribution.manifest.v2+json
       Date:
-      - Mon, 15 Jul 2019 23:32:10 GMT
+      - Thu, 29 Aug 2019 13:18:35 GMT
       Docker-Content-Digest:
       - sha256:c2b3b01f3f171309fbb44a057c0def279ba706764cc17f3438672030dad3d286
       Docker-Distribution-Api-Version:
@@ -496,9 +494,9 @@ interactions:
       X-Frame-Options:
       - DENY
       X-Gateway-Site-ID:
-      - nginx-router-c-prod-us-west-1
+      - nginx-router-d-prod-ca-central-1
       X-Request-Uuid:
-      - e31030df8a6152ea3c1d9d8b0e0015cd
+      - 8092954fe1edf520d059b7339ec85154
       X-Xss-Protection:
       - 1; mode=block
     status:
@@ -524,10 +522,12 @@ interactions:
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAA32MuxKCMBRE/yW1MPcBuYTvsLJh8lQsghNC5fjvht6x2zl7dt/qubllDWpWnZmQ
-        ScNk1EX5LVe75lh+dOdir7Yee2vKkfOa7w0fr2BrDIutDROg6UA6HK/EM9MM0KPA7bwu8Y+H2APS
-        6cVSttKUFsN6j/up7w9Lo549OXaAiRMKMpjk3DBYGMVDiInEOCugRQ/eoyQeeNJCwBBs4ECTVp8v
-        /gc+x/gAAAA=
+        H4sIAAAAAAAAA61QvU4kMQx+lWhqhk3ixHHmAagQFRUNyi/MaW9mlGQXFsS7X5ZDCJ2uoKCxZH+2
+        v5/X4dfq7+c4TMNoSYBETna4GMK6NDcvqfwHO1/U5tqhdiS7eZ9inx626FqK9671qeTCjpxGaW8F
+        TIIm0JfS6Lvz55K+tZdKWUtfuXonYPNyTEtby4k9ze2RvaMTu3anVFh9dFLjZBElKi08WmXQYhDa
+        WwSAmLTKEaTNlCl4zQ0IhJSJhNDgwTiXk/nK8dfVFyr2r4yJ3awsPbfiQm9ZXg9L7LWwndu2Xfu9
+        7WoqxzmksUdZUxg/L0f0KqIOZGn0L9vxaecWtz/VuY77s50qjdVaGTIoyApLkuiHHPZY4/yQ6jn6
+        j5dBevBcZMjCCOA2e6+U49oEHlPuUrwzHA2qEITJoIDQSA48ughREg5vfwAip5MsQwIAAA==
     headers:
       Cache-Control:
       - no-cache
@@ -538,7 +538,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 15 Jul 2019 23:32:11 GMT
+      - Thu, 29 Aug 2019 13:18:35 GMT
       Server:
       - tenable.io
       Set-Cookie:
@@ -555,9 +555,9 @@ interactions:
       X-Frame-Options:
       - DENY
       X-Gateway-Site-ID:
-      - nginx-router-c-prod-us-west-1
+      - nginx-router-d-prod-ca-central-1
       X-Request-Uuid:
-      - 30f109b8daa718397b23945e7fa52cce
+      - 2e109c341413ce273e726cfbbc245d88
       X-Xss-Protection:
       - 1; mode=block
     status:
