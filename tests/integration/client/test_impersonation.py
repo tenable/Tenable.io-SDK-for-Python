@@ -11,12 +11,12 @@ class TestImpersonation(BaseTest):
     @pytest.fixture(scope='class')
     def user(self, app, client):
         user_id = client.users_api.create(UserCreateRequest(
-            username=app.session_name(u'test_impersonation%%s@%s' % TenableIOTestConfig.get('users_domain_name')),
+            username='test_impersonation@%s' % TenableIOTestConfig.get('users_domain_name'),
             name='test_impersonation',
             password='Sdk!Test1',
             permissions='16',
             type='local',
-            email=app.session_name(u'test_user_email+%%s@%s' % TenableIOTestConfig.get('users_domain_name'))
+            email='test_user_email@%s' % TenableIOTestConfig.get('users_domain_name')
         ))
         user = client.users_api.get(user_id)
         yield user
