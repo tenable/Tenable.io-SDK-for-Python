@@ -1,5 +1,122 @@
 interactions:
 - request:
+    body: '{"username": "test_impersonation@sdk.org", "password": "Sdk!Test1", "permissions":
+      "16", "name": "test_impersonation", "email": "test_user_email@sdk.org", "type":
+      "local"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '171'
+      Content-Type:
+      - application/json
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: POST
+    uri: https://cloud.tenable.com/users
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA42QzW7EIAyE34VzqEJClpBT3wQZcBBqAisgh6rqu9fZH6k9VNoj488zY77YcUTP
+        FjZbaVEo4NYJxaVWA9far9zP/SCk6gG8Zh072VF37KhYTIIdabVhbSbuVyw1J2gxp/fqP95yCewO
+        vsLhDnF7Qjf3m/KL+NeFZu3zes627GCjp8upQUxk8rhOTsJap2au7eC4dOvIbQ8THy8evR6VnSdP
+        exBCwQCNvFo5sGOUssdaKaSyRVw6SggxmZWaGZeP1NjS/xFbbtTgFDGB3dA/nc4i5vWf/v4BAOdj
+        cZkBAAA=
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 04 Sep 2019 15:29:34 GMT
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Gateway-Site-ID:
+      - nginx-router-d-prod-ca-central-1
+      X-Request-Uuid:
+      - 54f38b71f43b2e9662fb9518a18cae5c
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: GET
+    uri: https://cloud.tenable.com/users/39
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA42QQY7DIAxF78I6jEJCSsiqN0EGnAo1gSrAYjTq3etkZqR2UalLvp+fjX9YrcGz
+        iY1WWhQKuHVCcalVx7X2M/dj2wmpWgCvWcN2ttcNqxk3E2FFai2YiwnrDbecIpSQ4jn761faLuwX
+        /ITDFcLyDx32I3ki3lqoVr5ve21JDhZ6uhQLhEiSv9/JQVjr1Mi17RyXbu65bWHg/cmj172y4+Cp
+        j6RryJmcmU3i1JDwEqKZaRHjUo2FTe1LWFKhgXuIEeyCNKtsFZvjqubzw94fVwXoFYgBAAA=
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 04 Sep 2019 15:29:35 GMT
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Gateway-Site-ID:
+      - nginx-router-d-prod-ca-central-1
+      X-Request-Uuid:
+      - b35831c395e7b69c7b3089771d3b75ed
+    status:
+      code: 200
+      message: OK
+- request:
     body: null
     headers:
       Accept:
@@ -18,7 +135,7 @@ interactions:
     uri: https://cloud.tenable.com/session
   response:
     body:
-      string: '{"id":37,"uuid":"7d833e4a-703a-4c0a-8b3a-43fe890d10e5","uuid_id":"7d833e4a-703a-4c0a-8b3a-43fe890d10e5","username":"test_impersonation@sdk.org","user_name":"test_impersonation@sdk.org","email":"test_user_email@sdk.org","name":"test_impersonation","type":"local","permissions":16,"enabled":true,"login_fail_count":0,"login_fail_total":0,"container_id":1000010,"container_uuid":"451bbc78-9b2c-4cf3-b0a5-36ded937b85d","container_name":"andrew@sdk.org","features":{"access_groups":true,"access_groups_migration":false,"advanced_search_v2":true,"agent_triage_m2":true,"agent_updates":true,"analytics":true,"analytics_v2":true,"asset_deleting_ui":true,"asset_management":true,"audits_workbench":false,"aws_connector_v1":true,"cfl_core_ssor":false,"connectors_gen2":true,"container_security":true,"container_security_gen2":true,"credentials_mgmt":true,"credentials_mgmt_v2":true,"dashboards_gen2":false,"dashboards_gen2_blank_canvas":false,"dashboards_gen2_export":false,"dashboards_gen2_export_png":false,"dashboards_gen2_lumin_enabled":false,"dashboards_gen2_schedule":false,"dashboards_gen2_tag_filter":false,"dashboards_gen2_widget_filters":false,"dashboards_gen2_widget_library":false,"dynamic_tagging":true,"environment_management":false,"export_dashboard":true,"export_dashboard_pdf":true,"general_data_protection_compliance":false,"import_data":false,"indexing_v2":true,"lumin_beta_allowed":false,"lumin_beta_enabled":false,"modify_vulnerability":false,"pci_multiscan":false,"qualys_connector":false,"qualys_vuln_connector":false,"rbac":true,"recast_rules":true,"reporting":true,"scan_service":true,"scans_gen2":false,"state":true,"suggest_feature":false,"tagging":true,"vm_service_query":false,"vulnerability_management_gen2":true,"was_discovery":false,"was_multi_scanning":false,"was_plugin_selection":true,"was_scan_progress":true,"webapp_scanning":false,"webapp_scanning_gen2":false,"system":false},"apps":{"consec":"eval"},"group_uuids":[],"groups":[]}'
+      string: '{"id":39,"uuid":"8b4be17a-bc17-4972-99df-d8021470aad9","uuid_id":"8b4be17a-bc17-4972-99df-d8021470aad9","username":"test_impersonation@sdk.org","user_name":"test_impersonation@sdk.org","email":"test_user_email@sdk.org","name":"test_impersonation","type":"local","permissions":16,"enabled":true,"login_fail_count":0,"login_fail_total":0,"container_id":1000010,"container_uuid":"451bbc78-9b2c-4cf3-b0a5-36ded937b85d","container_name":"andrew@sdk.org","features":{"access_groups":true,"access_groups_migration":false,"advanced_search_v2":true,"agent_triage_m2":true,"agent_updates":true,"analytics":true,"analytics_v2":true,"asset_deleting_ui":true,"asset_management":true,"audits_workbench":false,"aws_connector_v1":true,"cfl_core_ssor":false,"connectors_gen2":true,"container_security":true,"container_security_gen2":true,"credentials_mgmt":true,"credentials_mgmt_v2":true,"dashboards_gen2":false,"dashboards_gen2_blank_canvas":false,"dashboards_gen2_export":false,"dashboards_gen2_export_png":false,"dashboards_gen2_lumin_enabled":false,"dashboards_gen2_schedule":false,"dashboards_gen2_tag_filter":false,"dashboards_gen2_widget_filters":false,"dashboards_gen2_widget_library":false,"dynamic_tagging":true,"environment_management":false,"export_dashboard":true,"export_dashboard_pdf":true,"general_data_protection_compliance":false,"import_data":false,"indexing_v2":true,"lumin_beta_allowed":false,"lumin_beta_enabled":false,"modify_vulnerability":false,"pci_multiscan":false,"qualys_connector":false,"qualys_vuln_connector":false,"rbac":true,"recast_rules":true,"reporting":true,"scan_service":true,"scans_gen2":false,"state":true,"suggest_feature":false,"tagging":true,"vm_service_query":false,"vulnerability_management_gen2":true,"was_discovery":false,"was_multi_scanning":false,"was_plugin_selection":true,"was_scan_progress":true,"webapp_scanning":false,"webapp_scanning_gen2":false,"system":false},"apps":{"consec":"eval"},"group_uuids":[],"groups":[]}'
     headers:
       Accept-Ranges:
       - bytes
@@ -31,7 +148,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Wed, 04 Sep 2019 14:39:43 GMT
+      - Wed, 04 Sep 2019 15:29:35 GMT
       Server:
       - tenable.io
       Set-Cookie:
@@ -46,7 +163,58 @@ interactions:
       X-Gateway-Site-ID:
       - nginx-router-d-prod-ca-central-1
       X-Request-Uuid:
-      - 3863358d76a261d24e7a6691132b0ef2
+      - 07655bbaea20ddaebc0ae2d4c23f148b
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: DELETE
+    uri: https://cloud.tenable.com/users/39
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 04 Sep 2019 15:29:35 GMT
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-d-prod-ca-central-1
+      X-Request-Uuid:
+      - 6d25d030d9767ecdf05d2c935a3ebf33
+      X-Xss-Protection:
+      - 1; mode=block
     status:
       code: 200
       message: OK
