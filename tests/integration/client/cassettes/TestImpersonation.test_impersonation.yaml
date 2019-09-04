@@ -13,12 +13,12 @@ interactions:
       X-APIKeys:
       - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
       X-Impersonate:
-      - username=test_impersonation@tenable.dev
+      - username=test_impersonation@sdk.org
     method: GET
     uri: https://cloud.tenable.com/session
   response:
     body:
-      string: '{"id":36,"uuid":"d7f66829-7aff-480b-a0a7-c315886956b5","uuid_id":"d7f66829-7aff-480b-a0a7-c315886956b5","username":"test_impersonation@tenable.dev","user_name":"test_impersonation@tenable.dev","email":"test_user_email@tenable.dev","name":"test_impersonation","type":"local","permissions":16,"enabled":true,"login_fail_count":0,"login_fail_total":0,"container_id":1000010,"container_uuid":"451bbc78-9b2c-4cf3-b0a5-36ded937b85d","container_name":"andrew@sdk.org","features":{"access_groups":true,"access_groups_migration":false,"advanced_search_v2":true,"agent_triage_m2":true,"agent_updates":true,"analytics":true,"analytics_v2":true,"asset_deleting_ui":true,"asset_management":true,"audits_workbench":false,"aws_connector_v1":true,"cfl_core_ssor":false,"connectors_gen2":true,"container_security":true,"container_security_gen2":true,"credentials_mgmt":true,"credentials_mgmt_v2":true,"dashboards_gen2":false,"dashboards_gen2_blank_canvas":false,"dashboards_gen2_export":false,"dashboards_gen2_export_png":false,"dashboards_gen2_lumin_enabled":false,"dashboards_gen2_schedule":false,"dashboards_gen2_tag_filter":false,"dashboards_gen2_widget_filters":false,"dashboards_gen2_widget_library":false,"dynamic_tagging":true,"environment_management":false,"export_dashboard":true,"export_dashboard_pdf":true,"general_data_protection_compliance":false,"import_data":false,"indexing_v2":true,"lumin_beta_allowed":false,"lumin_beta_enabled":false,"modify_vulnerability":false,"pci_multiscan":false,"qualys_connector":false,"qualys_vuln_connector":false,"rbac":true,"recast_rules":true,"reporting":true,"scan_service":true,"scans_gen2":false,"state":true,"suggest_feature":false,"tagging":true,"vm_service_query":false,"vulnerability_management_gen2":true,"was_discovery":false,"was_multi_scanning":false,"was_plugin_selection":true,"was_scan_progress":true,"webapp_scanning":false,"webapp_scanning_gen2":false,"system":false},"apps":{"consec":"eval"},"group_uuids":[],"groups":[]}'
+      string: '{"id":37,"uuid":"7d833e4a-703a-4c0a-8b3a-43fe890d10e5","uuid_id":"7d833e4a-703a-4c0a-8b3a-43fe890d10e5","username":"test_impersonation@sdk.org","user_name":"test_impersonation@sdk.org","email":"test_user_email@sdk.org","name":"test_impersonation","type":"local","permissions":16,"enabled":true,"login_fail_count":0,"login_fail_total":0,"container_id":1000010,"container_uuid":"451bbc78-9b2c-4cf3-b0a5-36ded937b85d","container_name":"andrew@sdk.org","features":{"access_groups":true,"access_groups_migration":false,"advanced_search_v2":true,"agent_triage_m2":true,"agent_updates":true,"analytics":true,"analytics_v2":true,"asset_deleting_ui":true,"asset_management":true,"audits_workbench":false,"aws_connector_v1":true,"cfl_core_ssor":false,"connectors_gen2":true,"container_security":true,"container_security_gen2":true,"credentials_mgmt":true,"credentials_mgmt_v2":true,"dashboards_gen2":false,"dashboards_gen2_blank_canvas":false,"dashboards_gen2_export":false,"dashboards_gen2_export_png":false,"dashboards_gen2_lumin_enabled":false,"dashboards_gen2_schedule":false,"dashboards_gen2_tag_filter":false,"dashboards_gen2_widget_filters":false,"dashboards_gen2_widget_library":false,"dynamic_tagging":true,"environment_management":false,"export_dashboard":true,"export_dashboard_pdf":true,"general_data_protection_compliance":false,"import_data":false,"indexing_v2":true,"lumin_beta_allowed":false,"lumin_beta_enabled":false,"modify_vulnerability":false,"pci_multiscan":false,"qualys_connector":false,"qualys_vuln_connector":false,"rbac":true,"recast_rules":true,"reporting":true,"scan_service":true,"scans_gen2":false,"state":true,"suggest_feature":false,"tagging":true,"vm_service_query":false,"vulnerability_management_gen2":true,"was_discovery":false,"was_multi_scanning":false,"was_plugin_selection":true,"was_scan_progress":true,"webapp_scanning":false,"webapp_scanning_gen2":false,"system":false},"apps":{"consec":"eval"},"group_uuids":[],"groups":[]}'
     headers:
       Accept-Ranges:
       - bytes
@@ -27,11 +27,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '1970'
+      - '1958'
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 29 Aug 2019 20:07:47 GMT
+      - Wed, 04 Sep 2019 14:39:43 GMT
       Server:
       - tenable.io
       Set-Cookie:
@@ -44,9 +44,9 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Gateway-Site-ID:
-      - nginx-router-a-prod-ca-central-1
+      - nginx-router-d-prod-ca-central-1
       X-Request-Uuid:
-      - 92eb25f370288a5712dd7c734b7f2d74
+      - 3863358d76a261d24e7a6691132b0ef2
     status:
       code: 200
       message: OK
