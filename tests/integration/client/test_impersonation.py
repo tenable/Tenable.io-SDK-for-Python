@@ -9,6 +9,7 @@ from tests.config import TenableIOTestConfig
 class TestImpersonation(BaseTest):
 
     @pytest.fixture(scope='class')
+    @pytest.mark.vcr()
     def user(self, app, client):
         user_id = client.users_api.create(UserCreateRequest(
             username='test_impersonation@%s' % TenableIOTestConfig.get('users_domain_name'),
