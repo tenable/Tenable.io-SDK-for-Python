@@ -1,111 +1,85 @@
-import pytest
 import os
+import pytest
 
 from tenable_io.api.models import Policy, PolicyDetails, PolicyList, PolicySettings
-from tenable_io.api.policies import PolicyCreateRequest, PolicyConfigureRequest, PolicyImportRequest
-
-from tests.base import BaseTest
-from tests.config import TenableIOTestConfig
+from tenable_io.api.policies import PolicyConfigureRequest, PolicyImportRequest
 
 
-class TestPoliciesApi(BaseTest):
+@pytest.mark.vcr()
+def test_policy_create(new_policy):
+    assert isinstance(new_policy, int), u'The `create` method did not return type `int`.'
 
-    @pytest.fixture(scope='class')
-    def template(self, client):
-        """
-        Get policy template for testing.
-        """
-        template_list = client.editor_api.list('policy')
-        assert len(template_list.templates) > 0, u'At least one policy template.'
 
-        test_templates = [t for t in template_list.templates
-                          if t.name == TenableIOTestConfig.get('policy_template_name')]
-        assert len(test_templates) > 0, u'At least one test template.'
+@pytest.mark.vcr()
+def test_policy_details(client, new_policy):
+    policy_details = client.policies_api.details(new_policy)
+    assert isinstance(policy_details, PolicyDetails), u'The `details` method did not return type `PolicyDetails`.'
 
-        yield test_templates[0]
 
-    @pytest.fixture(scope='class')
-    def policy_id(self, app, client, template):
-        """
-        Create a policy for testing.
-        """
-        policy_id = client.policies_api.create(
-            PolicyCreateRequest(
-                template.uuid,
-                PolicySettings(
-                    name=app.session_name('test_policies'),
-                    description='test_policies'
-                )
+@pytest.mark.vcr()
+def test_policy_list(client):
+    policy_list = client.policies_api.list()
+    assert isinstance(policy_list, PolicyList), u'The `list` method did not return type `PolicyList`.'
+    for policy in policy_list.policies:
+        assert isinstance(policy, Policy), u'Should be a list of type `Policy`.'
+
+
+@pytest.mark.vcr()
+def test_policy_delete(client, new_policy):
+    assert client.policies_api.delete(new_policy), u'The policy was not deleted.'
+
+
+@pytest.mark.vcr()
+def test_policy_configure(client, new_policy):
+    policy_id = new_policy
+    policy_configure_request = PolicyConfigureRequest(
+        policy_id,
+        PolicySettings(
+                name='policy_name_edit'
             )
-        )
-        assert isinstance(policy_id, int), u'The `create` method returns a policy id.'
-        yield policy_id
+    )
+    assert client.policies_api.configure(policy_id, policy_configure_request), u'The policy was not edited.'
 
-        response = client.policies_api.delete(policy_id)
-        assert response is True, u'The `delete` method returns True.'
+    edited_policy = client.policies_api.details(policy_id)
+    assert edited_policy.settings.name == 'policy_name_edit', \
+        u'The returned policy name should match the the edited value.'
 
-    def test_details(self, client, policy_id):
-        policy = client.policies_api.details(policy_id)
-        assert isinstance(policy, PolicyDetails), u'The `details` method returns type.'
-        assert isinstance(policy.settings, PolicySettings), u'The `settings` field is set to type.'
 
-    def test_configure_and_copy(self, client, policy_id):
+@pytest.mark.vcr()
+def test_policy_copy(client, new_policy):
+    policy_id = new_policy
+    copy_of_policy_id = client.policies_api.copy(policy_id)
+    assert isinstance(copy_of_policy_id, int), u'The `copy` method did not return type `int`.'
+    policy_details = client.policies_api.details(policy_id)
+    copy_policy_details = client.policies_api.details(copy_of_policy_id)
+    assert policy_details.settings.description == copy_policy_details.settings.description, \
+        u'Expected the copy of the policy to have the same description as the original.'
 
-        new_description = 'foobar'
 
-        policy = client.policies_api.details(policy_id)
+@pytest.mark.vcr()
+def test_policy_import_and_export(client, new_policy):
+    policy_id = new_policy
+    iter_content = client.policies_api.export(policy_id, False)
 
-        copied_policy_id = client.policies_api.copy(policy_id)
-        assert isinstance(copied_policy_id, int), u'The `copy` method returns a policy'
+    path = 'test_policies_export_and_import'
+    with open(path, 'wb') as fd:
+        for chunk in iter_content:
+            fd.write(chunk)
+    assert os.path.isfile(path), u'The policy file has been downloaded'
+    assert os.path.getsize(path) > 0, u'The policy file is not empty.'
 
-        copied_policy = client.policies_api.details(copied_policy_id)
-        assert policy.settings.description == copied_policy.settings.description, u'The `description` field is the same'
+    with open(path, 'rb') as fu:
+        upload_file_name = client.file_api.upload(fu)
+    assert upload_file_name, u'File `upload` method returns valid file name.'
 
-        copied_policy.settings.description = new_description
-        response = client.policies_api.configure(
-            copied_policy_id,
-            PolicyConfigureRequest(
-                copied_policy.uuid,
-                copied_policy.settings
-            )
-        )
-        assert response is True, u'The `configure` method returns True.'
+    imported_policy_id = client.policies_api.import_policy(PolicyImportRequest(upload_file_name))
+    assert isinstance(imported_policy_id, int), u'The import request returns policy id.'
 
-        copied_policy = client.policies_api.details(copied_policy_id)
-        assert copied_policy.settings.description == new_description, u'The `description` field is the same'
+    policy = client.policies_api.details(policy_id)
+    imported_policy = client.policies_api.details(imported_policy_id)
+    assert policy.settings.description == imported_policy.settings.description, \
+        u'The description` field is the same'
 
-        response = client.policies_api.delete(copied_policy_id)
-        assert response is True, u'The `delete` method returns True.'
-
-    def test_export_and_import(self, app, client, policy_id):
-        iter_content = client.policies_api.export(policy_id, False)
-
-        path = app.session_file_output(u'test_policies_export_and_import')
-        with open(path, 'wb') as fd:
-            for chunk in iter_content:
-                fd.write(chunk)
-        assert os.path.isfile(path), u'The policy file has been downloaded'
-        assert os.path.getsize(path) > 0, u'The policy file is not empty.'
-
-        with open(path, 'rb') as fu:
-            upload_file_name = client.file_api.upload(fu)
-        assert upload_file_name, u'File `upload` method returns valid file name.'
-
-        imported_policy_id = client.policies_api.import_policy(PolicyImportRequest(upload_file_name))
-        assert isinstance(imported_policy_id, int), u'The import request returns policy id.'
-
-        policy = client.policies_api.details(policy_id)
-        imported_policy = client.policies_api.details(imported_policy_id)
-        assert policy.settings.description == imported_policy.settings.description, \
-            u'The description` field is the same'
-
-        response = client.policies_api.delete(imported_policy_id)
-        assert response is True, u'The `delete` method returns True.'
-        os.remove(path)
-
-    def test_list(self, client, policy_id):
-        # We create a policy to test get list
-        assert isinstance(policy_id, int), u'Policy has been created.'
-        policy_list = client.policies_api.list()
-        assert isinstance(policy_list, PolicyList), u'The `list` method returns type.'
-        assert isinstance(policy_list.policies[0], Policy), u'The list contains elements of type'
+    response = client.policies_api.delete(imported_policy_id)
+    assert response is True, u'The `delete` method returns True.'
+    os.remove(path)

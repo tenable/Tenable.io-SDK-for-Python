@@ -1,72 +1,74 @@
 import pytest
 
+from random import randint
 from tenable_io.api.access_groups import AccessGroupRequest
 from tenable_io.api.models import AccessGroup, AccessGroupList, AssetRule, AssetRuleFilter, Filters
-from tests.base import BaseTest
 
+@pytest.mark.vcr()
+def test_access_groups_filters_get(client):
+    filters = client.access_groups_api.filters()
+    print(filters)
+    assert isinstance(filters, Filters), u'The `filters` method did not return type `Filters`.'
 
-class TestAccessGroupsApi(BaseTest):
+@pytest.mark.vcr()
+def test_access_groups_rule_filters_get(client):
+    rule_filters = client.access_groups_api.rule_filters()
+    print(rule_filters)
+    for rf in rule_filters:
+        assert isinstance(rf, AssetRuleFilter), u'The `rule_filters` method did not return type `AssetRuleFilter`.'
 
-    @pytest.fixture(scope='class')
-    def access_group(self, app, client):
-        asset_rule = AssetRule(
+@pytest.mark.vcr()
+def test_access_groups_list(client):
+    access_group_list = client.access_groups_api.list()
+    assert isinstance(access_group_list, AccessGroupList), u'The `list` method did not return type `AccessGroupList`.'
+    for ag in access_group_list.access_groups:
+        assert isinstance(ag, AccessGroup), u'Invalid access group list\'s element type.'
+
+@pytest.mark.vcr()
+def test_access_groups_get_details(client):
+        new_group = create_access_group(client)
+        got_access_group = client.access_groups_api.details(new_group.id)
+        assert got_access_group.id == new_group.id, u'The `details` method returns access group with different ID.'
+
+@pytest.mark.vcr()
+def test_access_groups_delete(client):
+    access_group = client.access_groups_api.create(AccessGroupRequest(
+        name='test_create_delete',
+        rules=[AssetRule(
             type='ipv4',
             operator='eq',
-            terms=['172.11.13.14']
-        )
-        access_group = client.access_groups_api.create(AccessGroupRequest(
-            name=app.session_name('test_access_group'),
-            rules=[asset_rule]
-        ))
-        yield access_group
-        assert client.access_groups_api.delete(access_group.id), u'Access group was not deleted.'
+            terms=['10.0.0.14']
+        )]
+    ))
+    assert isinstance(access_group, AccessGroup), u'The `create` method did not return type `AccessGroup`.'
+    assert client.access_groups_api.delete(access_group.id), u'Access group was not deleted.'
 
-    def test_filters_get(self, client):
-        filters = client.access_groups_api.filters()
-        assert isinstance(filters, Filters), u'The `filters` method returned invalid filter type.'
-        rule_filters = client.access_groups_api.rule_filters()
-        for rf in rule_filters:
-            assert isinstance(rf, AssetRuleFilter), u'The `rule_filters` method returned invalid rule filter type.'
+@pytest.mark.vcr()
+def test_access_groups_edit(client):
+    existing_group = create_access_group(client)
+    new_name = 'test_edit'
 
-    def test_list(self, client, access_group):
-        access_group_list = client.access_groups_api.list()
-        assert isinstance(access_group_list, AccessGroupList), u'Invalid `AccessGroupList` class type.'
-        for ag in access_group_list.access_groups:
-            assert isinstance(ag, AccessGroup), u'Invalid access group list\'s element type.'
-        assert len([ag for ag in access_group_list.access_groups if ag.id == access_group.id]) == 1, \
-            u'Access group list does not contain created access group.'
+    edited_access_group = client.access_groups_api.edit(existing_group.id, AccessGroupRequest(
+        name=new_name,
+        rules=[AssetRule(
+            type='ipv4',
+            operator='eq',
+            terms=['10.0.0.20']
+        )]
+    ))
+    assert isinstance(edited_access_group, AccessGroup), u'The `edit` method did not return type `AccessGroup`.'
+    assert edited_access_group.name != existing_group.name, u'The `edit` method did not change the group name.'
 
-    def test_create_delete(self, app, client):
-        access_group = client.access_groups_api.create(AccessGroupRequest(
-            name=app.session_name('test_create_delete'),
-            rules=[AssetRule(
-                type='ipv4',
-                operator='eq',
-                terms=['10.0.0.14']
-            )]
-        ))
-        assert isinstance(access_group, AccessGroup), u'The `create` method return invalid type.'
-        assert hasattr(access_group, 'id'), u'Access group has no ID.'
-        assert hasattr(access_group, 'status'), u'Access group has no status.'
-        assert client.access_groups_api.delete(access_group.id), u'Access group was not deleted.'
+    got_access_group = client.access_groups_api.details(edited_access_group.id)
+    assert got_access_group.name == new_name, u'The `details` method returns access group with different name.'
 
-    def test_get_details(self, access_group, client):
-        got_access_group = client.access_groups_api.details(access_group.id)
-        assert got_access_group.id == access_group.id, u'The `details` method returns access group with different ID.'
-
-    def test_edit(self, app, client, access_group):
-        previous_name = access_group.name
-        new_name = app.session_name('test_edit')
-
-        edited_access_group = client.access_groups_api.edit(access_group.id, AccessGroupRequest(
-            name=new_name,
-            rules=[AssetRule(
-                type='ipv4',
-                operator='eq',
-                terms=['10.0.0.20']
-            )]
-        ))
-        assert edited_access_group.name == new_name, u'The `edit` method returns access group with different name.'
-
-        got_access_group = client.access_groups_api.details(edited_access_group.id)
-        assert got_access_group.name == new_name, u'The `details` method returns access group with different name.'
+def create_access_group(client):
+    asset_rule = AssetRule(
+        type='ipv4',
+        operator='eq',
+        terms=['172.11.13.14']
+    )
+    return client.access_groups_api.create(AccessGroupRequest(
+        name='test_access_group_name{}'.format(randint(0, 100)),
+        rules=[asset_rule]
+    ))

@@ -1,0 +1,73 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: GET
+    uri: https://cloud.tenable.com/server/properties
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA31TTW/bMAz9K4XOcWDJdlTnWvS6y7DTMAiyRKXCFMnQR7Mi6H8f5dhNsMOOEsnH
+        x8fHK3H2bPOrl5MDTY5GugQ7EuFkgydH8uP706tMmeyIC1KDFrMrJ+tFgoxR1tKx5ZQx1nWYkiC+
+        QxSlWEQiPeX9wM2hUZpNDWdcNXrsTdMeJgVdr3mvDOP8eZy6UbGRgVEHBCmzlhnI8UreIhhy9MW5
+        HfFwEYidFlZtJZiyjMih/dwR+DPbKPMSowNvx25kLSZ5SKkkUey9lFC6b/e0pdhpDeePGduRb0vy
+        04sLRddgyNZYtaAmcvz567GNyPaMNc8jymIV+LTwhXfpykpj1bGgJFhNkUxS0nt8CfxDefDnTlvc
+        Rn7kbueljvU7Ik/gM74GyrbHHWSDJUdWlfAZ4hxtJZRjwU1KL91Htgrrr+Q3fOCkWpt+QrkbqQZo
+        egDe8JbqhhtN5ThMqh+eUQHYPHEDSjaDWBZbUsMmgt3Oad7arKufinU15QX1P3AEMSEqqBuIUA20
+        pSs5y8k6my0sxM7FZVuHilhscONYevtb59sKI8whZgFnaZ1QwRt72kL5EoSRKgfEuJJ8QfjwRe+c
+        keqylE8k/j8TW+1g2W8o1eJde3cKjrENyGh10EpOTCHkmyXoMAxth9Pj3h79cP3nzm6aooVPUFfL
+        BmSF42Rp0SNCT4+Obfd9v680XKinNy0+2g5jFf7rNshhP+4p+fwLJ+QiLdkDAAA=
+    headers:
+      Accept-Ranges:
+      - bytes
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Length:
+      - '560'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Jul 2019 22:33:23 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - ''
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-a-prod-us-west-1
+      X-Request-Uuid:
+      - 61cb019457a82d4e455345e6e395d884
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

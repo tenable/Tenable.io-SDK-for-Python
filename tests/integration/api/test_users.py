@@ -1,111 +1,96 @@
 import pytest
 
-from tenable_io.api.models import User, UserList
-from tenable_io.api.users import UserCreateRequest
-from tenable_io.api.users import UserEditRequest
+from random import randint
+from tenable_io.api.models import Permissions, User, UserKeys, UserList
+from tenable_io.api.users import UserCreateRequest, UserEditRequest
 
-from tests.base import BaseTest
 from tests.config import TenableIOTestConfig
 
 
-class TestUsersApi(BaseTest):
+def create_user(client, role):
+    return client.users_api.create(UserCreateRequest(
+        username='test_user_{}_{}@{}'.format(role, randint(0, 10000), TenableIOTestConfig.get('users_domain_name')),
+        name='test_users',
+        password='Sdk!Test1',
+        permissions="{}".format(get_permission(role)),
+        type='local',
+        email='test_user_{}_{}@{}'.format(role, randint(0, 10000), TenableIOTestConfig.get('users_domain_name'))
+    ))
 
-    @pytest.fixture(scope='class')
-    def user_id(self, app, client):
-        new_user = client.users_api.create(UserCreateRequest(
-            username=app.session_name(u'test_users+%%s@%s' % TenableIOTestConfig.get('users_domain_name')),
-            name='test_users',
-            password='Sdk!Test1',
-            permissions="16",
-            type='local',
-            email=app.session_name(u'test_user_email+%%s@%s' % TenableIOTestConfig.get('users_domain_name'))
-        ))
-        yield new_user
-        client.users_api.delete(new_user)
 
-    def test_list_return_correct_type(self, client):
-        user_list = client.users_api.list()
-        assert isinstance(user_list, UserList), u'The `list` method returns type.'
+def get_permission(role):
+    if role == 'admin':
+        return Permissions.User.PERMISSION_ADMINISTRATOR
+    elif role == 'scan_manager':
+        return Permissions.User.PERMISSION_SCAN_MANAGER
+    elif role == 'standard':
+        return Permissions.User.PERMISSION_STANDARD
+    elif role == 'scan_operator':
+        return Permissions.User.PERMISSION_SCAN_OPERATOR
+    else:
+        return Permissions.User.PERMISSION_BASIC
 
-    def test_get_return_correct_user(self, client):
-        user_list = client.users_api.list()
 
-        assert len(user_list.users) > 0, u'User list has at least one user for testing.'
+@pytest.mark.vcr()
+def test_users_create(client):
+    user_id = create_user(client, 'admin')
+    assert isinstance(user_id, int), u'The `create` method did not return type `int`.'
 
-        user = user_list.users[0]
 
-        assert hasattr(user, 'id'), u'User has ID.'
+@pytest.mark.vcr()
+def test_users_list(client):
+    users = client.users_api.list()
+    assert isinstance(users, UserList), u'The `list` method did not return type `UserList`.'
+    for user in users.users:
+        assert isinstance(user, User), u'Expected a list of type `User`.'
 
-        got_user = client.users_api.get(user.id)
 
-        assert got_user.id == user.id, u'The `get` method returns user with the same ID.'
-        assert got_user.email == user.email, u'The `get` method returns user with the same email.'
-        assert got_user.username == user.username, u'The `get` method returns user with the same username.'
+@pytest.mark.vcr()
+def test_users_get(client):
+    user_id = create_user(client, 'scan_operator')
+    user_from_get = client.users_api.get(user_id)
+    assert isinstance(user_from_get, User), u'The `get` method did not return type `User`.'
+    assert user_from_get.id == user_id, u'Expected the `get` response to match the requested user.'
 
-    def test_users_create(self, app, client):
-        new_user_id = client.users_api.create(UserCreateRequest(
-            username=app.session_name(u'test_users_create+%%s@%s' % TenableIOTestConfig.get('users_domain_name')),
-            name='test_users_create',
-            password='Sdk!Test1',
-            permissions='16',
-            type='local',
-            email=app.session_name(u'test_user_email+%%s@%s' % TenableIOTestConfig.get('users_domain_name'))
-        ))
+    user_from_details = client.users_api.details(user_id)
+    assert isinstance(user_from_details, User), u'The `details` method did not return type `User`.'
+    assert user_from_details.id == user_id, u'Expected the `details` response to match the requested user.'
 
-        assert type(new_user_id) == int, u'User responded with ID of integer type.'
-        client.users_api.delete(new_user_id)
 
-    def test_users_edit(self, user_id, app, client):
-        user_info = client.users_api.get(user_id)
-        previous_name = user_info.name
-        new_name = 'test_users_edit'
+@pytest.mark.vcr()
+def test_users_edit(client):
+    user_id = create_user(client, 'scan_manager')
+    edited_name = 'test_user_edited'
+    edit_request = UserEditRequest(
+        name=edited_name
+    )
+    edited_user = client.users_api.edit(user_id, edit_request)
+    assert isinstance(edited_user, User), u'The `edit` method did not return type `User`.'
+    assert edited_user.id == user_id, u'Expected the `edit` response to match the requested user.'
+    assert edited_user.name == edited_name, u'Expected the name to be updated.'
 
-        edited_user = client.users_api.edit(user_id, UserEditRequest(
-            name=new_name,
-            email=app.session_name(u'test_user_email+%%s@%s' % TenableIOTestConfig.get('users_domain_name'))
-        ))
-        assert edited_user.name == new_name, u'The `edit` method returns user with matching name.'
 
-        reverted_edit_user = client.users_api.edit(user_id, UserEditRequest(
-            name=previous_name,
-            email=app.session_name(u'test_user_email+%%s@%s' % TenableIOTestConfig.get('users_domain_name'))
-        ))
-        assert reverted_edit_user.name == previous_name, u'The reverted user has matching name.'
+@pytest.mark.vcr()
+def test_users_edit_password(client):
+    user_id = create_user(client, 'basic')
+    new_password = 'Sdk!Test2'
+    assert client.users_api.password(user_id, new_password), u'A new password should be set.'
 
-    def test_list(self, user_id, client):
-        user_list = client.users_api.list()
-        for user in user_list.users:
-            assert isinstance(user, User), u'User list\'s element type.'
-        assert len([user for user in user_list.users if user.id == user_id]) == 1, u'User list contains created user.'
 
-    def test_edit_password(self, user_id, client):
-        new_password = 'Sdk!Test2'
+@pytest.mark.vcr()
+def test_users_delete(client):
+    user_id = create_user(client, 'standard')
+    assert client.users_api.delete(user_id), u'The user was not deleted.'
 
-        assert client.users_api.password(user_id, new_password), u'A new password should be set.'
 
-    def test_get_details(self, client):
-        user_list = client.users_api.list()
-        assert len(user_list.users) > 0, u'User list has at least one user for testing.'
+@pytest.mark.vcr()
+def test_users_keys(client):
+    user_id = create_user(client, 'standard')
+    keys = client.users_api.keys(user_id)
+    assert isinstance(keys, UserKeys), u'The `keys` method did not return type `UserKeys`.'
 
-        user = user_list.users[0]
 
-        detail_list = client.users_api.details(user.id)
-        assert detail_list.id == user.id, u'The user ID returned should match the requested ID.'
-
-    def test_keys(self, client, user_id):
-        user_keys_a = client.users_api.keys(user_id)
-        user_keys_b = client.users_api.keys(user_id)
-
-        assert user_keys_a.access_key != user_keys_b.access_key, u'Generated access key should change every time.'
-        assert user_keys_a.secret_key != user_keys_b.secret_key, u'Generated secret key should change every time.'
-
-    def test_enabled(self, client, user_id):
-        client.users_api.enabled(user_id, False)
-
-        check_disabled_user = client.users_api.details(user_id)
-        assert not check_disabled_user.enabled, u'The user should be disabled.'
-
-        client.users_api.enabled(user_id, True)
-
-        check_enabled_user = client.users_api.details(user_id)
-        assert check_enabled_user.enabled, u'The user should be set back to enabled.'
+@pytest.mark.vcr()
+def test_users_enabled(client):
+    user_id = create_user(client, 'standard')
+    assert client.users_api.enabled(user_id, False), u'The user was not disabled.'

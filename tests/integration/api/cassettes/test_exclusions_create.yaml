@@ -1,0 +1,73 @@
+interactions:
+- request:
+    body: '{"name": "test_exclusion_name4101", "members": "fake.tenable.com,fake2.tenable.com",
+      "description": "test description", "schedule": {"enabled": true, "starttime":
+      "2019-07-15 22:07:32", "endtime": "2019-07-15 23:07:32", "timezone": "UTC",
+      "rrules": {"freq": "ONETIME", "interval": 1}}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '285'
+      Content-Type:
+      - application/json
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: POST
+    uri: https://cloud.tenable.com/exclusions
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA3VQQU7DMBD8SrRnp7Kdhiq5Vj1wAC7lHLn2RlhNbLA3gKj6d9ZQpB7KHqzVzM6M
+        xifI9gXdMiH0J8DgyM+8gpaqq+WmVm2lm15u+kaDYN4cJnTQU1pQQEqsy0U4Jnxj1dPjbn//sONL
+        HwjTu5mgV2cBxfQrhmL8vN8ynckkuhGlL1GsCUgfMR0Hz3EgL1PfeP6GbSeTaZij86O3hnwMgzPE
+        Gaq9a7TuulYLsAn/o2acD5i4EIzmiCv6rbuycRZVQfQ1xHEOs03+tbixhjBTdQ1xB/PTsDADftpp
+        ySW4oGslVfkmLrc+fwOXPds8hQEAAA==
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Jul 2019 22:32:33 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - ''
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-c-prod-us-west-1
+      X-Request-Uuid:
+      - 3305de493f6737cbb3aa21f9b886a08c
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

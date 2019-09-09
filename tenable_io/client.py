@@ -172,7 +172,7 @@ class TenableIOClient(object):
                         raise TenableIOApiException(exception.response)
                     sleep_ms += count * int(TenableIOClient._RETRY_SLEEP_MILLISECONDS)
                     sleep(sleep_ms / 1000.0)
-                    logging.warn(u'RETRY(%d/%d)AFTER(%dms):%s' %
+                    logging.warning(u'RETRY(%d/%d)AFTER(%dms):%s' %
                                  (count, total_retries, sleep_ms, format_request(exception.response)))
         return wrapper
 

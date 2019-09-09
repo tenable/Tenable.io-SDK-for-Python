@@ -1,24 +1,27 @@
-from tenable_io.api.models import Agent, AgentList, FilterPagination, FilterSort
-from tenable_io.exceptions import TenableIOApiException, TenableIOErrorCode
+import pytest
 
-from tests.base import BaseTest
+from tenable_io.api.models import Agent, AgentList
 
 
-class TestAgentsApi(BaseTest):
+@pytest.mark.vcr()
+def test_agents_list(client):
+    agent_list = client.agents_api.list(limit=2)
+    assert isinstance(agent_list, AgentList), u'The `list` method did not return type `AgentList`.'
+    assert len(agent_list.agents) == 2, u'Expected limit to be applied.'
+    for a in agent_list.agents:
+        assert isinstance(a, Agent), u'Agents property does not represent type.'
 
-    def test_delete(self, client):
-        try:
-            client.agents_api.delete('test_agents_delete')
-        except TenableIOApiException as e:
-            assert e.code in (TenableIOErrorCode.BAD_REQUEST, TenableIOErrorCode.NOT_FOUND), \
-                u'Bad request for string agent_id or agent not found.'
 
-    def test_list(self, client):
-        agent_list = client.agents_api.list()
-        assert isinstance(agent_list, AgentList), u'List request returns type.'
-        for a in agent_list.agents:
-            assert isinstance(a, Agent), u'Agents property represents type.'
+@pytest.mark.vcr()
+def test_agents_get(client):
+    agent_list = client.agents_api.list()
+    assert len(agent_list.agents) > 0, u'Expected at least one agent.'
+    agent = client.agents_api.get(agent_list.agents[0].id)
+    assert isinstance(agent, Agent), u'The `get` method did not return type `AgentList`.'
 
-        assert isinstance(agent_list.pagination, FilterPagination), u'Pagination property represents type.'
-        for s in agent_list.pagination.sort:
-            assert isinstance(s, FilterSort), u'Sort property represents type.'
+
+@pytest.mark.vcr()
+def test_agents_delete(client):
+    agent_list = client.agents_api.list()
+    assert len(agent_list.agents) > 0, u'Expected at least one agent.'
+    assert client.agents_api.delete(agent_list.agents[0].id), u'The Agent was not deleted.'

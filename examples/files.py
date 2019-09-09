@@ -3,10 +3,12 @@ import os
 from tenable_io.client import TenableIOClient
 
 
-def example(test_file):
+def example():
 
     # Generate a file with an unique name.
-    upload_file = test_file(u'example_upload', u'example content')
+    upload_file = u'example_upload'
+    with open(upload_file, 'a') as fd:
+        fd.write('test_file')
 
     '''
     Instantiate an instance of the TenableIOClient.

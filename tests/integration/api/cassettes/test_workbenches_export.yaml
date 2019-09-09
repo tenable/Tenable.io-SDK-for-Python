@@ -1,0 +1,230 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: GET
+    uri: https://cloud.tenable.com/workbenches/export?format=nessus&report=vulnerabilities&chapter=vuln_by_asset
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA6tWSsvMSVWyMjQ2MTS3MDM0qgUAB06BWBIAAAA=
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Jul 2019 22:33:42 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - ''
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-a-prod-us-west-1
+      X-Request-Uuid:
+      - c9cdda043522b6ea34ffdac9672e04c9
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: GET
+    uri: https://cloud.tenable.com/workbenches/export/134178612/status
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA6tWKijKTy9KLS6OL8kvScxRslIyUNKBC0K5xSWJJaUgTlFqYkqlUi0Aq4sRdzYA
+        AAA=
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Jul 2019 22:33:43 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - ''
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-a-prod-us-west-1
+      X-Request-Uuid:
+      - 33fb888d2cf74dadb24beeaccb8d2b2e
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: GET
+    uri: https://cloud.tenable.com/workbenches/export/134178612/download
+  response:
+    body:
+      string: !!binary |
+        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
+        fDNKv8v5J34zmr8mxbvC1359/99PYanS6z8AAA==
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Disposition:
+      - attachment; filename="e3edc003f70d7b3ad022aa2f0c0ee990.nessus"
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/octet-stream
+      Date:
+      - Mon, 15 Jul 2019 22:33:43 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - ''
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-a-prod-us-west-1
+      X-Request-Uuid:
+      - fb152ab88fc3df8c4b56c83715421bd9
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -2,10 +2,16 @@ Tenable.io SDK for Python
 =========================
 .. image:: https://img.shields.io/pypi/v/tenable-io.svg?style=flat-square
     :target: https://pypi.python.org/pypi/tenable-io
+.. image:: https://img.shields.io/github/license/tenable/Tenable.io-SDK-for-Python
+   :target: https://github.com/tenable/Tenable.io-SDK-for-Python
 
-Tenable.io SDK for Python
+Welcome to the Tenable.io SDK for Python. This library can be used to easily integrate with the `tenable.io <https://cloud.tenable.com/>`_ API.
 
 For you coffee lovers, check out `Tenable.io SDK for Java <https://github.com/tenable/Tenable.io-SDK-for-Java>`_.
+
+Report any issues `here <https://github.com/tenable/Tenable.io-SDK-for-Python/issues>`_.
+
+Additional documentation is available in our `Developer Portal <https://developer.tenable.com/>`_.
 
 Installation
 ------------

@@ -8,21 +8,18 @@ from tests.config import TenableIOTestConfig
 
 class TestImpersonation(BaseTest):
 
-    @pytest.fixture(scope='class')
-    def user(self, app, client):
+    @pytest.mark.vcr()
+    def test_impersonation(self, client):
         user_id = client.users_api.create(UserCreateRequest(
-            username=app.session_name(u'test_impersonation%%s@%s' % TenableIOTestConfig.get('users_domain_name')),
+            username='test_impersonation@%s' % TenableIOTestConfig.get('users_domain_name'),
             name='test_impersonation',
             password='Sdk!Test1',
             permissions='16',
             type='local',
-            email=app.session_name(u'test_user_email+%%s@%s' % TenableIOTestConfig.get('users_domain_name'))
+            email='test_user_email@%s' % TenableIOTestConfig.get('users_domain_name')
         ))
         user = client.users_api.get(user_id)
-        yield user
-        client.users_api.delete(user_id)
-
-    def test_impersonation(self, client, user):
         impersonating_client = client.impersonate(user.username)
         impersonating_user = impersonating_client.session_api.get()
         assert impersonating_user.username == user.username, u'The current session user should be the impersonated user'
+        client.users_api.delete(user_id)

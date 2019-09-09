@@ -1,80 +1,95 @@
 import os
+import pytest
 
-from tests.base import BaseTest
-
-from tenable_io.api.models import AssetList, VulnerabilityList
+from tenable_io.api.models import Asset, AssetActivity, AssetActivityList, AssetList, AssetInfo, Vulnerability, \
+    VulnerabilityList, VulnerabilityOutputList
 from tenable_io.api.workbenches import WorkbenchesApi
-from tenable_io.exceptions import TenableIOErrorCode, TenableIOApiException
+
+from tests.integration.api.utils.utils import wait_until
 
 
-class TestWorkbenchesApi(BaseTest):
+@pytest.mark.vcr()
+def test_workbenches_assets(client):
+    assets_list = client.workbenches_api.assets()
+    assert isinstance(assets_list, AssetList), u'The `assets` method did not return type `AssetList`.'
+    for asset in assets_list.assets:
+        assert isinstance(asset, Asset), u'Expected a list of type `Asset`.'
 
-    def test_assets(self, client):
-        assets_list = client.workbenches_api.assets()
-        assert isinstance(assets_list, AssetList), u'The method returns asset list.'
 
-    def test_assets_vulnerabilities(self, client):
-        assets_list = client.workbenches_api.assets_vulnerabilities()
-        assert isinstance(assets_list, AssetList), u'The method returns asset list.'
+@pytest.mark.vcr()
+def test_workbenches_assets_vulnerabilities(client):
+    assets_list = client.workbenches_api.assets_vulnerabilities()
+    assert isinstance(assets_list, AssetList), u'The `assets_vulnerabilities` method did not return type `AssetList`.'
 
-    def test_asset_activity(self, client):
-        try:
-            client.workbenches_api.asset_activity('test_asset_activity')
-            assert False, u'TenableIOApiException should have been thrown for bad ID.'
-        except TenableIOApiException as e:
-            assert e.code is TenableIOErrorCode.NOT_FOUND, u'Appropriate exception thrown.'
 
-    def test_asset_info(self, client):
-        try:
-            client.workbenches_api.asset_info('1')
-            assert False, u'TenableIOApiException should have been thrown for an invalid ID.'
-        except TenableIOApiException as e:
-            assert e.code is TenableIOErrorCode.BAD_REQUEST, u'Appropriate exception thrown.'
-        try:
-            client.workbenches_api.asset_info('e1503229-c3d9-42e1-9eb3-84f3c2636081')
-        except TenableIOApiException as e:
-            assert e.code is TenableIOErrorCode.NOT_FOUND, u'Appropriate exception thrown.'
+@pytest.mark.vcr()
+def test_workbenches_asset_activity(client, fetch_asset):
+    asset_activity = client.workbenches_api.asset_activity(fetch_asset.id)
+    assert isinstance(asset_activity, AssetActivityList), \
+        u'The `asset_activity` method did not return type `AssetActivityList`.'
+    for activity in asset_activity.activity:
+        assert isinstance(activity, AssetActivity), u'Expected a list of type `AssetActivity`.'
 
-    def test_asset_vulnerabilities(self, client):
-        vulnerabilities = client.workbenches_api.asset_vulnerabilities('e1503229-c3d9-42e1-9eb3-84f3c263608f')
-        assert len(vulnerabilities.vulnerabilities) == 0, \
-            u'Expected 0 vulnerabilities to be returned for invalid asset.'
 
-    def test_vulnerabilities(self, client):
-        vulnerabilities_list = client.workbenches_api.vulnerabilities()
-        assert isinstance(vulnerabilities_list, VulnerabilityList), u'The method returns vulnerability list.'
+@pytest.mark.vcr()
+def test_workbenches_asset_info(client, fetch_asset):
+    asset_info = client.workbenches_api.asset_info(fetch_asset.id)
+    assert isinstance(asset_info, AssetInfo), u'The `asset_info` method did not return type `AssetInfo`.'
 
-    def test_vulnerability_output(self, client):
-        try:
-            client.workbenches_api.vulnerability_output('test_vulnerability_output')
-            assert False, u'TenableIOApiException should have been thrown for bad ID.'
-        except TenableIOApiException as e:
-            assert e.code is TenableIOErrorCode.BAD_REQUEST, u'Appropriate exception thrown.'
-        vulnerability_output = client.workbenches_api.vulnerability_output('11111')
-        assert len(vulnerability_output.outputs) == 0, u'Expected no output for unknown vulnerability.'
 
-    def test_export(self, app, client):
-        file_id = client.workbenches_api.export_request(
-            WorkbenchesApi.FORMAT_NESSUS,
-            WorkbenchesApi.REPORT_VULNERABILITIES,
-            WorkbenchesApi.CHAPTER_VULN_BY_ASSET,
-        )
-        assert file_id, u'The `export_request` method returns a valid file ID.'
+@pytest.mark.vcr()
+def test_workbenches_asset_vulnerabilities(client, fetch_asset):
+    asset_vulns = client.workbenches_api.asset_vulnerabilities(fetch_asset.id)
+    assert isinstance(asset_vulns, VulnerabilityList), \
+        u'The `asset_vulnerabilities` method did not return type `VulnerabilityList`.'
 
-        export_status = self.wait_until(lambda: client.workbenches_api.export_status(file_id),
-                                        lambda status: status == WorkbenchesApi.STATUS_EXPORT_READY)
 
-        assert export_status == WorkbenchesApi.STATUS_EXPORT_READY, u'Workbench export is ready.'
+@pytest.mark.vcr()
+def test_workbenches_asset_vulnerabilities(client, fetch_asset):
+    asset_vulns = client.workbenches_api.asset_vulnerabilities(fetch_asset.id)
+    assert isinstance(asset_vulns, VulnerabilityList), \
+        u'The `asset_vulnerabilities` method did not return type `VulnerabilityList`.'
 
-        iter_content = client.workbenches_api.export_download(file_id, False)
-        download_path = app.session_file_output('test_workbench_export')
 
-        assert not os.path.isfile(download_path), u'Workbench report does not yet exist.'
+@pytest.mark.vcr()
+def test_workbenches_vulnerabilities(client):
+    vulnerabilities_list = client.workbenches_api.vulnerabilities()
+    assert isinstance(vulnerabilities_list, VulnerabilityList), \
+        u'The `vulnerabilities` method did not return type `VulnerabilityList`.'
+    for vulnerability in vulnerabilities_list.vulnerabilities:
+        assert isinstance(vulnerability, Vulnerability), u'Expected a list of type `Vulnerability`.'
 
-        with open(download_path, 'wb') as fd:
-            for chunk in iter_content:
-                fd.write(chunk)
-        assert os.path.isfile(download_path), u'Workbench report is downloaded.'
-        assert os.path.getsize(download_path) > 0, u'Workbench report is not empty.'
 
-        os.remove(download_path)
+@pytest.mark.vcr()
+def test_workbenches_vulnerability_output(client, fetch_vulnerability):
+    vulnerability_output = client.workbenches_api.vulnerability_output(fetch_vulnerability.plugin_id)
+    assert isinstance(vulnerability_output, VulnerabilityOutputList), \
+        u'The `vulnerability_output` method did not return type `VulnerabilityOutputList`.'
+
+
+@pytest.mark.vcr()
+def test_workbenches_export(client):
+    file_id = client.workbenches_api.export_request(
+        WorkbenchesApi.FORMAT_NESSUS,
+        WorkbenchesApi.REPORT_VULNERABILITIES,
+        WorkbenchesApi.CHAPTER_VULN_BY_ASSET,
+    )
+    assert file_id, u'The `export_request` method did not return a valid file ID.'
+
+    export_status = wait_until(lambda: client.workbenches_api.export_status(file_id),
+                                    lambda status: status == WorkbenchesApi.STATUS_EXPORT_READY)
+
+    assert export_status == WorkbenchesApi.STATUS_EXPORT_READY, u'Workbench export is not ready.'
+
+    iter_content = client.workbenches_api.export_download(file_id, False)
+    download_path = 'test_workbench_export'
+
+    assert not os.path.isfile(download_path), u'Workbench report does not exist.'
+
+    with open(download_path, 'wb') as fd:
+        for chunk in iter_content:
+            fd.write(chunk)
+    assert os.path.isfile(download_path), u'Workbench report was not downloaded.'
+    assert os.path.getsize(download_path) > 0, u'Workbench report is empty.'
+
+    os.remove(download_path)

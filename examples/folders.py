@@ -3,11 +3,10 @@ from tenable_io.client import TenableIOClient
 from tenable_io.exceptions import TenableIOApiException
 
 
-def example(test_name):
+def example():
 
-    # Generate unique names.
-    scan_name = test_name(u'my test scan')
-    folder_name = test_name(u'my test folder', length=5)
+    scan_name = u'my test scan'
+    folder_name = u'my test folder'
 
     '''
     Instantiate an instance of the TenableIOClient.

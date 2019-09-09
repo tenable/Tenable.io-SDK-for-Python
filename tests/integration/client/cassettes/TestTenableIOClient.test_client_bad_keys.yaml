@@ -1,0 +1,45 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.1
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: GET
+    uri: https://cloud.tenable.com/session
+  response:
+    body:
+      string: This scanner, agent, or API key token does not appear to be related
+        to any active containers on any sites and has been blacklisted.
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '131'
+      Content-Type:
+      - application/octet-stream
+      Date:
+      - Tue, 16 Jul 2019 20:04:42 GMT
+      Server:
+      - tenable.io
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Gateway-Site-ID:
+      - nginx-router-d-prod-us-west-1
+      X-Path-Handler:
+      - blacklisted
+      X-Request-Uuid:
+      - 62ee8717411c9b5aff5e2db5888883f7
+    status:
+      code: 401
+      message: Unauthorized
+version: 1

@@ -1,0 +1,72 @@
+interactions:
+- request:
+    body: '{"name": "test_agent_exclusion_name_18", "description": "test description",
+      "schedule": {"enabled": true, "starttime": "2019-07-15 22:07:49", "endtime":
+      "2019-07-15 23:07:49", "timezone": "UTC", "rrules": {"freq": "ONETIME", "interval":
+      1}}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '241'
+      Content-Type:
+      - application/json
+      Cookie:
+      - nginx-cloud-site-id=us-2b
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.0
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: POST
+    uri: https://cloud.tenable.com/scanners/1/agents/exclusions
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA3WPvW5CMQyFXwV5DtJNgMLNihgYgIXOUZqYEinkQuKLqqK+e+2qQwe6Wf7Oj84D
+        WjhjHDOCfQCWSOnCJ5hO99NuOdWLiZnZbmnnPSjm/i1jBEt1RAW1sq+J8VTxxq7DfnPc7jasTIWw
+        3n0Gq78USOjnUCT49bhm3MhXelJlfqvYk30jdxliOqXgKQ3FRU+s14uXmTF9rzsFoeJ/KGILNV2F
+        cgdho8nfl4Lif9qFOP+OhRx+hDw2iRPm9Ep2RFnwDc5Z9ismAQAA
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Jul 2019 22:31:50 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - ''
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-c-prod-us-west-1
+      X-Request-Uuid:
+      - 912f315279edc050002c4546f86f98c0
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

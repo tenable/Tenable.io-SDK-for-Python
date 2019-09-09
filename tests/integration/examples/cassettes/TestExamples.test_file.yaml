@@ -1,0 +1,66 @@
+interactions:
+- request:
+    body: "--dfde6956c320c0a38b24decb4ce42de3\r\nContent-Disposition: form-data; name=\"\
+      Filedata\"; filename=\"example_upload\"\r\n\r\ntest_file\r\n--dfde6956c320c0a38b24decb4ce42de3--\r\
+      \n"
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '163'
+      Content-Type:
+      - multipart/form-data; boundary=dfde6956c320c0a38b24decb4ce42de3
+      User-Agent:
+      - TenableIOSDK Python/3.7.3/1.7.1
+      X-APIKeys:
+      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
+    method: POST
+    uri: https://cloud.tenable.com/file/upload
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA6tWSsvMSS0tyMlPTElNUbJSSq1IzC3ISY2HCMUbKtUCAJrrGmMjAAAA
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Jul 2019 23:43:56 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - ''
+      Server:
+      - tenable.io
+      Set-Cookie:
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - accept-encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Gateway-Site-ID:
+      - nginx-router-b-prod-us-west-1
+      X-Request-Uuid:
+      - 8fa450fab00e3c649daa4d873f6b9d77
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1
