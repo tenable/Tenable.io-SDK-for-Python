@@ -3017,6 +3017,70 @@ class TagCategoryList(BaseModel):
         self._pagination = pagination
 
 
+class TagValueFilter(BaseModel):
+
+    OPERATOR_EQ = u'eq'
+    OPERATOR_NEQ = u'neq'
+    OPERATOR_MATCH = u'match'
+    OPERATOR_NMATCH = u'nmatch'
+    OPERATOR_SET_HAS = u'set-has'
+    OPERATOR_SET_HASNOT = u'set-hasnot'
+    OPERATOR_SET_HASONLY = u'set-hasonly'
+
+    def __init__(
+            self,
+            field=None,
+            operator=None,
+            value=None
+    ):
+        self.field = field
+        self.operator = operator
+        self.value = value
+
+
+class TagValueFilters(BaseModel):
+
+    OPERATOR_AND = u'and'
+    OPERATOR_OR = u'or'
+
+    ASSET_FILTER_TYPE = u'asset'
+
+    def __init__(
+            self,
+            filter_type=ASSET_FILTER_TYPE,
+            operator=None,
+            filters=None
+    ):
+        self.filter_type = filter_type
+        self.operator = operator
+        self._filters = None
+        self.filters = filters
+
+    @property
+    def filters(self):
+        return self._filters
+
+
+    @filters.setter
+    @BaseModel._model_list(TagValueFilter)
+    def filters(self, filters):
+        self._filters = filters
+
+    def as_payload(self, filter_=None):
+        return {
+            TagValueFilters.ASSET_FILTER_TYPE: {
+                self.operator: [f.as_payload() for f in self.filters]
+            }
+        }
+
+    @classmethod
+    def from_dict(cls, dict_):
+        inner = loads(list(dict_.values())[0])
+        operator = list(inner.keys())[0]
+        filters = [TagValueFilter.from_dict(f) for f in list(inner.values())[0]]
+        return cls(operator=operator, filters=filters)
+
+
 class TagValue(BaseModel):
 
     def __init__(
@@ -3033,7 +3097,8 @@ class TagValue(BaseModel):
             created_by=None,
             updated_at=None,
             updated_by=None,
-            model_name=None
+            model_name=None,
+            filters=None
     ):
         self.container_uuid = container_uuid
         self.uuid = uuid
@@ -3048,6 +3113,24 @@ class TagValue(BaseModel):
         self.updated_at = updated_at
         self.updated_by = updated_by
         self.model_name = model_name
+        self._filters = None
+        self.filters = filters
+
+    @property
+    def filters(self):
+        return self._filters
+
+    @filters.setter
+    @BaseModel._model(TagValueFilters)
+    def filters(self, filters):
+        self._filters = filters
+
+    @classmethod
+    def from_json(cls, json):
+        parsed = loads(json)
+        if 'filters' in parsed:
+            parsed['filters'] = TagValueFilters.from_dict(dict_=parsed['filters'])
+        return cls.from_dict(parsed)
 
 
 class TagValueList(BaseModel):
