@@ -156,7 +156,7 @@ def test_tags_asset_tag_assignments(client, new_tag_category):
 
 @pytest.mark.vcr()
 def test_tags_value_create_dynamic(client, new_tag_category):
-    tag_filter = TagValueFilter(field='ipv4', operator='eq', value='127.0.0.1')
+    tag_filter = TagValueFilter(field='ipv4', operator=TagValueFilter.OPERATOR_EQ, value='127.0.0.1')
     filters = TagValueFilters(operator=TagValueFilters.OPERATOR_AND, filters=[tag_filter])
     value = create_value(client, new_tag_category.uuid, filters)
     assert isinstance(value, TagValue), u'The `create_value` method did not return type `TagValue`.'
@@ -176,7 +176,7 @@ def test_tags_value_edit_dynamic(client, new_tag_category):
     value = create_value(client, new_tag_category.uuid)
 
     edit_name = 'test_edit_value_dynamic'
-    tag_filter = TagValueFilter(field='ipv4', operator='eq', value='127.0.0.1')
+    tag_filter = TagValueFilter(field='ipv4', operator=TagValueFilter.OPERATOR_EQ, value='127.0.0.1')
     filters = TagValueFilters(operator=TagValueFilters.OPERATOR_AND, filters=[tag_filter])
 
     edit_value = client.tags_api.edit_value(value.uuid, TagValueRequest(
