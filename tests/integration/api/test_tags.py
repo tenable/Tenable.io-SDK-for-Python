@@ -3,21 +3,17 @@ import pytest
 from random import randint
 
 from tenable_io.api.models import AssetTagAssignment, AssetTagAssignmentList, TagCategory, TagCategoryList, TagValue, \
-    TagValueList
+    TagValueFilter, TagValueFilters, TagValueList
 from tenable_io.api.tags import AssetAssignmentsRequest, TagCategoryRequest, TagValueRequest
 
 
-# def create_category(client):
-#     return client.tags_api.create_category(TagCategoryRequest(
-#         name='test_category_{}'.format(randint(0, 1000))
-#     ))
-
-
-def create_value(client, category_name):
-    return client.tags_api.create_value(TagValueRequest(
+def create_value(client, category_name, filters=None):
+    req = TagValueRequest(
         category_name=category_name,
-        value='test_value_{}'.format(randint(0, 1000))
-    ))
+        value='test_value_{}'.format(randint(0, 1000)),
+        filters=filters
+    )
+    return client.tags_api.create_value(req)
 
 
 @pytest.mark.vcr()
@@ -156,3 +152,38 @@ def test_tags_asset_tag_assignments(client, new_tag_category):
     assert len(asset_assignments.tags) == 1, u'Expected 1 assignment for asset.'
     for assignment in asset_assignments.tags:
         assert isinstance(assignment, AssetTagAssignment), u'Expected list of type `AssetTagAssignment`.'
+
+
+@pytest.mark.vcr()
+def test_tags_value_create_dynamic(client, new_tag_category):
+    tag_filter = TagValueFilter(field='ipv4', operator='eq', value='127.0.0.1')
+    filters = TagValueFilters(operator=TagValueFilters.OPERATOR_AND, filters=[tag_filter])
+    value = create_value(client, new_tag_category.uuid, filters)
+    assert isinstance(value, TagValue), u'The `create_value` method did not return type `TagValue`.'
+    assert isinstance(value.filters, TagValueFilters), \
+        u'The `create_value` method did not return type `TagValueFilters` for filters property.'
+    assert len(value.filters.filters) == 1, u'Expected a single filter to exist for value.filters'
+    assert isinstance(value.filters.filters[0], TagValueFilter), \
+        u'The `create_value` method did not return type `TagValueFilter` for filters.filters property.'
+    details = client.tags_api.value(value.uuid)
+    assert isinstance(details, TagValue), u'The `value` method did not return type `TagValue`.'
+    assert isinstance(details.filters, TagValueFilters), \
+        u'The `value` method did not return type `TagValueFilters` for filters property.'
+
+
+@pytest.mark.vcr()
+def test_tags_value_edit_dynamic(client, new_tag_category):
+    value = create_value(client, new_tag_category.uuid)
+
+    edit_name = 'test_edit_value_dynamic'
+    tag_filter = TagValueFilter(field='ipv4', operator='eq', value='127.0.0.1')
+    filters = TagValueFilters(operator=TagValueFilters.OPERATOR_AND, filters=[tag_filter])
+
+    edit_value = client.tags_api.edit_value(value.uuid, TagValueRequest(
+        value=edit_name,
+        filters=filters
+    ))
+    assert isinstance(edit_value, TagValue), u'The `edit_value` method did not return type `TagValue`.'
+    assert edit_value.value == edit_name, u'The tag value edit was not successful.'
+    assert isinstance(edit_value.filters, TagValueFilters), \
+        u'The `create_value` method did not return type `TagValueFilters` for filters property.'

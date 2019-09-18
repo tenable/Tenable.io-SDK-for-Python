@@ -4,6 +4,7 @@ CHANGELOG
 
 Unreleased
 ==========
+* Added: Support for creating dynamic tags
 * Changed: Overhaul of all tests for reliability & speed improvements. pytest-vcr and pytest-xdist are now test dependencies.
 
 1.7.0

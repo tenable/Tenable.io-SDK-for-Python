@@ -2,7 +2,7 @@ from json import loads
 
 from tenable_io.api.base import BaseApi
 from tenable_io.api.base import BaseRequest
-from tenable_io.api.models import AssetTagAssignmentList, TagCategory, TagCategoryList, TagValue, TagValueList
+from tenable_io.api.models import AssetTagAssignmentList, TagCategory, TagCategoryList, TagValue, TagValueList, TagValueFilters
 
 
 class TagsApi(BaseApi):
@@ -208,7 +208,8 @@ class TagValueRequest(BaseRequest):
             category_uuid=None,
             category_name=None,
             category_description=None,
-            description=None
+            description=None,
+            filters=None
     ):
         """Request for TagsApi.create_value and TagsApi.edit_value.
 
@@ -222,12 +223,20 @@ class TagValueRequest(BaseRequest):
         :type value: string
         :param description: The description of the tag value.
         :type description: string
+        :param filters: Optional filters to create a dynamic tag
+        :type filters: TagValueFilters
         """
         self.category_uuid = category_uuid
         self.category_name = category_name
         self.category_description = category_description
         self.value = value
         self.description = description
+        if filters is not None:
+            assert filters.operator in [
+                TagValueFilters.OPERATOR_AND,
+                TagValueFilters.OPERATOR_OR
+            ]
+            self.filters = filters.as_payload()
 
 
 class AssetAssignmentsRequest(BaseRequest):
