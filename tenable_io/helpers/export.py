@@ -25,8 +25,8 @@ class ExportHelper(object):
         :param since: The start date (in Unix time) for the range of new or updated vulnerability data you want
             to export. If your request omits this parameter, exported data includes all vulnerabilities, regardless of
             date.
-        :param tags: Returns all assets with the specified tags. The filter is defined as "tag",
-            a period ("."), and the tag category name. Should be specified as a dict of {tag_category_name:[tag_value(s)]}
+        :param tags: Returns all assets with the specified tags. The filter is defined as a dict with catgeory name as
+            the key and a list of values as the value. Ex: {tag_category_name:[tag_value(s)]}
         :param cidr_range: Restricts search for vulnerabilities to assets assigned an IP address within the specified
             CIDR range. For example, 0.0.0.0/0 restricts the search to 0.0.0.1 and 255.255.255.254.
         :param first_found: The start date (in Unix time) for the range of vulnerability data you want to export,
@@ -116,8 +116,8 @@ class ExportHelper(object):
         :param has_plugin_results: If true, returns all assets that have plugin results. If false, returns all assets
             that do not have plugin results. An asset may not have plugin results if the asset details originated from a
             connector, an API import, or a discovery scan, rather than a vulnerabilities scan.
-        :param tags: Returns all assets with the specified tags. The filter is defined as "tag",
-            a period ("."), and the tag category name. Should be specified as a dict of {tag_category_name:[tag_value(s)]}
+        :param tags: Returns all assets with the specified tags. The filter is defined as a dict with catgeory name as
+            the key and a list of values as the value. Ex: {tag_category_name:[tag_value(s)]}
         :param file_open_mode: The open mode to the file output. Default to "wb".
         :return: The list of exported assets if path is `None` else the list of `chunk_id`s.
         """
