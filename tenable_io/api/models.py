@@ -2149,6 +2149,9 @@ class User(BaseModel):
             type=None,
             login_fail_count=None,
             last_login_attempt=None,
+            uuid=None,
+            uuid_id=None,
+            container_uuid=None
     ):
         self.id = id
         self.username = username
@@ -2159,6 +2162,9 @@ class User(BaseModel):
         self.type = type
         self.login_fail_count = login_fail_count
         self.last_login_attempt = last_login_attempt
+        self.uuid = uuid
+        self.uuid_id = uuid_id
+        self.container_uuid = container_uuid
 
 
 class UserKeys(BaseModel):
@@ -2207,6 +2213,23 @@ class UserList(BaseModel):
     @BaseModel._model_list(User)
     def users(self, users):
         self._users = users
+
+
+class UserAuthorizations(BaseModel):
+
+    def __init__(
+            self,
+            account_uuid=None,
+            user_uuid=None,
+            api_permitted=None,
+            password_permitted=None,
+            saml_permitted=None
+    ):
+        self.account_uuid = account_uuid
+        self.user_uuid = user_uuid
+        self.api_permitted = api_permitted
+        self.password_permitted = password_permitted
+        self.saml_permitted = saml_permitted
 
 
 class AssetSeverity(BaseModel):

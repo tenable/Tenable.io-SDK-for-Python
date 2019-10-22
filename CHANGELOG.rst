@@ -2,6 +2,10 @@
 CHANGELOG
 =========
 
+1.9.0
+==========
+* Added: Support for user authorizations endpoints
+
 1.8.0
 ==========
 * Added: Support for creating dynamic tags

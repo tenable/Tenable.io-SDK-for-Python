@@ -1,8 +1,8 @@
 import pytest
 
 from random import randint
-from tenable_io.api.models import Permissions, User, UserKeys, UserList
-from tenable_io.api.users import UserCreateRequest, UserEditRequest
+from tenable_io.api.models import Permissions, User, UserKeys, UserList, UserAuthorizations
+from tenable_io.api.users import UserCreateRequest, UserEditRequest, UserAuthorizationsRequest
 
 from tests.config import TenableIOTestConfig
 
@@ -94,3 +94,15 @@ def test_users_keys(client):
 def test_users_enabled(client):
     user_id = create_user(client, 'standard')
     assert client.users_api.enabled(user_id, False), u'The user was not disabled.'
+
+@pytest.mark.vcr()
+def test_users_authorizations(client):
+    user_id = create_user(client, 'standard')
+    user_uuid = client.users_api.get(user_id).uuid_id
+    authorizations = client.users_api.authorizations(user_id)
+    assert isinstance(authorizations, UserAuthorizations), \
+        u'The `authorizations` method did not return type `UserAuthorizations`.'
+    assert authorizations.user_uuid == user_uuid, u'The user_uuid did not match the expected value.'
+    req = UserAuthorizationsRequest(api_permitted=False, password_permitted=True, saml_permitted=False)
+    assert client.users_api.update_authorizations(user_id, req), u'Authorizations were not updated.'
+    assert not client.users_api.authorizations(user_id).api_permitted, u'`api_permitted` should be False'
