@@ -1,7 +1,7 @@
 from json import loads
 
 from tenable_io.api.base import BaseApi, BaseRequest
-from tenable_io.api.models import User, UserKeys, UserList
+from tenable_io.api.models import User, UserKeys, UserList, UserAuthorizations
 
 
 class UsersApi(BaseApi):
@@ -95,6 +95,27 @@ class UsersApi(BaseApi):
         self._client.put('users/%(user_id)s/enabled', {'enabled': enabled}, {'user_id': user_id})
         return True
 
+    def authorizations(self, user_id):
+        """Returns authorizations for a specified user.
+
+        :param user_id: The user ID.
+        :raise TenableIOApiException:  When API error is encountered.
+        :return: An instance of :class:`tenable_io.api.models.UserAuthorizations`
+        """
+        response = self._client.get('users/%(user_id)s/authorizations', {'user_id': user_id})
+        return UserAuthorizations.from_json(response.text)
+
+    def update_authorizations(self, user_id, authorizations_update):
+        """Updates a user's authorizations.
+
+        :param user_id: The user ID.
+        :param authorizations_update: An instance of :class:`UserAuthorizationsRequest`.
+        :raise TenableIOApiException:  When API error is encountered.
+        :return: True if successful.
+        """
+        self._client.put('users/%(user_id)s/authorizations', authorizations_update, {'user_id': user_id})
+        return True
+
 
 class UserCreateRequest(BaseRequest):
 
@@ -126,3 +147,16 @@ class UserEditRequest(BaseRequest):
         self.permissions = permissions
         self.name = name
         self.email = email
+
+class UserAuthorizationsRequest(BaseRequest):
+
+    def __init__(
+            self,
+            api_permitted=None,
+            password_permitted=None,
+            saml_permitted=None
+    ):
+        self.api_permitted = api_permitted
+        self.password_permitted = password_permitted
+        self.saml_permitted = saml_permitted
+
