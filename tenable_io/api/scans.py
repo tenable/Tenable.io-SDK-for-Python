@@ -60,7 +60,7 @@ class ScansApi(BaseApi):
 
         return ScanDetails.from_json(response.text)
 
-    def export_download(self, scan_id, file_id, stream=True, chunk_size=1024):
+    def export_download(self, scan_id, file_id, stream=True, chunk_size=1024, is_was=False):
         """Download an exported scan.
 
         :param scan_id: The scan ID.
@@ -68,43 +68,50 @@ class ScansApi(BaseApi):
         :param stream: Default to True. If False, the response content will be immediately downloaded.
         :param chunk_size: If Stream=False, data is returned as a single chunk.\
          If Stream=True, it's the number of bytes it should read into memory.
+        :param is_was: A flag that specifies that the scan is a WAS type scan.
         :raise TenableIOApiException:  When API error is encountered.
         :return: The downloaded file.
         """
         response = self._client.get('scans/%(scan_id)s/export/%(file_id)s/download',
                                     path_params={'scan_id': scan_id, 'file_id': file_id},
+                                    params={'type': ScanExportRequest.WAS_EXPORT_TYPE} if is_was else None,
                                     stream=stream)
         return response.iter_content(chunk_size=chunk_size)
 
-    def export_request(self, scan_id, scan_export, history_id=None):
+    def export_request(self, scan_id, scan_export, history_id=None, is_was=False):
         """Export the given scan. Once requested, the file can be downloaded using the export\
          download method upon receiving a "ready" status from the export status method.
 
         :param scan_id: The scan ID.
         :param scan_export: An instance of :class:`ScanExportRequest`.
         :param history_id: The history ID of historical data.
+        :param is_was: A flag that specifies that the scan is a WAS type scan.
         :raise TenableIOApiException:  When API error is encountered.
         :return: The file ID.
         """
         assert isinstance(scan_export, ScanExportRequest)
+        params = {'history_id': history_id if history_id else None,
+                  'type': ScanExportRequest.WAS_EXPORT_TYPE if is_was else None}
         response = self._client.post('scans/%(scan_id)s/export',
                                      scan_export,
                                      path_params={'scan_id': scan_id},
-                                     params={'history_id': history_id} if history_id else None)
+                                     params={k: v for k, v in params.items() if v is not None})
         return loads(response.text).get('file')
 
-    def export_status(self, scan_id, file_id):
+    def export_status(self, scan_id, file_id, is_was=False):
         """Check the file status of an exported scan. When an export has been requested,\
          it is necessary to poll this endpoint until a "ready" status is returned,\
           at which point the file is complete and can be downloaded using the export download endpoint.
 
         :param scan_id: The scan ID.
         :param file_id: The file ID.
+        :param is_was: A flag that specifies that the scan is a WAS type scan.
         :raise TenableIOApiException:  When API error is encountered.
         :return: The file status.
         """
         response = self._client.get('scans/%(scan_id)s/export/%(file_id)s/status',
-                                    path_params={'scan_id': scan_id, 'file_id': file_id})
+                                    path_params={'scan_id': scan_id, 'file_id': file_id},
+                                    params={'type': ScanExportRequest.WAS_EXPORT_TYPE} if is_was else None)
         return loads(response.text).get('status')
 
     def folder(self, scan_id, folder_id):
@@ -276,6 +283,8 @@ class ScanExportRequest(BaseRequest):
     FORMAT_HTML = u'html'
     FORMAT_NESSUS = u'nessus'
     FORMAT_PDF = u'pdf'
+
+    WAS_EXPORT_TYPE = u'web-app'
 
     def __init__(
             self,

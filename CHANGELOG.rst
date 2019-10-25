@@ -2,6 +2,10 @@
 CHANGELOG
 =========
 
+1.9.1
+==========
+* Fixed: Scan exports for WAS scans caused 404s due to missing param
+
 1.9.0
 ==========
 * Added: Support for user authorizations endpoints

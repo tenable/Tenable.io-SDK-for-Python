@@ -400,7 +400,7 @@ class ScanRef(object):
         return self._client.scans_api.details(self.id, history_id=history_id)
 
     def download(self, path, history_id=None, format=ScanExportRequest.FORMAT_PDF,
-                 chapter=ScanExportRequest.CHAPTER_EXECUTIVE_SUMMARY, file_open_mode='wb'):
+                 chapter=ScanExportRequest.CHAPTER_EXECUTIVE_SUMMARY, file_open_mode='wb', is_was=False):
         """Download a scan report.
 
         :param path: The file path to save the report to.
@@ -409,6 +409,8 @@ class ScanRef(object):
         :class:`tenable_io.api.scans.ScanExportRequest`.CHAPTER_EXECUTIVE_SUMMARY.
         :param file_open_mode: The open mode to the file output. Default to "wb".
         :param history_id: A specific scan history ID, None for the most recent scan history. default to None.
+        :param is_was: A flag that specifies that the scan is a WAS type scan, which requires additional changes to the
+        export request.
         :return: The same ScanRef instance.
         """
         self.wait_until_stopped(history_id=history_id)
@@ -421,12 +423,13 @@ class ScanRef(object):
         file_id = self._client.scans_api.export_request(
             self.id,
             export_request,
-            history_id
+            history_id,
+            is_was=is_was
         )
         util.wait_until(
-            lambda: self._client.scans_api.export_status(self.id, file_id) == ScansApi.STATUS_EXPORT_READY)
+            lambda: self._client.scans_api.export_status(self.id, file_id, is_was=is_was) == ScansApi.STATUS_EXPORT_READY)
 
-        iter_content = self._client.scans_api.export_download(self.id, file_id)
+        iter_content = self._client.scans_api.export_download(self.id, file_id, is_was=is_was)
         with open(path, file_open_mode) as fd:
             for chunk in iter_content:
                 fd.write(chunk)
