@@ -1275,6 +1275,7 @@ class Scan(BaseModel):
     STATUS_PAUSED = u'paused'
     STATUS_PAUSING = u'pausing'
     STATUS_PENDING = u'pending'
+    STATUS_PROCESSING = u'processing'
     STATUS_RESUMING = u'resuming'
     STATUS_RUNNING = u'running'
     STATUS_STOPPING = u'stopping'
@@ -1394,6 +1395,7 @@ class ScanInfo(BaseModel):
             name=None,
             user_permissions=None,
             control=None,
+            schedule_uuid=None
     ):
         self.acls = acls
         self.edit_allowed = edit_allowed
@@ -1414,6 +1416,7 @@ class ScanInfo(BaseModel):
         self.name = name
         self.user_permissions = user_permissions
         self.control = control
+        self.schedule_uuid = schedule_uuid
 
     @classmethod
     def from_dict(cls, dict_):

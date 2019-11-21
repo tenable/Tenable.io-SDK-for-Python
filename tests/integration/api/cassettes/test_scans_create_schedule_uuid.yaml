@@ -8,8 +8,6 @@ interactions:
       - gzip, deflate
       Connection:
       - keep-alive
-      Cookie:
-      - nginx-cloud-site-id=us-2b
       User-Agent:
       - TenableIOSDK Python/3.7.3/1.9.1
       X-APIKeys:
@@ -81,7 +79,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 21 Nov 2019 15:14:23 GMT
+      - Thu, 21 Nov 2019 18:21:47 GMT
       Expires:
       - '0'
       Pragma:
@@ -102,7 +100,7 @@ interactions:
       X-Gateway-Site-ID:
       - nginx-router-d-ca-central-1-prod
       X-Request-Uuid:
-      - 3555e6700381c10f97d2b32d2fd510b7
+      - e12a62556cc2145c0cce0d65a08cb8e4
       X-Xss-Protection:
       - 1; mode=block
     status:
@@ -134,14 +132,14 @@ interactions:
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAA3VSy47kIAz8F85NKy8SMqf9k8iA6UZDIAKi3tnR/Pua9GO00g6HKMJV5SqbT5Y1
-        BPb2yXQMBVzAtDjD3tggWqX0JPmsOs0HbXuuGhC8Hw2auZ+UFIadWLxVxr4fHJyENloiV50EPkA/
-        cTnrjo9ajCh7MYsGiPNAF1w3DwW57efWiFZyO1jNjWgs7+SouTCyGYeukSCUEbMdpo4cSDXLvsoE
-        WPGQyWWpIRbrfpc9IZUMZp3cVlykaGH3/sS26J3+OLKR4umI/Qx7RzxvHvaax+H/+fx0WuqNKzif
-        X6Ir/bJ6HUB5JGELPiNZhHxVEZIh2x6fcBe03w0ucLkkvNBw2FtJO97NLcWtuNxcMPH2JOg9l7gu
-        BdIFS21l4R2vMZdzuXc867hS+0yIUvlPYkq7x5fNWvkTw6saYnHWaagTrAYLpu9IV0g1SEObzDSv
-        DdPqciYkQdpO1vFb2H35t9I8Hgt5hGAS3n5l836O6fJ6RcduTswDLXSN5tuAOQbRimnoh7kbB4qd
-        8KdS+djqs9h2RQsn7fvG56+vv3Qms+LrAgAA
+        H4sIAAAAAAAAA3VS247jIAz9F55LlZKQS5/2TyIDToqGQARE3ZnR/PuYtOlopR0eEMLn2OfY/mRJ
+        g2fXT6aDz2A9xtEadmWNvCilu54PSmje6KnmqgLJ69agGepO9dKwEwv3wti2nYOd1Eb3yJXogTdQ
+        d7wftOCtli32tRxkBcR5ojMuq4OMvFFaDe3QcTEMhWsEr6WpuRTQGtnqrtGgQYIchOhFPxmSRWk8
+        LLinSXksJsbJ/s1bRAoZTDraNdtA1vzm3ImtwVn9vnsTQpx224fZB+L4ecqrnof/5/rtXKg2LmBd
+        eiVd6MnKtwflkBJP4BKSREg3FSAaku3wgFuv3WZwhHmOOFNz2DXHDR/ixmwXHO/Wm3A/CHpLOSxj
+        hjhjLqUmeMNbSPmcHxXPOixUPhEiF/5BjHFz+JJZIh/Bv6I+ZDtZDaWDRWDG+GPpBrEYqWiSifq1
+        YlxsSoQkyEX0pf0TbC7/G6mey0IawZuI9z/JvJ1DnF9btM/mxBzQQJdgfgSYvREX2TV1W8mqI9sR
+        fwvl97WsxbopGjjlfky8/vr6BlZbH3TrAgAA
     headers:
       Cache-Control:
       - no-cache
@@ -152,7 +150,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 21 Nov 2019 15:14:24 GMT
+      - Thu, 21 Nov 2019 18:21:47 GMT
       Expires:
       - '0'
       Pragma:
@@ -175,63 +173,7 @@ interactions:
       X-Gateway-Site-ID:
       - nginx-router-d-ca-central-1-prod
       X-Request-Uuid:
-      - 1fb41e22dd504752019b2665ec7fd5f3
-      X-Xss-Protection:
-      - 1; mode=block
-    status:
-      code: 200
-      message: OK
-- request:
-    body: null
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Cookie:
-      - nginx-cloud-site-id=us-2b
-      User-Agent:
-      - TenableIOSDK Python/3.7.3/1.9.1
-      X-APIKeys:
-      - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
-    method: GET
-    uri: https://cloud.tenable.com/scans/template-f391d518-f4fc-d50f-286c-5d8064208a5bd59f4720a58b983a/latest-status
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA6tWKi5JLCktVrJSSs0tKKlUqgUAH8SqihIAAAA=
-    headers:
-      Cache-Control:
-      - no-cache
-      Connection:
-      - keep-alive
-      Content-Encoding:
-      - gzip
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Thu, 21 Nov 2019 15:14:24 GMT
-      Server:
-      - tenable.io
-      Set-Cookie:
-      - nginx-cloud-site-id=us-2b; path=/; HttpOnly; Secure
-      - nginx-cloud-site-id=us-2b; path=/; HttpOnly; Secure
-      Strict-Transport-Security:
-      - max-age=63072000; includeSubDomains
-      Transfer-Encoding:
-      - chunked
-      Vary:
-      - accept-encoding
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      X-Gateway-Site-ID:
-      - nginx-router-d-ca-central-1-prod
-      X-Request-Uuid:
-      - d734ec0afcc7d1235b93c720ce6ef37e
+      - 264e757116c3ab2bed320024ab77148a
       X-Xss-Protection:
       - 1; mode=block
     status:

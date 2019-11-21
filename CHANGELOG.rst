@@ -2,6 +2,10 @@
 CHANGELOG
 =========
 
+Unreleased
+==========
+* Changed: Scans API and Scan Helper methods will now accept schedule_uuid as a param to improve lookup perfomance.
+
 1.9.1
 ==========
 * Fixed: Scan exports for WAS scans caused 404s due to missing param

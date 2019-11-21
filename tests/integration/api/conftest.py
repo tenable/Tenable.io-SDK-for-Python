@@ -145,6 +145,23 @@ def new_scan(client):
                 'test_scan_fixture',
                 TenableIOTestConfig.get('scan_text_targets'),
             )
+        ),
+        return_uuid=True
+    )
+
+@pytest.fixture
+def new_scan_id(client):
+    template_list = client.editor_api.list('scan')
+    assert len(template_list.templates) > 0, u'Expected at least one scan template.'
+
+    test_templates = [t for t in template_list.templates if t.name == 'basic']
+    return client.scans_api.create(
+        ScanCreateRequest(
+            test_templates[0].uuid,
+            ScanSettings(
+                'test_scan_fixture',
+                TenableIOTestConfig.get('scan_text_targets'),
+            )
         )
     )
 
