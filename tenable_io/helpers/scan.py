@@ -441,9 +441,9 @@ class ScanRef(object):
             schedule_uuid=self.uuid
         )
         util.wait_until(
-            lambda: self._client.scans_api.export_status(file_id, is_was=is_was, schedule_uuid=self.uuid) == ScansApi.STATUS_EXPORT_READY)
+            lambda: self._client.scans_api.export_status(file_id=file_id, is_was=is_was, schedule_uuid=self.uuid) == ScansApi.STATUS_EXPORT_READY)
 
-        iter_content = self._client.scans_api.export_download(file_id, is_was=is_was, schedule_uuid=self.uuid)
+        iter_content = self._client.scans_api.export_download(file_id=file_id, is_was=is_was, schedule_uuid=self.uuid)
         with open(path, file_open_mode) as fd:
             for chunk in iter_content:
                 fd.write(chunk)

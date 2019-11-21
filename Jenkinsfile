@@ -1,4 +1,4 @@
-@Library('tenable.common@v1.0.0')
+@Library('tenable.common')
 import com.tenable.jenkins.*
 import com.tenable.jenkins.builds.*
 import com.tenable.jenkins.builds.checkmarx.*
@@ -30,18 +30,11 @@ try {
                 checkout scm
             }
             dir('automation') {
-                git(branch:'develop',
-                    changelog:false,
-                    credentialsId: Constants.BITBUCKETUSER,
-                    poll:false,
-                    url:'ssh://git@stash.corp.tenablesecurity.com:7999/aut/automation-tenableio.git')
-            }
-            dir('site') {
-                git(branch:params.SITE_BRANCH,
-                    changelog:false,
-                    credentialsId: Constants.BITBUCKETUSER,
-                    poll:false,
-                    url:'ssh://git@stash.corp.tenablesecurity.com:7999/aut/site-configs.git')
+                git(branch:'master',
+                        changelog:false,
+                        credentialsId:'githubkey',
+                        poll:false,
+                        url: 'git@github.eng.tenable.com:Product/catium-tenableio.git')
             }
         }
 
@@ -50,7 +43,7 @@ try {
                 stage('build auto') {
                     buildsCommon.prepareGit()
 
-                    sshagent([Constants.BITBUCKETUSER]) {
+                    sshagent([Constants.GITHUBKEY]) {
                         timeout(time: 24, unit: Constants.HOURS) {
                             try {
                                 sh '''
