@@ -30,18 +30,24 @@ try {
                 stage('build auto') {
                     buildsCommon.prepareGit()
 
+                    stage('scm auto') {
+                        dir('tenableio-sdk') {
+                            checkout scm
+                        }
+                    }
+
                     sshagent([Constants.GITHUBKEY]) {
                         timeout(time: 24, unit: Constants.HOURS) {
                             try {
                                 sh '''
-                                cd automation || exit 1
+                                cd tenableio-sdk
+                                cp ./tests/test.tenable.ini ./tenable_io.ini
+
                                 export JENKINS_NODE_COOKIE=
                                 unset JENKINS_NODE_COOKIE
 
                                 export PYTHONHASHSEED=0
                                 export PYTHONPATH=.
-
-                                cp ./tests/test.tenable.ini ./tenable.ini
 
                                 pip3 install -r requirements.txt || exit 1
                                 pip3 install -r requirements-build.txt || exit 1
