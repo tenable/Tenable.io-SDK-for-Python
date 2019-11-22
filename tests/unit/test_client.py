@@ -1,6 +1,9 @@
 import pytest
 
-from unittest.mock import Mock
+try:
+    from unittest.mock import Mock
+except ImportError:
+    from mock import Mock
 
 from tenable_io.client import TenableIOClient, TenableIOApiException, TenableIORetryableApiException
 from tests.base import BaseTest
