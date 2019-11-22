@@ -1,4 +1,4 @@
-@Library('tenable.common@v1.0.0')
+@Library('tenable.common')
 import com.tenable.jenkins.*
 import com.tenable.jenkins.builds.*
 import com.tenable.jenkins.builds.checkmarx.*
@@ -25,50 +25,30 @@ try {
     node(Constants.DOCKERNODE) {
         buildsCommon.cleanup()
 
-        stage('scm auto') {
-            dir('tenableio-sdk') {
-                checkout scm
-            }
-            dir('automation') {
-                git(branch:'develop',
-                    changelog:false,
-                    credentialsId: Constants.BITBUCKETUSER,
-                    poll:false,
-                    url:'ssh://git@stash.corp.tenablesecurity.com:7999/aut/automation-tenableio.git')
-            }
-            dir('site') {
-                git(branch:params.SITE_BRANCH,
-                    changelog:false,
-                    credentialsId: Constants.BITBUCKETUSER,
-                    poll:false,
-                    url:'ssh://git@stash.corp.tenablesecurity.com:7999/aut/site-configs.git')
-            }
-        }
-
         docker.withRegistry(Constants.AWS_DOCKER_REGISTRY) {
             docker.image(Constants.DOCKER_CI_VULNAUTOMATION_BASE).inside('-u root') {
                 stage('build auto') {
                     buildsCommon.prepareGit()
 
-                    sshagent([Constants.BITBUCKETUSER]) {
+                    stage('scm auto') {
+                        dir('tenableio-sdk') {
+                            checkout scm
+                        }
+                    }
+
+                    sshagent([Constants.GITHUBKEY]) {
                         timeout(time: 24, unit: Constants.HOURS) {
                             try {
                                 sh '''
-                                cd automation || exit 1
+                                cd tenableio-sdk
+                                cp ./tests/test.tenable.ini ./tenable_io.ini
+
                                 export JENKINS_NODE_COOKIE=
                                 unset JENKINS_NODE_COOKIE
 
-                                python3 autosetup.py catium --all --no-venv 2>&1
-
                                 export PYTHONHASHSEED=0
                                 export PYTHONPATH=.
-                                export CAT_USE_GRID=true
 
-                                export TENABLEIO_MAX_POLLING_INTERVAL=60
-
-                                python3 tenableio/commandline/sdk_test_container.py --python_static
-
-                                cd ../tenableio-sdk || exit 1
                                 pip3 install -r requirements.txt || exit 1
                                 pip3 install -r requirements-build.txt || exit 1
                                 pytest -nauto tests --junitxml=test-results-junit.xml || exit 1
@@ -84,7 +64,7 @@ try {
         }
 
     common.setResultIfNotSet(Constants.JSUCCESS)
-    } 
+    }
 }
 catch (ex) {
     common.logException(ex)
