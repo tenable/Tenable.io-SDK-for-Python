@@ -13,7 +13,7 @@ interactions:
       User-Agent:
       - python-requests/2.22.0
     method: GET
-    uri: https://cloud.tenable.com/container-security-registry/v2/token?service=tenable.io
+    uri: https://registry.cloud.tenable.com/v2/token?service=tenable.io
   response:
     body:
       string: !!binary |
@@ -71,7 +71,7 @@ interactions:
       User-Agent:
       - python-requests/2.22.0
     method: POST
-    uri: https://cloud.tenable.com/container-security-registry/v2/test_sc_test_jobs_by_image_digest/blobs/uploads/
+    uri: https://registry.cloud.tenable.com/v2/test_sc_test_jobs_by_image_digest/blobs/uploads/
   response:
     body:
       string: ''
@@ -214,7 +214,7 @@ interactions:
       User-Agent:
       - python-requests/2.22.0
     method: HEAD
-    uri: https://cloud.tenable.com/container-security-registry/v2/test_sc_test_jobs_by_image_digest/blobs/sha256:96626451b6947696c15b96333de54fd329f8f8cb5073163ef881153b37aafe7d
+    uri: https://registry.cloud.tenable.com/v2/test_sc_test_jobs_by_image_digest/blobs/sha256:96626451b6947696c15b96333de54fd329f8f8cb5073163ef881153b37aafe7d
   response:
     body:
       string: ''
@@ -273,7 +273,7 @@ interactions:
       User-Agent:
       - python-requests/2.22.0
     method: POST
-    uri: https://cloud.tenable.com/container-security-registry/v2/test_sc_test_jobs_by_image_digest/blobs/uploads/
+    uri: https://registry.cloud.tenable.com/v2/test_sc_test_jobs_by_image_digest/blobs/uploads/
   response:
     body:
       string: ''
@@ -398,7 +398,7 @@ interactions:
       User-Agent:
       - python-requests/2.22.0
     method: HEAD
-    uri: https://cloud.tenable.com/container-security-registry/v2/test_sc_test_jobs_by_image_digest/blobs/sha256:cf8462c9e061a5697ed7f4c2a6a993dcc102f68e03a7acb932999f3894a5378b
+    uri: https://registry.cloud.tenable.com/v2/test_sc_test_jobs_by_image_digest/blobs/sha256:cf8462c9e061a5697ed7f4c2a6a993dcc102f68e03a7acb932999f3894a5378b
   response:
     body:
       string: ''
@@ -461,7 +461,7 @@ interactions:
       User-Agent:
       - python-requests/2.22.0
     method: PUT
-    uri: https://cloud.tenable.com/container-security-registry/v2/test_sc_test_jobs_by_image_digest/manifests/test_sc_test_jobs_by_image_digest
+    uri: https://registry.cloud.tenable.com/v2/test_sc_test_jobs_by_image_digest/manifests/test_sc_test_jobs_by_image_digest
   response:
     body:
       string: ''
