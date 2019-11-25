@@ -2,7 +2,8 @@ import os
 import pytest
 
 from tenable_io.api.models import Scan, ScanHostDetails, ScanList, ScanSettings, ScanDetails
-from tenable_io.api.scans import ScansApi, ScanConfigureRequest, ScanExportRequest, ScanImportRequest, ScanLaunchRequest
+from tenable_io.api.scans import ScansApi, ScanConfigureRequest, ScanCreateRequest, \
+    ScanExportRequest, ScanImportRequest, ScanLaunchRequest
 
 from tests.config import TenableIOTestConfig
 from tests.integration.api.utils.utils import wait_until
@@ -241,3 +242,30 @@ def test_scans_export_import(client, new_scan):
         u'Imported scan retains name of exported scan.'
 
     os.remove(download_path)
+
+@pytest.mark.vcr()
+def test_scans_agent_scan(client, new_agent_group):
+    template_list = client.editor_api.list('scan')
+    assert len(template_list.templates) > 0, u'Expected at least one scan template.'
+
+    agent_group_uuid = client.agent_groups_api.details(new_agent_group).uuid
+
+    test_templates = [t for t in template_list.templates if t.name == 'agent_basic']
+    scan_id = client.scans_api.create(
+        ScanCreateRequest(
+            test_templates[0].uuid,
+            ScanSettings(
+                'test_basic_agent_scan',
+                agent_group_id=[agent_group_uuid],
+            )
+        )
+    )
+    # we need to launch the scan in order for some fields to be fully populated
+    client.scans_api.launch(scan_id, ScanLaunchRequest())
+
+    scan_details = client.scans_api.details(scan_id)
+    assert isinstance(scan_details, ScanDetails), u'The `details` method did not return type `ScanDetails`.'
+    assert scan_details.info.agent_targets is not None, u'Expected agent_targets attribute to be present.'
+    assert len(scan_details.info.agent_targets) == 1, u'Expected a single agent group to be included in agent_targets.'
+    assert scan_details.info.agent_targets[0].uuid == agent_group_uuid, \
+        u'Expected agent group uuid to match configured value.'

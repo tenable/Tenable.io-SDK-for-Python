@@ -1264,6 +1264,19 @@ class PolicyDetails(BaseModel):
         self._settings = settings
 
 
+class ScanAgentTarget(BaseModel):
+
+    def __init__(
+            self,
+            uuid=None,
+            id=None,
+            name=None,
+    ):
+        self.uuid = uuid
+        self.id = id
+        self.name = name
+
+
 class Scan(BaseModel):
 
     STATUS_ABORTED = u'aborted'
@@ -1383,6 +1396,7 @@ class ScanInfo(BaseModel):
             pci_can_upload=None,  # API uses "pci-can-upload" which is not a valid python attribute name.
             hasaudittrail=None,
             scan_start=None,
+            scan_end=None,
             folder_id=None,
             targets=None,
             timestamp=None,
@@ -1391,12 +1405,21 @@ class ScanInfo(BaseModel):
             haskb=None,
             uuid=None,
             hostcount=None,
-            scan_end=None,
             name=None,
             user_permissions=None,
             control=None,
-            schedule_uuid=None
+            schedule_uuid=None,
+            tag_targets=None,
+            agent_count=None,
+            agent_targets=None,
+            alt_targets_used=None,
+            scanner_start=None,
+            scanner_end=None,
+            shared=None,
+            scan_type=None,
     ):
+        self._agent_targets = None
+
         self.acls = acls
         self.edit_allowed = edit_allowed
         self.status = status
@@ -1417,6 +1440,23 @@ class ScanInfo(BaseModel):
         self.user_permissions = user_permissions
         self.control = control
         self.schedule_uuid = schedule_uuid
+        self.tag_targets = tag_targets
+        self.agent_count = agent_count
+        self.agent_targets = agent_targets
+        self.alt_targets_used = alt_targets_used
+        self.scanner_start = scanner_start
+        self.scanner_end = scanner_end
+        self.shared = shared
+        self.scan_type = scan_type
+
+    @property
+    def agent_targets(self):
+        return self._agent_targets
+
+    @agent_targets.setter
+    @BaseModel._model_list(ScanAgentTarget)
+    def agent_targets(self, agent_targets):
+        self._agent_targets = agent_targets
 
     @classmethod
     def from_dict(cls, dict_):
@@ -1659,7 +1699,7 @@ class ScanSettings(BaseModel):
     def __init__(
             self,
             name,
-            text_targets,
+            text_targets=None,
             description=None,
             emails=None,
             enabled=False,
@@ -1674,6 +1714,8 @@ class ScanSettings(BaseModel):
             scanner_id=None,
             acls=[],
             asset_lists=[],
+            agent_group_id=[],
+            tag_targets=[],
     ):
         self.name = name
         self.description = description
@@ -1691,6 +1733,8 @@ class ScanSettings(BaseModel):
         self.text_targets = text_targets
         self.acls = acls
         self.asset_lists = asset_lists
+        self.agent_group_id = agent_group_id
+        self.tag_targets = tag_targets
 
 
 class ScannerLicense(BaseModel):
