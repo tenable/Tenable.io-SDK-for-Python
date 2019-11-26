@@ -9,58 +9,73 @@ class ScansApi(BaseApi):
 
     STATUS_EXPORT_READY = u'ready'
 
-    def configure(self, scan_id, scan_configure):
+    def configure(self, scan_id=None, scan_configure=None, schedule_uuid=None):
         """Configure an existing scan.
 
-        :param scan_id:
+        :param scan_id: The scan ID.
         :param scan_configure: An instance of :class:`ScanConfigureRequest`.
+        :param schedule_uuid: The scan schedule UUID, this value will be used when specified and when scan_id is not present.
         :raise TenableIOApiException:  When API error is encountered.
         :return: The ID of scan just configured.
         """
-        response = self._client.put('scans/%(scan_id)s', scan_configure, path_params={'scan_id': scan_id})
+        response = self._client.put('scans/%(scan_id)s',
+                                    scan_configure,
+                                    path_params={'scan_id': scan_id or schedule_uuid})
         return loads(response.text).get('scan', {}).get('id')
 
-    def create(self, scan_create):
+    def create(self, scan_create, return_uuid=False):
         """Create a scan.
 
         :param scan_create: An instance of :class:`ScanCreateRequest`.
+        :param return_uuid: Optional param to return uuid rather than numeric id as the method response.
         :raise TenableIOApiException:  When API error is encountered.
         :return: The ID of scan just created.
         """
         response = self._client.post('scans', scan_create)
-        return loads(response.text).get('scan', {}).get('id')
+        return loads(response.text).get('scan', {}).get('id') \
+            if not return_uuid \
+            else loads(response.text).get('scan', {}).get('uuid')
 
-    def copy(self, scan_id):
+    def copy(self, scan_id=None, schedule_uuid=None):
+        """Creates a copy of a scan.
+
+        :param scan_id: The scan ID.
+        :param schedule_uuid: The scan schedule UUID, this value will be used when specified and when scan_id is not present.
+        :return: An instance of :class:`tenable_io.api.models.Scan`.
+        """
         response = self._client.post('scans/%(scan_id)s/copy',
                                      {},
-                                     path_params={'scan_id': scan_id})
+                                     path_params={'scan_id': scan_id or schedule_uuid})
         return Scan.from_json(response.text)
 
-    def delete(self, scan_id):
+    def delete(self, scan_id=None, schedule_uuid=None):
         """Delete a scan. NOTE: Scans in running, paused or stopping states can not be deleted.
 
         :raise TenableIOApiException:  When API error is encountered.
         :param scan_id: The scan ID.
+        :param schedule_uuid: The scan schedule UUID, this value will be used when specified and when scan_id is not present.
         :return: True if successful.
         """
-        self._client.delete('scans/%(scan_id)s', path_params={'scan_id': scan_id})
+        self._client.delete('scans/%(scan_id)s', path_params={'scan_id': scan_id or schedule_uuid})
         return True
 
-    def details(self, scan_id, history_id=None):
+    def details(self, scan_id=None, history_id=None, schedule_uuid=None):
         """Return details of the given scan.
 
         :param scan_id: The scan ID.
         :param history_id: The historical data ID.
+        :param schedule_uuid: The scan schedule UUID, this value will be used when specified and when scan_id is not present.
         :raise TenableIOApiException:  When API error is encountered.
         :return: An instance of :class:`tenable_io.api.models.ScanDetails`.
         """
+        print(scan_id, schedule_uuid)
         response = self._client.get('scans/%(scan_id)s',
-                                    path_params={'scan_id': scan_id},
+                                    path_params={'scan_id': scan_id or schedule_uuid},
                                     params={'history_id': history_id} if history_id else None)
 
         return ScanDetails.from_json(response.text)
 
-    def export_download(self, scan_id, file_id, stream=True, chunk_size=1024, is_was=False):
+    def export_download(self, scan_id=None, file_id=None, stream=True, chunk_size=1024, is_was=False, schedule_uuid=None):
         """Download an exported scan.
 
         :param scan_id: The scan ID.
@@ -69,16 +84,17 @@ class ScansApi(BaseApi):
         :param chunk_size: If Stream=False, data is returned as a single chunk.\
          If Stream=True, it's the number of bytes it should read into memory.
         :param is_was: A flag that specifies that the scan is a WAS type scan.
+        :param schedule_uuid: The scan schedule UUID, this value will be used when specified and when scan_id is not present.
         :raise TenableIOApiException:  When API error is encountered.
         :return: The downloaded file.
         """
         response = self._client.get('scans/%(scan_id)s/export/%(file_id)s/download',
-                                    path_params={'scan_id': scan_id, 'file_id': file_id},
+                                    path_params={'scan_id': scan_id or schedule_uuid, 'file_id': file_id},
                                     params={'type': ScanExportRequest.WAS_EXPORT_TYPE} if is_was else None,
                                     stream=stream)
         return response.iter_content(chunk_size=chunk_size)
 
-    def export_request(self, scan_id, scan_export, history_id=None, is_was=False):
+    def export_request(self, scan_id=None, scan_export=None, history_id=None, is_was=False, schedule_uuid=None):
         """Export the given scan. Once requested, the file can be downloaded using the export\
          download method upon receiving a "ready" status from the export status method.
 
@@ -86,6 +102,7 @@ class ScansApi(BaseApi):
         :param scan_export: An instance of :class:`ScanExportRequest`.
         :param history_id: The history ID of historical data.
         :param is_was: A flag that specifies that the scan is a WAS type scan.
+        :param schedule_uuid: The scan schedule UUID, this value will be used when specified and when scan_id is not present.
         :raise TenableIOApiException:  When API error is encountered.
         :return: The file ID.
         """
@@ -94,11 +111,11 @@ class ScansApi(BaseApi):
                   'type': ScanExportRequest.WAS_EXPORT_TYPE if is_was else None}
         response = self._client.post('scans/%(scan_id)s/export',
                                      scan_export,
-                                     path_params={'scan_id': scan_id},
+                                     path_params={'scan_id': scan_id or schedule_uuid},
                                      params={k: v for k, v in params.items() if v is not None})
         return loads(response.text).get('file')
 
-    def export_status(self, scan_id, file_id, is_was=False):
+    def export_status(self, scan_id=None, file_id=None, is_was=False, schedule_uuid=None):
         """Check the file status of an exported scan. When an export has been requested,\
          it is necessary to poll this endpoint until a "ready" status is returned,\
           at which point the file is complete and can be downloaded using the export download endpoint.
@@ -106,42 +123,52 @@ class ScansApi(BaseApi):
         :param scan_id: The scan ID.
         :param file_id: The file ID.
         :param is_was: A flag that specifies that the scan is a WAS type scan.
+        :param schedule_uuid: The scan schedule UUID, this value will be used when specified and when scan_id is not present.
         :raise TenableIOApiException:  When API error is encountered.
         :return: The file status.
         """
         response = self._client.get('scans/%(scan_id)s/export/%(file_id)s/status',
-                                    path_params={'scan_id': scan_id, 'file_id': file_id},
+                                    path_params={'scan_id': scan_id or schedule_uuid, 'file_id': file_id},
                                     params={'type': ScanExportRequest.WAS_EXPORT_TYPE} if is_was else None)
         return loads(response.text).get('status')
 
-    def folder(self, scan_id, folder_id):
+    def folder(self, scan_id=None, folder_id=None, schedule_uuid=None):
         """Move to a scan to a folder.
 
         :param scan_id: The scan ID.
         :param folder_id: The folder ID.
+        :param schedule_uuid: The scan schedule UUID, this value will be used when specified and when scan_id is not present.
         :raise TenableIOApiException:  When API error is encountered.
         :return: True if successful.
         """
         self._client.put('scans/%(scan_id)s/folder',
                          {'folder_id': folder_id},
-                         path_params={'scan_id': scan_id})
+                         path_params={'scan_id': scan_id or schedule_uuid})
         return True
 
-    def history(self, scan_id, history_id):
+    def history(self, scan_id=None, history_id=None, schedule_uuid=None):
+        """Returns a scan history.
+
+        :param scan_id: The scan ID.
+        :param history_id: The historical data ID.
+        :param schedule_uuid: The scan schedule UUID, this value will be used when specified and when scan_id is not present.
+        :return: An instance of :class:`tenable_io.api.models.ScanHistory`.
+        """
         response = self._client.get('scans/%(scan_id)s/history/%(history_id)s',
-                                    path_params={'scan_id': scan_id, 'history_id': history_id})
+                                    path_params={'scan_id': scan_id or schedule_uuid, 'history_id': history_id})
         return ScanHistory.from_json(response.text)
 
-    def host_details(self, scan_id, host_id):
+    def host_details(self, scan_id=None, host_id=None, schedule_uuid=None):
         """Returns details for the given host.
 
         :param scan_id: The scan ID.
         :param host_id: The host ID.
+        :param schedule_uuid: The scan schedule UUID, this value will be used when specified and when scan_id is not present.
         :raise TenableIOApiException:  When API error is encountered.
         :return: An instance of :class:`tenable_io.api.models.ScanHostDetails`.
         """
         response = self._client.get('scans/%(scan_id)s/hosts/%(host_id)s',
-                                    path_params={'scan_id': scan_id, 'host_id': host_id})
+                                    path_params={'scan_id': scan_id or schedule_uuid, 'host_id': host_id})
         return ScanHostDetails.from_json(response.text)
 
     def import_scan(self, scan_import, include_aggregate=True):
@@ -161,18 +188,19 @@ class ScansApi(BaseApi):
                                      path_params={'include_aggregate': aggregate_option})
         return loads(response.text).get('scan', {}).get('id')
 
-    def launch(self, scan_id, scan_launch_request):
+    def launch(self, scan_id=None, scan_launch_request=None, schedule_uuid=None):
         """Launch a scan.
 
         :param scan_id: The scan ID.
         :param scan_launch_request: An instance of :class:`ScanLaunchRequest`.
+        :param schedule_uuid: The scan schedule UUID, this value will be used when specified and when scan_id is not present.
         :raise TenableIOApiException:  When API error is encountered.
         :return: The scan uuid.
         """
         assert isinstance(scan_launch_request, ScanLaunchRequest)
         response = self._client.post('scans/%(scan_id)s/launch',
                                      scan_launch_request,
-                                     path_params={'scan_id': scan_id})
+                                     path_params={'scan_id': scan_id or schedule_uuid})
         return loads(response.text).get('scan_uuid')
 
     def list(self, folder_id=None, last_modification_date=None):
@@ -187,45 +215,49 @@ class ScansApi(BaseApi):
         response = self._client.get('scans', params={k: v for (k, v) in params.items() if v})
         return ScanList.from_json(response.text)
 
-    def pause(self, scan_id):
+    def pause(self, scan_id=None, schedule_uuid=None):
         """Pause a scan.
 
         :param scan_id: The scan ID.
+        :param schedule_uuid: The scan schedule UUID, this value will be used when specified and when scan_id is not present.
         :raise TenableIOApiException:  When API error is encountered.
         :return: True if successful.
         """
-        self._client.post('scans/%(scan_id)s/pause', {}, path_params={'scan_id': scan_id})
+        self._client.post('scans/%(scan_id)s/pause', {}, path_params={'scan_id': scan_id or schedule_uuid})
         return True
 
-    def resume(self, scan_id):
+    def resume(self, scan_id=None, schedule_uuid=None):
         """Resume a scan.
 
         :param scan_id: The scan ID.
+        :param schedule_uuid: The scan schedule UUID, this value will be used when specified and when scan_id is not present.
         :raise TenableIOApiException:  When API error is encountered.
         :return: True if successful.
         """
-        self._client.post('scans/%(scan_id)s/resume', {}, path_params={'scan_id': scan_id})
+        self._client.post('scans/%(scan_id)s/resume', {}, path_params={'scan_id': scan_id or schedule_uuid})
         return True
 
-    def stop(self, scan_id):
+    def stop(self, scan_id=None, schedule_uuid=None):
         """Stop a scan.
 
         :param scan_id: The scan ID.
+        :param schedule_uuid: The scan schedule UUID, this value will be used when specified and when scan_id is not present.
         :raise TenableIOApiException:  When API error is encountered.
         :return: True if successful.
         """
-        self._client.post('scans/%(scan_id)s/stop', {}, path_params={'scan_id': scan_id})
+        self._client.post('scans/%(scan_id)s/stop', {}, path_params={'scan_id': scan_id or schedule_uuid})
         return True
 
-    def latest_status(self, scan_id):
+    def latest_status(self, scan_id=None, schedule_uuid=None):
         """ Gets scan latest status.
 
         :param scan_id: The scan ID.
+        :param schedule_uuid: The scan schedule UUID, this value will be used when specified and when scan_id is not present.
         :raise TenableIOApiException:  When API error is encountered.
         :return: the scan status.
         """
         response = self._client.get('scans/%(scan_id)s/latest-status',
-                                    path_params={'scan_id': scan_id})
+                                    path_params={'scan_id': scan_id or schedule_uuid})
         return loads(response.text).get('status', '')
 
 

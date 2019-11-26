@@ -1288,6 +1288,7 @@ class Scan(BaseModel):
     STATUS_PAUSED = u'paused'
     STATUS_PAUSING = u'pausing'
     STATUS_PENDING = u'pending'
+    STATUS_PROCESSING = u'processing'
     STATUS_RESUMING = u'resuming'
     STATUS_RUNNING = u'running'
     STATUS_STOPPING = u'stopping'
@@ -1407,6 +1408,7 @@ class ScanInfo(BaseModel):
             name=None,
             user_permissions=None,
             control=None,
+            schedule_uuid=None,
             tag_targets=None,
             agent_count=None,
             agent_targets=None,
@@ -1437,6 +1439,7 @@ class ScanInfo(BaseModel):
         self.name = name
         self.user_permissions = user_permissions
         self.control = control
+        self.schedule_uuid = schedule_uuid
         self.tag_targets = tag_targets
         self.agent_count = agent_count
         self.agent_targets = agent_targets

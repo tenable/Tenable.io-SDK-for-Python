@@ -25,16 +25,16 @@ try {
     node(Constants.DOCKERNODE) {
         buildsCommon.cleanup()
 
+        stage('scm auto') {
+            dir('tenableio-sdk') {
+                checkout scm
+            }
+        }
+
         docker.withRegistry(Constants.AWS_DOCKER_REGISTRY) {
             docker.image(Constants.DOCKER_CI_VULNAUTOMATION_BASE).inside('-u root') {
                 stage('build auto') {
                     buildsCommon.prepareGit()
-
-                    stage('scm auto') {
-                        dir('tenableio-sdk') {
-                            checkout scm
-                        }
-                    }
 
                     sshagent([Constants.GITHUBKEY]) {
                         timeout(time: 24, unit: Constants.HOURS) {

@@ -1,5 +1,4 @@
 import six
-import os
 import re
 import time
 
@@ -44,7 +43,7 @@ class ScanHelper(object):
             scans = [scan for scan in scans if name_regex.match(scan.name)]
         elif name:
             scans = [scan for scan in scans if name == scan.name]
-        return [ScanRef(self._client, scan.id) for scan in scans]
+        return [ScanRef(self._client, scan.id, scan.schedule_uuid) for scan in scans]
 
     def id(self, id):
         """Get scan by ID.
@@ -52,10 +51,21 @@ class ScanHelper(object):
         :param id: Scan ID.
         :return: ScanRef referenced by id if exists.
         """
-        self._client.scans_api.details(id)
+        scan = self._client.scans_api.details(id)
         # object_id is not returned by the API when the current user is not the owner of the scan.
         # return ScanRef(self._client, self._client.scans_api.details(id).info.object_id)
-        return ScanRef(self._client, id)
+        return ScanRef(self._client, scan.id, scan.info.schedule_uuid)
+
+    def uuid(self, schedule_uuid):
+        """Get scan by schedule UUID.
+
+        :param schedule_uuid: Scan Schedule UUID.
+        :return: ScanRef referenced by uuid if exists.
+        """
+        scan = self._client.scans_api.details(schedule_uuid=schedule_uuid)
+        # object_id is not returned by the API when the current user is not the owner of the scan.
+        # return ScanRef(self._client, self._client.scans_api.details(id).info.object_id)
+        return ScanRef(self._client, scan.info.object_id, scan.schedule_uuid)
 
     def stop_all(self, folder=None, folder_id=None):
         """Stop all scans.
@@ -80,7 +90,7 @@ class ScanHelper(object):
         return self
 
     def create(self, name, text_targets, template):
-        """Get scan by ID.
+        """Create new scan.
 
         :param name: The name of the Scan to be created.
         :param text_targets: A string of comma separated targets or a list of targets.
@@ -101,16 +111,18 @@ class ScanHelper(object):
         if not t:
             raise TenableIOException(u'Template with name or title as "%s" not found.' % template)
 
-        scan_id = self._client.scans_api.create(
+        scan_uuid = self._client.scans_api.create(
             ScanCreateRequest(
                 t.uuid,
                 ScanSettings(
                     name,
                     text_targets,
                 )
-            )
+            ),
+            return_uuid=True
         )
-        return ScanRef(self._client, scan_id)
+        scan = self._client.scans_api.details(schedule_uuid=scan_uuid)
+        return ScanRef(self._client, scan.info.object_id, scan.info.schedule_uuid)
 
     def template(self, name=None, title=None):
         """Get template by name or title. The `title` argument is ignored if `name` is passed.
@@ -370,17 +382,18 @@ class ScanActivity(object):
 
 class ScanRef(object):
 
-    def __init__(self, client, id):
+    def __init__(self, client, id, uuid):
         self._client = client
         self.id = id
+        self.uuid = uuid
 
     def copy(self):
         """Create a copy of the scan.
 
         :return: An instance of ScanRef that references the newly copied scan.
         """
-        scan = self._client.scans_api.copy(self.id)
-        return ScanRef(self._client, scan.id)
+        scan = self._client.scans_api.copy(schedule_uuid=self.uuid)
+        return ScanRef(self._client, scan.id, scan.uuid)
 
     def delete(self, force_stop=False):
         """Delete the scan.
@@ -389,7 +402,8 @@ class ScanRef(object):
         """
         if force_stop and not self.stopped():
             self.stop()
-        self._client.scans_api.delete(self.id)
+
+        self._client.scans_api.delete(schedule_uuid=self.id)
         return self
 
     def details(self, history_id=None):
@@ -397,7 +411,7 @@ class ScanRef(object):
 
         :return: An instance of :class:`tenable_io.api.models.ScanDetails`.
         """
-        return self._client.scans_api.details(self.id, history_id=history_id)
+        return self._client.scans_api.details(schedule_uuid=self.uuid, history_id=history_id)
 
     def download(self, path, history_id=None, format=ScanExportRequest.FORMAT_PDF,
                  chapter=ScanExportRequest.CHAPTER_EXECUTIVE_SUMMARY, file_open_mode='wb', is_was=False):
@@ -421,15 +435,15 @@ class ScanRef(object):
             export_request = ScanExportRequest(format=format)
 
         file_id = self._client.scans_api.export_request(
-            self.id,
-            export_request,
-            history_id,
-            is_was=is_was
+            scan_export=export_request,
+            history_id=history_id,
+            is_was=is_was,
+            schedule_uuid=self.uuid
         )
         util.wait_until(
-            lambda: self._client.scans_api.export_status(self.id, file_id, is_was=is_was) == ScansApi.STATUS_EXPORT_READY)
+            lambda: self._client.scans_api.export_status(file_id=file_id, is_was=is_was, schedule_uuid=self.uuid) == ScansApi.STATUS_EXPORT_READY)
 
-        iter_content = self._client.scans_api.export_download(self.id, file_id, is_was=is_was)
+        iter_content = self._client.scans_api.export_download(file_id=file_id, is_was=is_was, schedule_uuid=self.uuid)
         with open(path, file_open_mode) as fd:
             for chunk in iter_content:
                 fd.write(chunk)
@@ -470,8 +484,8 @@ class ScanRef(object):
             alt_targets = [alt_targets]
 
         self._client.scans_api.launch(
-            self.id,
-            ScanLaunchRequest(alt_targets=alt_targets)
+            scan_launch_request=ScanLaunchRequest(alt_targets=alt_targets),
+            schedule_uuid=self.uuid
         )
         if wait:
             util.wait_until(lambda: self.status() not in ScanHelper.STATUSES_PENDING)
@@ -521,7 +535,7 @@ class ScanRef(object):
         :class:`tenable_io.api.models.Scan`.STATUS_PAUSING. Default is False.
         :return: The same ScanRef instance.
         """
-        self._client.scans_api.pause(self.id)
+        self._client.scans_api.pause(schedule_uuid=self.uuid)
         if wait:
             util.wait_until(lambda: self.status() != Scan.STATUS_PAUSING)
         return self
@@ -533,7 +547,7 @@ class ScanRef(object):
         :class:`tenable_io.api.models.Scan`.STATUS_RESUMING. Default is False.
         :return: The same ScanRef instance.
         """
-        self._client.scans_api.resume(self.id)
+        self._client.scans_api.resume(schedule_uuid=self.uuid)
         if wait:
             util.wait_until(lambda: self.status() != Scan.STATUS_RESUMING)
         return self
@@ -545,9 +559,9 @@ class ScanRef(object):
         :return: The same ScanRef instance.
         """
         if history_id is not None:
-            status = self._client.scans_api.history(self.id, history_id=history_id).status
+            status = self._client.scans_api.history(schedule_uuid=self.uuid, history_id=history_id).status
         else:
-            status = self._client.scans_api.latest_status(self.id)
+            status = self._client.scans_api.latest_status(schedule_uuid=self.uuid)
         return status
 
     def stop(self, wait=True):
@@ -556,7 +570,7 @@ class ScanRef(object):
         :param wait: If True, the method blocks until the scan's status is stopped. Default is False.
         :return: The same ScanRef instance.
         """
-        self._client.scans_api.stop(self.id)
+        self._client.scans_api.stop(schedule_uuid=self.uuid)
         if wait:
             self.wait_until_stopped()
         return self
