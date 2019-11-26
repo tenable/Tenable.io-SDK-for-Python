@@ -2,9 +2,11 @@
 CHANGELOG
 =========
 
-Unreleased
+1.10.0
 ==========
 * Changed: Scans API and Scan Helper methods will now accept schedule_uuid as a param to improve lookup perfomance.
+* Fixed: Missing support for agent_group_id in Agent Scan configuration.
+* Added: Support for tag_targets in Scan configuration.
 
 1.9.1
 ==========
