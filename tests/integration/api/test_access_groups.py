@@ -71,7 +71,7 @@ def test_access_groups_edit(client):
 def test_access_groups_principal_permissions(client):
     group = create_access_group(client)
     assert len(group.principals) == 1, u'Expected a single all_users principal'
-    assert group.principals[0].type == 'all_users', u'Expected a single all_users principal'
+    assert group.principals[0].type == AssetRulePrincipal.ALL_USERS_TYPE, u'Expected a single all_users principal'
 
     session = client.session_api.get()
     new_principal = AssetRulePrincipal(type=AssetRulePrincipal.USER_TYPE,

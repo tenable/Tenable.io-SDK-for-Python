@@ -3278,6 +3278,7 @@ class AssetRulePrincipal(BaseModel):
 
     USER_TYPE = u'user'
     GROUP_TYPE = u'group'
+    ALL_USERS_TYPE = u'all_users'
 
     def __init__(
             self,
