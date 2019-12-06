@@ -96,7 +96,8 @@ class AccessGroupRequest(BaseRequest):
             all_assets=False,
             all_users=False,
             rules=None,
-            principals=None
+            principals=None,
+            access_group_type=AccessGroup.MANAGE_ASSETS_TYPE,
     ):
         """Request for AccessGroupsApi.create and AccessGroupsApi.edit.
 
@@ -125,21 +126,31 @@ class AccessGroupRequest(BaseRequest):
             any principal data is ignored and you can omit this parameter.
             If all_users is 'false', the principal data is added to the access group.
         :type principals: list
+        :param access_group_type: The type of access group. It can be one of two possible types:
+            MANAGE_ASSETS - The access group applies only to existing assets.
+            SCAN_TARGETS - The access group restricts which targets can be specified in a scan and is not limited to
+            existing assets.
+            Note: If unspecified, MANAGE_ASSETS will be used as the default access_group_type value.
+            Note: ALL is also a valid type, but it is reserved for system created groups.
+        :type access_group_type: str
         """
-        for r in rules:
-            assert isinstance(r, AssetRule)
+        if rules:
+            for r in rules:
+                assert isinstance(r, AssetRule)
 
         self.name = name
         self.all_assets = all_assets
         self.all_users = all_users
         self.rules = rules
         self.principals = principals
+        self.access_group_type = access_group_type
 
     def as_payload(self, filter_=None):
         payload = super(AccessGroupRequest, self).as_payload(True)
         rule_list = []
-        for r in self.rules:
-            rule_list.append(r.as_payload())
+        if self.rules:
+            for r in self.rules:
+                rule_list.append(r.as_payload())
         payload.__setitem__('rules', rule_list)
         if not self.all_users and self.principals:
             principal_list = []

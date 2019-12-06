@@ -1,7 +1,8 @@
 interactions:
 - request:
     body: '{"name": "test_create_delete", "all_assets": false, "all_users": false,
-      "rules": [{"type": "ipv4", "operator": "eq", "terms": ["10.0.0.14"]}]}'
+      "rules": [{"type": "ipv4", "operator": "eq", "terms": ["10.0.0.14"]}], "access_group_type":
+      "MANAGE_ASSETS"}'
     headers:
       Accept:
       - '*/*'
@@ -10,13 +11,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '142'
+      - '180'
       Content-Type:
       - application/json
       Cookie:
       - nginx-cloud-site-id=us-2b
       User-Agent:
-      - TenableIOSDK Python/3.7.3/1.7.0
+      - TenableIOSDK Python/3.7.3/1.10.0
       X-APIKeys:
       - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
     method: POST
@@ -24,12 +25,14 @@ interactions:
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAA6WQ0UvDMBDG/5c8L6NpkjXtkyAivqg4n5RRLsl1FLu2JulkjP3v3jZFfRAEydN9
-        97vcfd+euaFP0PYY6mlqPauY0sJaVxhe2txx5RrJbQaay4VHX8rCGu3ZjLmAkNDXkGgmz0TJs4IL
-        /ZjnlRSVXMwLo56Im0b/J+60OxcAoEvNLZqGKw3IrXGWK8y1kFaIpjHE9rBBohPGVJ/vqD12mJB6
-        0HU1xIgpsqqBLuJZmiKGL2VLRTv0rBIzFhOkiVrs/uHu8mq5vLm9pm/C1CGJz3uWduNxWTtuFenD
-        iAHSEEjBV6oThs2RYyKbH59QbHVYfcVjd5+5YqGdd4Yc5Qa4AllwU7qcL5xeoJHkOoNvef1n8CMf
-        6H3At4voX+ZDWLMfR/2GjGFwGGPbr2ty6rCnhIfNeAq3yg7vLvkrEDACAAA=
+        H4sIAAAAAAAAA6WS22rjMBCGX6XoOgqSbdmWrzaUEPaiB9bdm5YidBgFs46tSnKXUvruK6cJTaCF
+        hUogmNE3M78084r0OETZDeDFNHUGNahgVCld1ZirTONC2xwrIhnOSwOG55WqmUELpD3ICEbImGIy
+        QjmmGSblHeVNVjSMLjPK7xM3OfNf3L42NVZyZSzmpsxxwThgqSzFla2IpZUtbUYSO8gdJDpCiOJd
+        hzDQQ4R0J/teyBAgBtRY2Qd4d00B/IfnORndOKCGLlCIMk7pCt3+urlct+3P682cRmsIQWz9ODkR
+        X9xc72p1vdqsxapt13dtYvzUQwp8eEUHoHPPRfKPDryMo08eeEp2BL+bOUTJct60QI9vjwvkfDfo
+        ziVJp0k+1J4QYv895LDwJ8dxnUUdPmrV9xe/jymTmC7Mr5+r7nUcW6lejjMAFdNG14BVVktcyLzC
+        NdcZLjUroc4ZZ0Se9PY7gQeJcjAe/v4I5s9y9Ft0JuorxPlxblI3bEV6lYYhTcO4c/tBaMjbP7kh
+        o5/cAgAA
     headers:
       Cache-Control:
       - no-cache
@@ -40,12 +43,12 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 15 Jul 2019 22:31:36 GMT
+      - Fri, 06 Dec 2019 19:24:51 GMT
       Server:
       - tenable.io
       Set-Cookie:
-      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
-      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly; Secure
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly; Secure
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
       Transfer-Encoding:
@@ -55,9 +58,9 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Gateway-Site-ID:
-      - nginx-router-c-prod-us-west-1
+      - nginx-router-oabww-ca-central-1-prod
       X-Request-Uuid:
-      - f70e3d3c9ba88ab7aa5e87cbd6a3d935
+      - 2951f453d564bbf4e363ac65602c5a48
     status:
       code: 200
       message: OK
@@ -75,11 +78,11 @@ interactions:
       Cookie:
       - nginx-cloud-site-id=us-2b
       User-Agent:
-      - TenableIOSDK Python/3.7.3/1.7.0
+      - TenableIOSDK Python/3.7.3/1.10.0
       X-APIKeys:
       - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
     method: DELETE
-    uri: https://cloud.tenable.com/access-groups/21aaa595-be8f-45ae-b8cb-4e2513b11ff8
+    uri: https://cloud.tenable.com/access-groups/1dfa9bdf-9d63-459e-abf1-7f70f17f6f20
   response:
     body:
       string: ''
@@ -93,20 +96,20 @@ interactions:
       Content-Type:
       - application/octet-stream
       Date:
-      - Mon, 15 Jul 2019 22:31:37 GMT
+      - Fri, 06 Dec 2019 19:24:51 GMT
       Server:
       - tenable.io
       Set-Cookie:
-      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
-      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly; Secure
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly; Secure
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
       X-Content-Type-Options:
       - nosniff
       X-Gateway-Site-ID:
-      - nginx-router-c-prod-us-west-1
+      - nginx-router-oabww-ca-central-1-prod
       X-Request-Uuid:
-      - d74da82803a7862cefa491613541032f
+      - bf84987c07f210ea5074cc70926a20b9
     status:
       code: 200
       message: OK

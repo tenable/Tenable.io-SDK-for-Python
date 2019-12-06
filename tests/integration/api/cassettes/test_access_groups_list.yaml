@@ -11,7 +11,7 @@ interactions:
       Cookie:
       - nginx-cloud-site-id=us-2b
       User-Agent:
-      - TenableIOSDK Python/3.7.3/1.7.0
+      - TenableIOSDK Python/3.7.3/1.10.0
       X-APIKeys:
       - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
     method: GET
@@ -19,12 +19,13 @@ interactions:
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAA42RTU/DMAyG/wrKmaA0bWib2wS7geCwE2iKnMSbKnVNlY/DNPW/Y7Zp2oEDN/v1
-        Y/t1cmLgHKZk9jGUOTH9fWIuTBmGCaMpZfBMs0ZV1rq2472VjjduV3MrQPH62aPv69Z2yrNH5iJC
-        Rm8gU48UVc9Fyyu1kVJLoZvmScr2i7gy+39x592OdirbIFcd9LyRbc2hagVFdW1lpZyHjtgJDkj0
-        ahwfVilhTqTBOBq4JDrHghelJIw3IWXIhTL28vH++bberF/v/NmjuY5Nx5TxcHfiH6U5ht+HHKa9
-        mTE6nLJx4TCPmAmrhFi2xMB+mCAPYWL6xMJuR+aYFo8shwwjYeQoxHz+het8snw7KESPkTSPybFl
-        uyw/q9cMHb4BAAA=
+        H4sIAAAAAAAAA21Ry2rDMBD8laJzFGRZrm3dQppDIX1A0xZagtArwWBbRpILIeTfu3YeTUt1EKvd
+        2RnPeI+k1jYEsfWu7wLin3ukXRtl1Vov+r4yiCOWJUrpvMClohozvUmxIjLD6a2xpkxzVWQGTZD2
+        VkZrhIywQ0lSYpLjJFtRyinhjE0pzT8A13fmDy6hmLAVKTkrOC2nLB9xo7YGzUwxi7NClpjRPMUy
+        yQlUaapokmkjC8C2srGAntX1zSwEGwP0ZF0LeXzw6Ht77PTB+kvjC+rKtYizCQpRxh4maP708Lxc
+        rBZ3A8dVOiLuulFkuYRJ56tWV52sj6GdZj8KVwgxOiGng/+5zufX1pWn1zOl9U0Vhk8eVNF89ije
+        7hfvMBnKF7jQ+rD++RVqd2YJuxBtM/K7wVLVbgWwadtGoV3T1TYCLCFkWO/ktmplHJPZI7fZQIiI
+        kwmKLsoaYJCW83E0fuIH45fgnTfWQ8/YoNFhfTh8A7P6ubdmAgAA
     headers:
       Cache-Control:
       - no-cache
@@ -35,12 +36,12 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 15 Jul 2019 22:31:36 GMT
+      - Fri, 06 Dec 2019 19:24:48 GMT
       Server:
       - tenable.io
       Set-Cookie:
-      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
-      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly; Secure
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly; Secure
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
       Transfer-Encoding:
@@ -50,9 +51,9 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Gateway-Site-ID:
-      - nginx-router-c-prod-us-west-1
+      - nginx-router-sdktv-ca-central-1-prod
       X-Request-Uuid:
-      - ec84a17bfa55d1475ce6d84a6909962f
+      - 524bedbb19dcecd00ea63c62e9039410
     status:
       code: 200
       message: OK

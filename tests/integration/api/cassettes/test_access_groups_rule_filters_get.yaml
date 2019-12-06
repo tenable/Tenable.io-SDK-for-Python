@@ -8,8 +8,10 @@ interactions:
       - gzip, deflate
       Connection:
       - keep-alive
+      Cookie:
+      - nginx-cloud-site-id=us-2b
       User-Agent:
-      - TenableIOSDK Python/3.7.3/1.7.0
+      - TenableIOSDK Python/3.7.3/1.10.0
       X-APIKeys:
       - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
     method: GET
@@ -17,22 +19,27 @@ interactions:
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAA72X75OaOBjH/xWO7s1Ba1xBUGTmxqP2ly/WbutNd6ZCnRCiSwcJS0Druv7vfRC3
-        3e0axZt6vjAJzzeZD0/yPHlYyWkeUS7bo5XMEprijKXFSKY3sleTYzyjsi3jBR9jQlgeZ3JNTikO
-        sB/R8dbqXA0lp7RK/VcgSCJM6DWLApqC+fU3W9L0pmGChbA4S1kk2ys5WybF5AxPN0tO6TcYfXHd
-        4MWZvF7XDuLMcRhhP4zCbDm+ZTEVgT3QSZ9L3VO+nCOKeYY0XAVyhNGtgz57L9CDXgN1YOBVo6dE
-        H+NZOA4DAfbrni45F32RP2Eu2vi01baOJD6aM4x5hmNC98P2tyoRcYgaPm4axNKtdpP4PiUnB98M
-        xcSD0rzDuQuOOE3n8OAwYf15VZwkZUFOsjFhwT6sy1Im9UrZY7zfBgTqkMUCjI/3RnGg6EdsHmwc
-        qrhtnJI8LSJ6mrI8EeANtyLp7Vb0FJNPEQ1I0GlbxilPGc/9mGbiwBhu7KKQKGcjTE1Tn2j+KUHn
-        CRFTfrrsiRBhHmq32/rEb5CT8d3mKYUDyVmeCrNMoYFzWWp20R53HitjzWf7gD5dnBClJs9wRq6h
-        hcyaZhw6NA74A8TJTbArhN98eDU4f8d4FosyHGGzBMfLOrRHxnH9eQXXTUly4NZ4y9g0olIvYnlw
-        8Opomh3L6miNtqG1OqZptaokn8NpsKCEnPyVEkEEP4K8LJXCWMazJKJoux6qWu9UoxSUN4/4DpU2
-        GqqSYA7zhMnc2MHSv5wbkhMEEMZ8dwXY0etay6prda3KkVO6fxeloOvWnzaKcnbnuufqHbRIVVVF
-        GWkQR12w3WnwV7Q65B/D2/RM6JqeCpO76spYKwrMVYr05N3BPN0ru01odE+FRdFx66lq92BAzDAZ
-        4x/O+dV3F05vr+samq03bcO0W23b6tjOy0oOLF7LQW8wmngrfT2ykaeuzPUvj9WD6HBD+SHjomJq
-        QLOX/fdDcTE1g/K7UW3LR1D9n3f/+ePZ2Z9fYIM3P9l1/1qtFbXmrbSaZgqB75PlT/BSEcbTMV/y
-        jM52wL+/l0jDe8nTF7gISco4m2TSVRgHbMGlwb+VkqbrLlz3ynV5hYx5k+NoCR81nIvKiQ8bheQU
-        ir1fWa3f9pm1hbqGm2QvU3HV/E9IRVkeEhqzRbGrO6GGpWTAFsWu/sf7eZMHvfV3eeYa3x4PAAA=
+        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
+        6rg6P7ITAAA=
     headers:
       Cache-Control:
       - no-cache
@@ -43,12 +50,12 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 15 Jul 2019 22:31:36 GMT
+      - Fri, 06 Dec 2019 19:24:48 GMT
       Server:
       - tenable.io
       Set-Cookie:
-      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
-      - nginx-cloud-site-id=us-2b; path=/; HttpOnly
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly; Secure
+      - nginx-cloud-site-id=us-2b; path=/; HttpOnly; Secure
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
       Transfer-Encoding:
@@ -58,9 +65,9 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Gateway-Site-ID:
-      - nginx-router-c-prod-us-west-1
+      - nginx-router-ua684-ca-central-1-prod
       X-Request-Uuid:
-      - 9d707b76f619867f3063855a95867a62
+      - 03d836d67df69bd45bcbba83d4986bc9
     status:
       code: 200
       message: OK

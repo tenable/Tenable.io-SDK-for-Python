@@ -2048,6 +2048,7 @@ class Session(BaseModel):
             lastlogin=None,
             container_id=None,
             groups=None,
+            uuid=None,
     ):
         self.id = id
         self.username = username
@@ -2058,6 +2059,7 @@ class Session(BaseModel):
         self.lastlogin = lastlogin
         self.container_id = container_id
         self.groups = groups
+        self.uuid = uuid
 
 
 class TargetGroup(BaseModel):
@@ -3271,18 +3273,30 @@ class AssetRuleFilter(Filter):
 
 class AssetRulePrincipal(BaseModel):
 
+    CAN_VIEW = u'CAN_VIEW'
+    CAN_SCAN = u'CAN_SCAN'
+
+    USER_TYPE = u'user'
+    GROUP_TYPE = u'group'
+
     def __init__(
             self,
             type=None,
             principal_id=None,
-            principal_name=None
+            principal_name=None,
+            permissions=[],
     ):
         self.type = type
         self.principal_id = principal_id
         self.principal_name = principal_name
+        self.permissions = permissions
 
 
 class AccessGroup(BaseModel):
+
+    ALL_TYPE = u'ALL'
+    MANAGE_ASSETS_TYPE = u'MANAGE_ASSETS'
+    SCAN_TARGETS_TYPE = u'SCAN_TARGETS'
 
     def __init__(
             self,
@@ -3301,7 +3315,8 @@ class AccessGroup(BaseModel):
             updated_by_uuid=None,
             updated_by_name=None,
             created_by_name=None,
-            processing_percent_complete=None
+            processing_percent_complete=None,
+            access_group_type=None,
     ):
         self._rules = None
         self._principals = None
@@ -3321,6 +3336,7 @@ class AccessGroup(BaseModel):
         self.updated_by_name = updated_by_name
         self.created_by_name = created_by_name
         self.processing_percent_complete = processing_percent_complete
+        self.access_group_type = access_group_type
 
     @property
     def rules(self):
