@@ -6,9 +6,13 @@ Unreleased
 ==========
 * Added: Support for Managed Credentials API
 
+1.10.1
+==========
+* Fixed missing ScanRef id attribute when initializing a ScanRef via the id method.
+
 1.10.0
 ==========
-* Changed: Scans API and Scan Helper methods will now accept schedule_uuid as a param to improve lookup perfomance.
+* Changed: Scans API and Scan Helper methods will now accept schedule_uuid as a param to improve lookup performance.
 * Fixed: Missing support for agent_group_id in Agent Scan configuration.
 * Added: Support for tag_targets in Scan configuration.
 

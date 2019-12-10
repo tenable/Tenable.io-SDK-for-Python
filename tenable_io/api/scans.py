@@ -68,7 +68,6 @@ class ScansApi(BaseApi):
         :raise TenableIOApiException:  When API error is encountered.
         :return: An instance of :class:`tenable_io.api.models.ScanDetails`.
         """
-        print(scan_id, schedule_uuid)
         response = self._client.get('scans/%(scan_id)s',
                                     path_params={'scan_id': scan_id or schedule_uuid},
                                     params={'history_id': history_id} if history_id else None)
