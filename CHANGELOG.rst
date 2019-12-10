@@ -2,6 +2,10 @@
 CHANGELOG
 =========
 
+Unreleased
+==========
+* Added: Support for Managed Credentials API
+
 1.10.0
 ==========
 * Changed: Scans API and Scan Helper methods will now accept schedule_uuid as a param to improve lookup perfomance.

@@ -3370,3 +3370,334 @@ class AccessGroupList(BaseModel):
     @BaseModel._model(FilterPagination)
     def pagination(self, pagination):
         self._pagination = pagination
+
+
+class CredentialFilter(BaseModel):
+
+    def __init__(
+            self,
+            field=None,
+            operator=None,
+            value=None
+    ):
+        self.field = field
+        self.operator = operator
+        self.value = value
+
+
+class CredentialCategory(BaseModel):
+
+    def __init__(
+            self,
+            id=None,
+            name=None,
+    ):
+        self.id = id
+        self.name = name
+
+
+class CredentialType(BaseModel):
+
+    def __init__(
+            self,
+            id=None,
+            name=None,
+    ):
+        self.id = id
+        self.name = name
+
+
+class CredentialCreatedBy(BaseModel):
+
+    def __init__(
+            self,
+            id=None,
+            display_name=None,
+    ):
+        self.id = id
+        self.display_name = display_name
+
+
+class CredentialLastUsedBy(BaseModel):
+
+    def __init__(
+            self,
+            id=None,
+            display_name=None,
+    ):
+        self.id = id
+        self.display_name = display_name
+
+
+class CredentialSettings(BaseModel):
+
+    def __init__(
+            self,
+            domain=None,
+            username=None,
+            auth_method=None,
+            password=None,
+    ):
+        self.domain = domain
+        self.username = username
+        self.auth_method = auth_method
+        self.password = password
+
+
+class CredentialPermission(BaseModel):
+
+    USER_TYPE = u'user'
+    GROUP_TYPE = u'group'
+
+    CAN_USE = 32
+    CAN_EDIT = 64
+
+    def __init__(
+            self,
+            grantee_uuid=None,
+            type=None,
+            permissions=None,
+            name=None,
+            isPending=None
+    ):
+        self.grantee_uuid = grantee_uuid
+        self.type = type
+        self.permissions = permissions
+        self.name = name
+        self.isPending = isPending
+
+
+class Credential(BaseModel):
+
+    def __init__(
+            self,
+            uuid=None,
+            name=None,
+            description=None,
+            category=None,
+            type=None,
+            created_date=None,
+            created_by=None,
+            last_used_by=None,
+            permission=None,
+            user_permissions=None
+    ):
+        self._category = None
+        self._type = None
+        self._created_by = None
+        self._last_used_by = None
+
+        self.uuid = uuid
+        self.name = name
+        self.description = description
+        self.category = category
+        self.type = type
+        self.created_date = created_date
+        self.created_by = created_by
+        self.last_used_by = last_used_by
+        self.permission = permission
+        self.user_permissions = user_permissions
+
+    @property
+    def category(self):
+        return self._category
+
+    @category.setter
+    @BaseModel._model(CredentialCategory)
+    def category(self, category):
+        self._category = category
+
+    @property
+    def type(self):
+        return self._type
+
+    @type.setter
+    @BaseModel._model(CredentialType)
+    def type(self, type):
+        self._type = type
+
+    @property
+    def created_by(self):
+        return self._created_by
+
+    @created_by.setter
+    @BaseModel._model(CredentialCreatedBy)
+    def created_by(self, created_by):
+        self._created_by = created_by
+
+    @property
+    def last_used_by(self):
+        return self._last_used_by
+
+    @last_used_by.setter
+    @BaseModel._model(CredentialLastUsedBy)
+    def last_used_by(self, last_used_by):
+        self._last_used_by = last_used_by
+
+
+class CredentialDetails(BaseModel):
+
+    def __init__(
+            self,
+            name=None,
+            description=None,
+            category=None,
+            type=None,
+            permission=None,
+            user_permissions=None,
+            settings=None,
+            ad_hoc=None,
+    ):
+        self._category = None
+        self._type = None
+        self._permissions = None
+        self._settings = None
+
+        self.name = name
+        self.description = description
+        self.category = category
+        self.type = type
+        self.permission = permission
+        self.user_permissions = user_permissions
+        self.settings = settings
+        self.ad_hoc = ad_hoc
+
+    @property
+    def category(self):
+        return self._category
+
+    @category.setter
+    @BaseModel._model(CredentialCategory)
+    def category(self, category):
+        self._category = category
+
+    @property
+    def type(self):
+        return self._type
+
+    @type.setter
+    @BaseModel._model(CredentialType)
+    def type(self, type):
+        self._type = type
+
+    @property
+    def settings(self):
+        return self._settings
+
+    @settings.setter
+    @BaseModel._model(CredentialSettings)
+    def settings(self, settings):
+        self._settings = settings
+
+    @property
+    def permissions(self):
+        return self._permissions
+
+    @permissions.setter
+    @BaseModel._model_list(CredentialPermission)
+    def permissions(self, permissions):
+        self._permissions = permissions
+
+
+class CredentialList(BaseModel):
+
+    def __init__(
+            self,
+            credentials=None,
+            pagination=None
+    ):
+        self._credentials = None
+        self._pagination = None
+        self.credentials = credentials
+        self.pagination = pagination
+
+    @property
+    def credentials(self):
+        return self._credentials
+
+    @credentials.setter
+    @BaseModel._model_list(Credential)
+    def credentials(self, credentials):
+        self._credentials = credentials
+
+    @property
+    def pagination(self):
+        return self._pagination
+
+    @pagination.setter
+    @BaseModel._model(FilterPagination)
+    def pagination(self, pagination):
+        self._pagination = pagination
+
+
+class CredentialTypesConfiguration(BaseModel):
+
+    def __init__(
+            self,
+            id=None,
+            name=None,
+            type=None,
+            required=None,
+    ):
+        self.id = id
+        self.name = name
+        self.type = type
+        self.required = required
+
+
+class CredentialTypes(BaseModel):
+
+    def __init__(
+            self,
+            id=None,
+            name=None,
+            max=None,
+            expand_settings=None,
+            configuration=None,
+    ):
+        self._configuration = None
+
+        self.id = id
+        self.name = name
+        self.max = max
+        self.expand_settings = expand_settings
+        self.configuration = configuration
+
+    @property
+    def configuration(self):
+        return self._configuration
+
+    @configuration.setter
+    @BaseModel._model_list(CredentialTypesConfiguration)
+    def configuration(self, configuration):
+        self._configuration = configuration
+
+
+
+class CredentialPrimitiveType(BaseModel):
+
+    def __init__(
+            self,
+            id=None,
+            category=None,
+            default_expand=None,
+            types=None,
+    ):
+        self._types = None
+
+        self.id = id
+        self.category = category
+        self.default_expand = default_expand
+        self.types = types
+
+    @property
+    def types(self):
+        return self._types
+
+    @types.setter
+    @BaseModel._model_list(CredentialTypes)
+    def types(self, types):
+        self._types = types
+
+
+
