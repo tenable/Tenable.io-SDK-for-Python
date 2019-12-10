@@ -99,3 +99,17 @@ def test_scan_helper_activities(client):
     activity = next((a for a in activities if a.history_id == history_id), None)
     assert activity is not None, u'Completed scan history should be in activities.'
     assert activity.timestamp is not None, u'Completed scan activity has a timestamp.'
+
+
+@pytest.mark.vcr()
+def test_scan_helper_id_uuid_resolution(client):
+    scan_ref1 = create_scan(client)
+    scan_detail = scan_ref1.details()
+
+    scan_ref2 = client.scan_helper.id(scan_ref1.id)
+    assert scan_ref1.id == scan_ref2.id
+    assert scan_ref1.uuid == scan_ref2.uuid
+
+    scan_ref3 = client.scan_helper.uuid(scan_detail.info.schedule_uuid)
+    assert scan_ref1.id == scan_ref3.id
+    assert scan_ref1.uuid == scan_ref3.uuid
