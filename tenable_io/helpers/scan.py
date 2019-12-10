@@ -54,7 +54,7 @@ class ScanHelper(object):
         scan = self._client.scans_api.details(id)
         # object_id is not returned by the API when the current user is not the owner of the scan.
         # return ScanRef(self._client, self._client.scans_api.details(id).info.object_id)
-        return ScanRef(self._client, scan.id, scan.info.schedule_uuid)
+        return ScanRef(self._client, id, scan.info.schedule_uuid)
 
     def uuid(self, schedule_uuid):
         """Get scan by schedule UUID.
@@ -65,7 +65,7 @@ class ScanHelper(object):
         scan = self._client.scans_api.details(schedule_uuid=schedule_uuid)
         # object_id is not returned by the API when the current user is not the owner of the scan.
         # return ScanRef(self._client, self._client.scans_api.details(id).info.object_id)
-        return ScanRef(self._client, scan.info.object_id, scan.schedule_uuid)
+        return ScanRef(self._client, scan.info.object_id, schedule_uuid)
 
     def stop_all(self, folder=None, folder_id=None):
         """Stop all scans.

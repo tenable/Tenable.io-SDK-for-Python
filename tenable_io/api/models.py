@@ -1312,6 +1312,7 @@ class Scan(BaseModel):
             starttime=None,
             timezone=None,
             rrules=None,
+            schedule_uuid=None,
     ):
         self.id = id
         self.uuid = uuid
@@ -1330,6 +1331,7 @@ class Scan(BaseModel):
         self.starttime = starttime
         self.timezone = timezone
         self.rrules = rrules
+        self.schedule_uuid = schedule_uuid
 
 
 class ScanDetailsHistory(BaseModel):
