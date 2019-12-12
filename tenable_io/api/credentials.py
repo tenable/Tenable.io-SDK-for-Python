@@ -49,7 +49,10 @@ class CredentialsApi(BaseApi):
         :return: An instance of :class:`tenable_io.api.models.CredentialDetails`.
         """
         response = self._client.get('credentials/%(uuid)s', path_params={'uuid': uuid})
-        return CredentialDetails.from_json(response.text)
+        # We manually add the uuid back to the response object to it can be referenced later more easily
+        credential_details = loads(response.text)
+        credential_details['uuid'] = uuid
+        return CredentialDetails.from_dict(credential_details)
 
 
     def update(self, uuid, credential_request):

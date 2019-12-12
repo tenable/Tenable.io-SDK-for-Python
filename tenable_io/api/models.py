@@ -1696,6 +1696,41 @@ class ScanList(BaseModel):
         self._scans = scans
 
 
+class ScanCredentials(BaseModel):
+
+    def __init__(
+            self,
+            add=[],
+            edit=[],
+            delete=[],
+    ):
+        self.add = add
+        self.edit = edit
+        self.delete = delete
+
+    def _parse_credential_list(self, credential_list):
+        _parsed_credentials = {}
+        for cd in credential_list:
+            if cd.category.id not in _parsed_credentials:
+                _parsed_credentials[cd.category.id] = {}
+                _parsed_credentials[cd.category.id][cd.type.id] = [{'id': cd.uuid}]
+            else:
+                if cd.type.id not in _parsed_credentials[cd.category.id]:
+                    _parsed_credentials[cd.category.id][cd.type.id] = [{'id': cd.uuid}]
+                else:
+                    _parsed_credentials[cd.category.id][cd.type.id].append({'id': cd.uuid})
+        return _parsed_credentials
+
+    def as_payload(self, filter_=None):
+        payload = {}
+        # All items for each attribute will be an instance of CredentialDetails
+        payload['add'] = self._parse_credential_list(self.add)
+        payload['edit'] = self._parse_credential_list(self.edit)
+        payload['delete'] = []
+
+        return payload
+
+
 class ScanSettings(BaseModel):
 
     def __init__(
@@ -3541,6 +3576,7 @@ class CredentialDetails(BaseModel):
 
     def __init__(
             self,
+            uuid=None,
             name=None,
             description=None,
             category=None,
@@ -3555,6 +3591,7 @@ class CredentialDetails(BaseModel):
         self._permissions = None
         self._settings = None
 
+        self.uuid = uuid
         self.name = name
         self.description = description
         self.category = category
