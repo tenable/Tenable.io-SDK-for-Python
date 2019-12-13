@@ -1,7 +1,7 @@
 interactions:
 - request:
-    body: '{"username": "example_test_user_30@sdk.org", "password": "Sdk!Test123444",
-      "permissions": 32, "name": "example_test_user_30", "email": "example_test_user_30@sdk.org",
+    body: '{"username": "example_test_user_38@sdk.org", "password": "Sdk!Test123420",
+      "permissions": 32, "name": "example_test_user_38", "email": "example_test_user_38@sdk.org",
       "type": "local"}'
     headers:
       Accept:
@@ -23,10 +23,10 @@ interactions:
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAA41QSW7FIAy9C+tQJQE+SVb/JsiAQagJRAxSq6p3L+mw6Kb9S7/Jz34jrQVLNgJi
-        khJmRxenHeWTlnQRsFK8oRwnoZnVSAZyaTkfSCuYVYQDuxVf4Dh3VBVLVZ8EG+/FPj+l7MmX9DEl
-        HhD2/2V/hHW2vp4XuycDex9NihVC7Oz3oVxMWhu50FXPhnLjGNUjCMpuFu3KpF6E7T7wPqOH2rNq
-        bjiQE/MRSgkpFrKxeegbfIjK9crKpBYr2cZfYE21N7hAjKB3tD9JVxH1+NPfPwC5nxk0pAEAAA==
+        H4sIAAAAAAAAA41QSW7FIAy9C+tQkUB+htW/CQJjECqBiEFqVfXuJR0W3bR/6Tf52W+kNW/ITmAT
+        xi4To4zPlgo2AtVWAwVmb6MFQDstZCCXVswDaQWzjOrAbsUXdZwBZcVS5SfB13sxz08pO/IlfUyJ
+        h/Lhf9kfYZ2tr+fFhgQq9BFSrMrHzn4fKuZRa1hWuukJqADLqWZqpvxm0Gx80etsuk85l9Gp2rNq
+        bjiQE/PhS/EpFrLzaegbnI/S9soSUouV7OwXWFPtDS4Qo9IBzU/SVUQ+/vT3Dy8wZUSkAQAA
     headers:
       Cache-Control:
       - no-cache
@@ -37,7 +37,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 13 Dec 2019 16:51:13 GMT
+      - Fri, 13 Dec 2019 19:41:31 GMT
       Server:
       - tenable.io
       Set-Cookie:
@@ -54,7 +54,7 @@ interactions:
       X-Gateway-Site-ID:
       - nginx-router-7ms2v-us-east-2-prod
       X-Request-Uuid:
-      - 6994df15b4d565f1277fe156aedc96aa
+      - 24903c1c348664b15d5398ab207cd6ec
     status:
       code: 200
       message: OK
@@ -74,14 +74,14 @@ interactions:
       X-APIKeys:
       - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
     method: GET
-    uri: https://cloud.tenable.com/users/44
+    uri: https://cloud.tenable.com/users/45
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAA41QzW7DIAx+F85hSgKUJKe+CbLBVGgJRAGkTVXffaTbZZetR39/tr87qzU4tjBQ
-        g9Ywej559FwOqPmkYOZ0Id0PCoVDYh07tVJ2rGY6TISNmpU+YNtXMoVyMU9C9Nfs3t/ScWPf0teU
-        tEFY/5f9EdbY8rmf7JosrG20KRYIsbE/j0o1IFo98RlHy6X1gmMPiouLIzcLjZNyzbfTsYWcQ4qZ
-        LWLsWuAtROPbhcamGgtb+l9gSaUtPEGKgCu1XeWo1D0LNq93/PgC1BHLcJMBAAA=
+        H4sIAAAAAAAAA41QS27DIBC9C2tTYQPxZ5WbIBiGCBWDZUBKFOXuxWk32aRZzvvNzLuTWr0lC4FZ
+        WDcOjDIuHRWsB2qcAQrMnXoHgG4YSUcOrZAdqRl3FfWKzYpXvW4BVcFc1JPg0znb76+0X8iv9DMl
+        rtqH/2VvwhpbbtvBhgQ6tBFSLNrHxv49KmRvDIwTnc0AVIDj1DAtKT9ZtDMfzSRt8224rz5nn2Im
+        Cx+6FnjxUbl2oYJUYyELewFLKm3hAWLUJmDbVfaK3bNg9XnHjx9AcLmlkwEAAA==
     headers:
       Cache-Control:
       - no-cache
@@ -92,7 +92,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 13 Dec 2019 16:51:13 GMT
+      - Fri, 13 Dec 2019 19:41:31 GMT
       Server:
       - tenable.io
       Set-Cookie:
@@ -109,7 +109,7 @@ interactions:
       X-Gateway-Site-ID:
       - nginx-router-7ms2v-us-east-2-prod
       X-Request-Uuid:
-      - c5ded4aec1bed90a9666f5477ba009fd
+      - e47cd1aa4f410def4ec049e26a7823a7
     status:
       code: 200
       message: OK
@@ -133,21 +133,21 @@ interactions:
   response:
     body:
       string: !!binary |
-        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
+        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
     headers:
       Cache-Control:
       - no-cache
@@ -158,7 +158,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 13 Dec 2019 16:51:13 GMT
+      - Fri, 13 Dec 2019 19:41:32 GMT
       Server:
       - tenable.io
       Set-Cookie:
@@ -177,14 +177,14 @@ interactions:
       X-Gateway-Site-ID:
       - nginx-router-7ms2v-us-east-2-prod
       X-Request-Uuid:
-      - 5d36665f8686f5bfd247f198c4e91b30
+      - f484bebb855a1d64ada41de02738a360
       X-Xss-Protection:
       - 1; mode=block
     status:
       code: 200
       message: OK
 - request:
-    body: '{"name": "example_test_user_30_edit"}'
+    body: '{"permissions": 40}'
     headers:
       Accept:
       - '*/*'
@@ -193,7 +193,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '37'
+      - '19'
       Content-Type:
       - application/json
       Cookie:
@@ -203,15 +203,15 @@ interactions:
       X-APIKeys:
       - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
     method: PUT
-    uri: https://cloud.tenable.com/users/44
+    uri: https://cloud.tenable.com/users/45
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAA42Ry26EMAxF/yVrUgEhE2A1fxI5iaFRIUF5dFpV/feaPhbdtLP09bn2tfzGavWO
-        zQxkpxT0Cx8Xs/ChM4qPEiaOF1RtJ41wBlnDTnYYGlYzJh1gR7LiC+zHhrpgLvqzIdprdk8PMa3s
-        C72PxB389j/2xzCNzhdCyutxIlu0sFFpYyjgAyHf1w6yM8aqkU+mt3ywi+CmBcnFxaGbhDKjdOS7
-        PULJAW/6GVP2MZCTVFjXhCsU2lBSxYYdmHafTyCzWfQN7V190Atdo22sobC5/SWWWCjXKWIAs6H7
-        mXTG0/f/4/0DcoRCZb8BAAA=
+        H4sIAAAAAAAAA42RSXLDIBBF78JauNCAJXnlm1DQNAoVCVSA4rhSuXuaDItsEi/5//2eeGPH4S27
+        MJgH68ZOcNFLxwfRAjfOAAfhzq0DQNeNrGGVHWTDjoxJBb0hRfFVb/uKqmAu6tPop2u2z6eYFvaF
+        Pkbipv36P/ZHMXLLfa/uGkGv9IQYivaB3O9FB9kaA+PEZ9MBH8D13AgteX+2aOd+NJO0lLs96ZID
+        3tQLpuxjoCSpelkSLrpQh5IObNiOafO5ApkOIxrqu/igHC2iIB6hsMtvscRCc1URgzYr2p9KdTz1
+        +Fe8fwAvZzl5ugEAAA==
     headers:
       Cache-Control:
       - no-cache
@@ -222,7 +222,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 13 Dec 2019 16:51:14 GMT
+      - Fri, 13 Dec 2019 19:41:32 GMT
       Server:
       - tenable.io
       Set-Cookie:
@@ -241,7 +241,7 @@ interactions:
       X-Gateway-Site-ID:
       - nginx-router-7ms2v-us-east-2-prod
       X-Request-Uuid:
-      - ec411298d20d8990393c2ae7d47db58b
+      - d830d39d237b902bc144ba8baaa8605a
       X-Xss-Protection:
       - 1; mode=block
     status:
@@ -265,7 +265,7 @@ interactions:
       X-APIKeys:
       - accessKey=TIO_ACCESS_KEY;secretKey=TIO_SECRET_KEY
     method: DELETE
-    uri: https://cloud.tenable.com/users/44
+    uri: https://cloud.tenable.com/users/45
   response:
     body:
       string: ''
@@ -275,7 +275,7 @@ interactions:
       Connection:
       - keep-alive
       Date:
-      - Fri, 13 Dec 2019 16:51:15 GMT
+      - Fri, 13 Dec 2019 19:41:33 GMT
       Server:
       - tenable.io
       Set-Cookie:
@@ -292,7 +292,7 @@ interactions:
       X-Gateway-Site-ID:
       - nginx-router-7ms2v-us-east-2-prod
       X-Request-Uuid:
-      - 384db9dfd75e76169142dd956884da4e
+      - c88c3d5fb0f8180bb0b92f32decde00e
       X-Xss-Protection:
       - 1; mode=block
     status:
@@ -342,7 +342,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 13 Dec 2019 16:51:15 GMT
+      - Fri, 13 Dec 2019 19:41:33 GMT
       Server:
       - tenable.io
       Set-Cookie:
@@ -361,7 +361,7 @@ interactions:
       X-Gateway-Site-ID:
       - nginx-router-7ms2v-us-east-2-prod
       X-Request-Uuid:
-      - 03d73c4ec32bfc50e59755b665d0bfd5
+      - c8ac7cf3af0b57b3ceabcf482142fdbd
       X-Xss-Protection:
       - 1; mode=block
     status:
