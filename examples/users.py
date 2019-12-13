@@ -33,7 +33,8 @@ def example(test_domain):
     '''
     std_user = client.users_api.details(std_user_id)
     assert isinstance(std_user, User)
-    assert std_user.username == test_user_username
+    assert std_user.permissions == Permissions.User.PERMISSION_STANDARD
+
 
     '''
     Check that new user is included in user list
