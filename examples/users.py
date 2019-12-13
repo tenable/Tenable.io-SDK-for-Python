@@ -45,10 +45,10 @@ def example(test_domain):
     '''
     Edit user
     '''
-    user_edit_request = UserEditRequest(name=test_user_name+'_edit')
+    user_edit_request = UserEditRequest(permissions=Permissions.User.PERMISSION_SCAN_MANAGER)
     edited_std_user = client.users_api.edit(std_user_id, user_edit_request)
     assert isinstance(edited_std_user, User)
-    assert edited_std_user.name == test_user_name + '_edit'
+    assert edited_std_user.permissions == Permissions.User.PERMISSION_SCAN_MANAGER
 
     '''
     Delete user
