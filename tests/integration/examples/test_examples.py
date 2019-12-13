@@ -33,6 +33,11 @@ class TestExamples(BaseTest):
         example(TenableIOTestConfig.get('scan_text_targets'))
 
     @pytest.mark.vcr()
+    def test_users(self):
+        from examples.users import example
+        example(TenableIOTestConfig.get('users_domain_name'))
+
+    @pytest.mark.vcr()
     def test_workbench(self):
         from examples.workbench import example
         example()

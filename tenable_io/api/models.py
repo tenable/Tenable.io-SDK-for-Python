@@ -2187,6 +2187,9 @@ class TemplateList(BaseModel):
 
 class User(BaseModel):
 
+    LOCAL = u'local'
+    LDAP = u'LDAP'
+
     def __init__(
             self,
             id=None,
