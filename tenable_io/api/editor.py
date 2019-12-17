@@ -1,6 +1,8 @@
 from tenable_io.api.base import BaseApi
 from tenable_io.api.models import EditorConfigurationDetails, EditorPluginDetails, EditorTemplateDetails, TemplateList
 
+SCAN = u'scan'
+POLICY = u'policy'
 
 class EditorApi(BaseApi):
 

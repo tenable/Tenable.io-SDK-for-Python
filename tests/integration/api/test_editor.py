@@ -1,5 +1,6 @@
 import pytest
 
+from tenable_io.api.editor import SCAN, POLICY
 from tenable_io.api.models import EditorConfigurationDetails, EditorPluginAttributes, EditorPluginDescription, \
     EditorTemplateDetails, TemplateList, PolicySettings
 from tenable_io.api.policies import PolicyCreateRequest
@@ -7,23 +8,23 @@ from tenable_io.api.policies import PolicyCreateRequest
 
 @pytest.mark.vcr()
 def test_editor_list(client):
-    template_list = client.editor_api.list('scan')
+    template_list = client.editor_api.list(SCAN)
     assert isinstance(template_list, TemplateList), u'The `list` method did not return type `TemplateList`.'
-    policy_list = client.editor_api.list('policy')
+    policy_list = client.editor_api.list(POLICY)
     assert isinstance(policy_list, TemplateList), u'The `list` method did not return type `TemplateList`.'
 
 
 @pytest.mark.vcr()
 def test_editor_details(client, new_scan_id):
-    scan_configuration_details = client.editor_api.details('scan', new_scan_id)
+    scan_configuration_details = client.editor_api.details(SCAN, new_scan_id)
     assert isinstance(scan_configuration_details, EditorConfigurationDetails), \
         u'The `details` method did not return type `EditorConfigurationDetails`.'
 
 
 @pytest.mark.vcr()
 def test_editor_template_details(client):
-    template_list = client.editor_api.list('scan')
-    scan_template_details = client.editor_api.template_details('scan', template_list.templates[0].uuid)
+    template_list = client.editor_api.list(SCAN)
+    scan_template_details = client.editor_api.template_details(SCAN, template_list.templates[0].uuid)
     assert isinstance(scan_template_details, EditorTemplateDetails), \
         u'The `template_details` method did not return type `EditorTemplateDetails`.'
 
@@ -31,7 +32,7 @@ def test_editor_template_details(client):
 @pytest.mark.vcr()
 def test_editor_plugin_details(client):
     # create new policy based on advanced template
-    template_list = client.editor_api.list('policy')
+    template_list = client.editor_api.list(POLICY)
     aadvanced_template = [t for t in template_list.templates if t.name == 'advanced']
     policy_id = client.policies_api.create(
         PolicyCreateRequest(
