@@ -2220,7 +2220,275 @@ class TemplateList(BaseModel):
         self._templates = templates
 
 
+class EditorConfigurationFilterAttributes(BaseModel):
+
+    def __init__(
+            self,
+            operators=None,
+            control=None,
+            name=None,
+            readable_name=None,
+    ):
+        self.operators = operators
+        self.control = control
+        self.name = name
+        self.readable_name = readable_name
+
+
+class EditorTemplateDetails(BaseModel):
+
+    def __init__(
+            self,
+            uuid=None,
+            name=None,
+            title=None,
+            owner=None,
+            user_permissions=None,
+            is_was=None,
+            is_agent=None,
+            settings=None,
+            filter_attributes=None,
+    ):
+        self._filter_attributes = None
+
+        self.uuid = uuid
+        self.name = name
+        self.title = title
+        self.owner = owner
+        self.user_permissions = user_permissions
+        self.is_was = is_was
+        self.is_agent = is_agent
+        self.settings = settings
+        self.filter_attributes = filter_attributes
+
+    @property
+    def filter_attributes(self):
+        return self._filter_attributes
+
+    @filter_attributes.setter
+    @BaseModel._model_list(EditorConfigurationFilterAttributes)
+    def filter_attributes(self, filter_attributes):
+        self._filter_attributes = filter_attributes
+
+
+class EditorPluginRiskInformation(BaseModel):
+
+    def __init__(
+            self,
+            cvss_vector=None,
+            risk_factor=None,
+            cvss_base_score=None,
+            cvss_temporal_score=None,
+            cvss_temporal_vector=None
+    ):
+        self.cvss_vector = cvss_vector
+        self.risk_factor = risk_factor
+        self.cvss_base_score = cvss_base_score
+        self.cvss_temporal_score = cvss_temporal_score
+        self.cvss_temporal_vector = cvss_temporal_vector
+
+
+class EditorPluginRefInformation(BaseModel):
+
+    def __init__(
+            self,
+            ref=None,
+    ):
+        self.ref = ref
+
+
+class EditorPluginPluginInformation(BaseModel):
+
+    def __init__(
+            self,
+            plugin_id=None,
+            plugin_version=None,
+            plugin_type=None,
+            plugin_publication_date=None,
+            plugin_family=None,
+            plugin_modification_date=None,
+    ):
+        self.plugin_id = plugin_id
+        self.plugin_version = plugin_version
+        self.plugin_type = plugin_type
+        self.plugin_publication_date = plugin_publication_date
+        self.plugin_family = plugin_family
+        self.plugin_modification_date = plugin_modification_date
+
+
+class EditorPluginVulnInformation(BaseModel):
+
+    def __init__(
+            self,
+            cpe=None,
+            exploitability_ease=None,
+            exploit_available=None,
+            patch_publication_date=None
+    ):
+        self.cpe = cpe
+        self.exploitability_ease = exploitability_ease
+        self.exploit_available = exploit_available
+        self.patch_publication_date = patch_publication_date
+
+
+class EditorPluginAttributes(BaseModel):
+
+    def __init__(
+            self,
+            plugin_name=None,
+            synopsis=None,
+            description=None,
+            fname=None,
+            usn=None,
+            solution=None,
+            see_also=None,
+            risk_information=None,
+            ref_information=None,
+            plugin_information=None,
+            vuln_information=None
+    ):
+        self._risk_information = None
+        self._ref_information = None
+        self._plugin_information = None
+        self._vuln_information = None
+
+        self.plugin_name = plugin_name
+        self.synopsis = synopsis
+        self.description = description
+        self.fname = fname
+        self.usn = usn
+        self.solution = solution
+        self.see_also = see_also
+        self.risk_information = risk_information
+        self.ref_information = ref_information
+        self.plugin_information = plugin_information
+        self.vuln_information = vuln_information
+
+    @property
+    def risk_information(self):
+        return self._risk_information
+
+    @risk_information.setter
+    @BaseModel._model(EditorPluginRiskInformation)
+    def risk_information(self, risk_information):
+        self._risk_information = risk_information
+
+    @property
+    def ref_information(self):
+        return self._ref_information
+
+    @ref_information.setter
+    @BaseModel._model(EditorPluginRefInformation)
+    def ref_information(self, ref_information):
+        self._ref_information = ref_information
+
+    @property
+    def plugin_information(self):
+        return self._plugin_information
+
+    @plugin_information.setter
+    @BaseModel._model(EditorPluginPluginInformation)
+    def plugin_information(self, plugin_information):
+        self._plugin_information = plugin_information
+
+    @property
+    def vuln_information(self):
+        return self._vuln_information
+
+    @vuln_information.setter
+    @BaseModel._model(EditorPluginVulnInformation)
+    def vuln_information(self, vuln_information):
+        self._vuln_information = vuln_information
+
+
+class EditorPluginDescription(BaseModel):
+
+    def __init__(
+            self,
+            pluginid=None,
+            pluginname=None,
+            pluginfamily=None,
+            severity=None,
+            pluginattributes=None,
+    ):
+        self._pluginattributes = None
+
+        self.pluginid = pluginid
+        self.pluginname = pluginname
+        self.pluginfamily = pluginfamily
+        self.severity = severity
+        self.pluginattributes = pluginattributes
+
+    @property
+    def pluginattributes(self):
+        return self._pluginattributes
+
+    @pluginattributes.setter
+    @BaseModel._model(EditorPluginAttributes)
+    def pluginattributes(self, pluginattributes):
+        self._pluginattributes = pluginattributes
+
+
+class EditorPluginDetails(BaseModel):
+
+    def __init__(
+            self,
+            plugindescription=None
+    ):
+        self._plugindescription = None
+
+        self.plugindescription = plugindescription
+
+    @property
+    def plugindescription(self):
+        return self._plugindescription
+
+    @plugindescription.setter
+    @BaseModel._model(EditorPluginDescription)
+    def plugindescription(self, plugindescription):
+        self._plugindescription = plugindescription
+
+
+class EditorConfigurationDetails(BaseModel):
+
+    def __init__(
+            self,
+            uuid=None,
+            name=None,
+            title=None,
+            owner=None,
+            user_permissions=None,
+            is_was=None,
+            is_agent=None,
+            settings=None,
+            filter_attributes=None,
+    ):
+        self._filter_attributes = None
+
+        self.uuid = uuid
+        self.name = name
+        self.title = title
+        self.owner = owner
+        self.user_permissions = user_permissions
+        self.is_was = is_was
+        self.is_agent = is_agent
+        self.settings = settings
+        self.filter_attributes = filter_attributes
+
+    @property
+    def filter_attributes(self):
+        return self._filter_attributes
+
+    @filter_attributes.setter
+    @BaseModel._model_list(EditorConfigurationFilterAttributes)
+    def filter_attributes(self, filter_attributes):
+        self._filter_attributes = filter_attributes
+
+
 class User(BaseModel):
+
+    LOCAL = u'local'
+    LDAP = u'LDAP'
 
     def __init__(
             self,

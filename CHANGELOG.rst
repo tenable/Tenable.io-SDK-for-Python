@@ -2,13 +2,14 @@
 CHANGELOG
 =========
 
-Unreleased
+1.11.0
 ==========
 * Added: Support for Managed Credentials API
+* Added: Support for missing Editor API endpoints.
 
 1.10.1
 ==========
-* Fixed missing ScanRef id attribute when initializing a ScanRef via the id method.
+* Fixed: missing ScanRef id attribute when initializing a ScanRef via the id method.
 
 1.10.0
 ==========
