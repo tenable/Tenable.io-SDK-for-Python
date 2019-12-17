@@ -2,8 +2,9 @@
 CHANGELOG
 =========
 
-Unreleased
+1.11.0
 ==========
+* Added: Support for Managed Credentials API
 * Added: Support for missing Editor API endpoints.
 
 1.10.1

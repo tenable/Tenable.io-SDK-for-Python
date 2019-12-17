@@ -7,13 +7,11 @@ from tenable_io.api.models import AccessGroup, AccessGroupList, AssetRule, Asset
 @pytest.mark.vcr()
 def test_access_groups_filters_get(client):
     filters = client.access_groups_api.filters()
-    print(filters)
     assert isinstance(filters, Filters), u'The `filters` method did not return type `Filters`.'
 
 @pytest.mark.vcr()
 def test_access_groups_rule_filters_get(client):
     rule_filters = client.access_groups_api.rule_filters()
-    print(rule_filters)
     for rf in rule_filters:
         assert isinstance(rf, AssetRuleFilter), u'The `rule_filters` method did not return type `AssetRuleFilter`.'
 

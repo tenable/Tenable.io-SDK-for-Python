@@ -4,7 +4,8 @@ from datetime import datetime
 from time import time
 
 from tenable_io.api.models import Scan
-from tenable_io.api.scans import ScanExportRequest
+from tenable_io.api.credentials import CredentialPermission, CredentialRequest
+from tenable_io.api.scans import ScanExportRequest, ScanSettings, ScanCreateRequest, ScanCredentials
 from tenable_io.client import TenableIOClient
 from tenable_io.exceptions import TenableIOApiException
 
@@ -122,6 +123,43 @@ def example(test_targets):
     imported_scan = client.scan_helper.import_scan(test_nessus_file)
     assert imported_scan.details().info.name == scan.details().info.name
     os.remove(test_nessus_file)
+
+    '''
+    Create a new scan using managed credentials.
+    Note: First we must create a new managed credential
+    '''
+    # Created managed credential for SSH
+    test_user = client.users_api.list().users[0]
+    test_permission = CredentialPermission(grantee_uuid=test_user.uuid,
+                                           type=CredentialPermission.USER_TYPE,
+                                           permissions=CredentialPermission.CAN_EDIT,
+                                           name=test_user.username,
+                                           isPending=True)
+    credential_request = CredentialRequest(name='Lab SSH',
+                                           description='SSH Credentials for Lab',
+                                           type_='SSH',
+                                           settings={
+                                                'auth_method': 'password',
+                                                'elevate_privledges_with': 'Nothing',
+                                                'username': 'username',
+                                                'password': 'password'
+                                           },
+                                           permissions=[test_permission])
+    credential_uuid = client.credentials_api.create(credential_request)
+    credential_detail = client.credentials_api.details(credential_uuid)
+
+    # Create scan settings
+    settings = ScanSettings(name='Credentialed Scan',
+                            text_targets=test_targets)
+    credentials = ScanCredentials(add=[credential_detail])
+    template_uuid = client.scan_helper.template('basic').uuid
+
+    # Create Scan
+    scan_request = ScanCreateRequest(uuid=template_uuid,
+                                     settings=settings,
+                                     credentials=credentials)
+    scan_id = client.scans_api.create(scan_request)
+    assert scan_id
 
     '''
     Stop all scans.
