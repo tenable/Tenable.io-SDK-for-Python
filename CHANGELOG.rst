@@ -2,6 +2,11 @@
 CHANGELOG
 =========
 
+1.12.0
+==========
+* Added: Support for Networks API
+* Added: Support for missing Asset management endpoints.
+
 1.11.0
 ==========
 * Added: Support for Managed Credentials API
