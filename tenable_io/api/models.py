@@ -2942,6 +2942,7 @@ class BulkAsset(BaseModel):
     ):
         self.response = response
 
+
 class AssetsExport(BaseModel):
 
     def __init__(
