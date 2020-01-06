@@ -2844,19 +2844,6 @@ class AssetsAssetList(BaseModel):
         self._assets = assets
 
 
-class ExportsAssetsStatus(BaseModel):
-
-    STATUS_FINISHED = u'FINISHED'
-
-    def __init__(
-            self,
-            status=None,
-            chunks_available=None
-    ):
-        self.status = status
-        self.chunks_available = chunks_available
-
-
 class AssetTag(BaseModel):
 
     def __init__(
@@ -2872,6 +2859,88 @@ class AssetTag(BaseModel):
         self.value = value
         self.added_by = added_by
         self.added_at = added_at
+
+
+class AssetsAssetDetails(AssetsAsset):
+
+    def __init__(
+            self,
+            has_agent=None,
+            last_scan_target=None,
+            tags=None,
+            acr_score=None,
+            acr_drivers=None,
+            exposure_score=None,
+            scan_frequency=None,
+            network_id=None,
+            agent_name=None,
+            azure_vm_id=None,
+            azure_resource_id=None,
+            gcp_project_id=None,
+            gcp_zone=None,
+            gcp_instance_id=None,
+            mcafee_epo_guid=None,
+            mcafee_epo_agent_guid=None,
+            qualys_asset_id=None,
+            qualys_host_id=None,
+            servicenow_sysid=None,
+            installed_software=None,
+            bigfix_asset_id=None,
+    ):
+        self._tags = None
+
+        self.has_agent = has_agent
+        self.last_scan_target = last_scan_target
+        self.tags = tags
+        self.acr_score = acr_score
+        self.acr_drivers = acr_drivers
+        self.exposure_score = exposure_score
+        self.scan_frequency = scan_frequency
+        self.network_id = network_id
+        self.agent_name = agent_name
+        self.azure_vm_id = azure_vm_id
+        self.azure_resource_id = azure_resource_id
+        self.gcp_project_id = gcp_project_id
+        self.gcp_zone = gcp_zone
+        self.gcp_instance_id = gcp_instance_id
+        self.mcafee_epo_guid = mcafee_epo_guid
+        self.mcafee_epo_agent_guid = mcafee_epo_agent_guid
+        self.qualys_asset_id = qualys_asset_id
+        self.qualys_host_id = qualys_host_id
+        self.servicenow_sysid = servicenow_sysid
+        self.installed_software = installed_software
+        self.bigfix_asset_id = bigfix_asset_id
+
+    @property
+    def tags(self):
+        return self._tags
+
+    @tags.setter
+    @BaseModel._model_list(AssetTag)
+    def tags(self, tags):
+        self._tags = tags
+
+
+class ExportsAssetsStatus(BaseModel):
+
+    STATUS_FINISHED = u'FINISHED'
+
+    def __init__(
+            self,
+            status=None,
+            chunks_available=None
+    ):
+        self.status = status
+        self.chunks_available = chunks_available
+
+
+class BulkAsset(BaseModel):
+
+    def __init__(
+            self,
+            response=None,
+    ):
+        self.response = response
 
 
 class AssetsExport(BaseModel):
@@ -4007,4 +4076,65 @@ class CredentialPrimitiveType(BaseModel):
         self._types = types
 
 
+class Network(BaseModel):
 
+    def __init__(
+            self,
+            owner_uuid=None,
+            created=None,
+            modified=None,
+            scanner_count=None,
+            uuid=None,
+            name=None,
+            description=None,
+            is_default=None,
+            created_by=None,
+            created_at=None,
+            modified_by=None,
+            created_in_seconds=None,
+            modified_in_seconds=None,
+    ):
+        self.owner_uuid = owner_uuid
+        self.created = created
+        self.modified = modified
+        self.scanner_count = scanner_count
+        self.uuid = uuid
+        self.name = name
+        self.description = description
+        self.is_default = is_default
+        self.created_by = created_by
+        self.created_at = created_at
+        self.modified_by = modified_by
+        self.created_in_seconds = created_in_seconds
+        self.modified_in_seconds = modified_in_seconds
+
+
+class NetworkList(BaseModel):
+
+    def __init__(
+            self,
+            networks=None,
+            pagination=None,
+    ):
+        self._networks = None
+        self.networks = networks
+        self._pagination = None
+        self.pagination = pagination
+
+    @property
+    def networks(self):
+        return self._networks
+
+    @networks.setter
+    @BaseModel._model_list(Network)
+    def networks(self, networks):
+        self._networks = networks
+
+    @property
+    def pagination(self):
+        return self._pagination
+
+    @pagination.setter
+    @BaseModel._model(FilterPagination)
+    def pagination(self, pagination):
+        self._pagination = pagination
