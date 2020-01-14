@@ -2667,10 +2667,66 @@ class AssetActivityList(BaseModel):
         self._activity = activity
 
 
+class ACRDrivers(BaseModel):
+
+    def __init__(
+            self,
+            driver_name=None,
+            driver_value=None,
+    ):
+        self.driver_name = driver_name
+        self.driver_value = driver_value
+
+
+class AssetScanFrequency(BaseModel):
+
+    def __init__(
+            self,
+            interval=None,
+            frequency=None,
+            licensed=None,
+    ):
+        self.interval = interval
+        self.frequency = frequency
+        self.licensed = licensed
+
+
+class AssetsAssetSource(BaseModel):
+
+    def __init__(
+            self,
+            name=None,
+            last_seen=None,
+            first_seen=None
+    ):
+        self.name = name
+        self.last_seen = last_seen
+        self.first_seen = first_seen
+
+
+class AssetTag(BaseModel):
+
+    def __init__(
+            self,
+            uuid=None,
+            key=None,
+            value=None,
+            added_by=None,
+            added_at=None
+    ):
+        self.uuid = uuid
+        self.key = key
+        self.value = value
+        self.added_by = added_by
+        self.added_at = added_at
+
+
 class AssetInfo(BaseModel):
 
     def __init__(
             self,
+            id=None,
+            uuid=None,
             counts=None,
             first_seen=None,
             fqdn=None,
@@ -2682,9 +2738,57 @@ class AssetInfo(BaseModel):
             netbios_name=None,
             operating_system=None,
             system_type=None,
+            time_end=None,
+            time_start=None,
+            has_agent=None,
+            created_at=None,
+            updated_at=None,
+            last_licensed_scan_date=None,
+            sources=None,
+            tags=None,
+            acr_score=None,
+            acr_drivers=None,
+            exposure_score=None,
+            scan_frequency=None,
+            tenable_uuid=None,
+            hostname=None,
+            agent_name=None,
+            bios_uuid=None,
+            aws_ec2_instance_id=None,
+            aws_ec2_instance_ami_id=None,
+            aws_owner_id=None,
+            aws_availability_zone=None,
+            aws_region=None,
+            aws_vpc_id=None,
+            aws_ec2_instance_group_name=None,
+            aws_ec2_instance_state_name=None,
+            aws_ec2_instance_type=None,
+            aws_subnet_id=None,
+            aws_ec2_product_code=None,
+            aws_ec2_name=None,
+            azure_vm_id=None,
+            azure_resource_id=None,
+            gcp_project_id=None,
+            gcp_zone=None,
+            gcp_instance_id=None,
+            ssh_fingerprint=None,
+            mcafee_epo_guid=None,
+            mcafee_epo_agent_guid=None,
+            qualys_asset_id=None,
+            qualys_host_id=None,
+            servicenow_sysid=None,
+            installed_software=None,
+            bigfix_asset_id=None,
+            network_name=None,
     ):
         self._counts = None
+        self._tags = None
+        self._sources = None
+        self._acr_drivers = None
+        self._scan_frequency = None
 
+        self.id = id
+        self.uuid = uuid
         self.counts = counts
         self.first_seen = first_seen
         self.fqdn = fqdn
@@ -2696,6 +2800,48 @@ class AssetInfo(BaseModel):
         self.netbios_name = netbios_name
         self.operating_system = operating_system
         self.system_type = system_type
+        self.time_end = time_end
+        self.time_start = time_start
+        self.has_agent = has_agent
+        self.created_at = created_at
+        self.updated_at = updated_at
+        self.last_licensed_scan_date = last_licensed_scan_date
+        self.sources = sources
+        self.tags = tags
+        self.acr_score = acr_score
+        self.acr_drivers = acr_drivers
+        self.exposure_score = exposure_score
+        self.scan_frequency = scan_frequency
+        self.tenable_uuid = tenable_uuid
+        self.hostname = hostname
+        self.agent_name = agent_name
+        self.bios_uuid = bios_uuid
+        self.aws_ec2_instance_id = aws_ec2_instance_id
+        self.aws_ec2_instance_ami_id = aws_ec2_instance_ami_id
+        self.aws_owner_id = aws_owner_id
+        self.aws_availability_zone = aws_availability_zone
+        self.aws_region = aws_region
+        self.aws_vpc_id = aws_vpc_id
+        self.aws_ec2_instance_group_name = aws_ec2_instance_group_name
+        self.aws_ec2_instance_state_name = aws_ec2_instance_state_name
+        self.aws_ec2_instance_type = aws_ec2_instance_type
+        self.aws_subnet_id = aws_subnet_id
+        self.aws_ec2_product_code = aws_ec2_product_code
+        self.aws_ec2_name = aws_ec2_name
+        self.azure_vm_id = azure_vm_id
+        self.azure_resource_id = azure_resource_id
+        self.gcp_project_id = gcp_project_id
+        self.gcp_zone = gcp_zone
+        self.gcp_instance_id = gcp_instance_id
+        self.ssh_fingerprint = ssh_fingerprint
+        self.mcafee_epo_guid = mcafee_epo_guid
+        self.mcafee_epo_agent_guid = mcafee_epo_agent_guid
+        self.qualys_asset_id = qualys_asset_id
+        self.qualys_host_id = qualys_host_id
+        self.servicenow_sysid = servicenow_sysid
+        self.installed_software = installed_software
+        self.bigfix_asset_id = bigfix_asset_id
+        self.network_name = network_name
 
     @property
     def counts(self):
@@ -2710,6 +2856,43 @@ class AssetInfo(BaseModel):
                 and isinstance(self._counts['vulnerabilities']['severities'], list):
             self._counts['vulnerabilities']['severities'] = \
                 AssetSeverity.from_list(self._counts['vulnerabilities']['severities'])
+
+    @property
+    def tags(self):
+        return self._tags
+
+    @tags.setter
+    @BaseModel._model_list(AssetTag)
+    def tags(self, tags):
+        self._tags = tags
+
+    @property
+    def sources(self):
+        return self._sources
+
+    @sources.setter
+    @BaseModel._model_list(AssetsAssetSource)
+    def sources(self, sources):
+        self._sources = sources
+
+    @property
+    def acr_drivers(self):
+        return self._acr_drivers
+
+    @acr_drivers.setter
+    @BaseModel._model_list(ACRDrivers)
+    def acr_drivers(self, acr_drivers):
+        self._acr_drivers = acr_drivers
+
+    @property
+    def scan_frequency(self):
+        return self._scan_frequency
+
+    @scan_frequency.setter
+    @BaseModel._model_list(AssetScanFrequency)
+    def scan_frequency(self, scan_frequency):
+        print(scan_frequency)
+        self._scan_frequency = scan_frequency
 
 
 class AssetList(BaseModel):
@@ -2730,19 +2913,6 @@ class AssetList(BaseModel):
     @BaseModel._model_list(Asset)
     def assets(self, assets):
         self._assets = assets
-
-
-class AssetsAssetSource(BaseModel):
-
-    def __init__(
-            self,
-            name=None,
-            last_seen=None,
-            first_seen=None
-    ):
-        self.name = name
-        self.last_seen = last_seen
-        self.first_seen = first_seen
 
 
 class AssetsAsset(BaseModel):
@@ -2779,9 +2949,17 @@ class AssetsAsset(BaseModel):
             last_seen=None,
             first_seen=None,
             last_licensed_scan_date=None,
-            created_at=None
+            created_at=None,
+            acr_score=None,
+            acr_drivers=None,
+            exposure_score=None,
+            scan_frequency=None,
+            bigfix_asset_id=None,
     ):
         self._sources = None
+        self._acr_drivers = None
+        self._scan_frequency = None
+
         self.id = id
         self.bios_uuid = bios_uuid
         self.ipv4 = ipv4
@@ -2813,6 +2991,11 @@ class AssetsAsset(BaseModel):
         self.first_seen = first_seen
         self.last_licensed_scan_date = last_licensed_scan_date
         self.created_at = created_at
+        self.acr_score = acr_score
+        self.acr_drivers = acr_drivers
+        self.exposure_score = exposure_score
+        self.scan_frequency = scan_frequency
+        self.bigfix_asset_id = bigfix_asset_id
 
     @property
     def sources(self):
@@ -2822,6 +3005,24 @@ class AssetsAsset(BaseModel):
     @BaseModel._model_list(AssetsAssetSource)
     def sources(self, sources):
         self._sources = sources
+
+    @property
+    def acr_drivers(self):
+        return self._acr_drivers
+
+    @acr_drivers.setter
+    @BaseModel._model_list(ACRDrivers)
+    def acr_drivers(self, acr_drivers):
+        self._acr_drivers = acr_drivers
+
+    @property
+    def scan_frequency(self):
+        return self._scan_frequency
+
+    @scan_frequency.setter
+    @BaseModel._model_list(AssetScanFrequency)
+    def scan_frequency(self, scan_frequency):
+        self._scan_frequency = scan_frequency
 
 
 class AssetsAssetList(BaseModel):
@@ -2842,23 +3043,6 @@ class AssetsAssetList(BaseModel):
     @BaseModel._model_list(AssetsAsset)
     def assets(self, assets):
         self._assets = assets
-
-
-class AssetTag(BaseModel):
-
-    def __init__(
-            self,
-            uuid=None,
-            key=None,
-            value=None,
-            added_by=None,
-            added_at=None
-    ):
-        self.uuid = uuid
-        self.key = key
-        self.value = value
-        self.added_by = added_by
-        self.added_at = added_at
 
 
 class AssetsAssetDetails(AssetsAsset):
@@ -2888,6 +3072,8 @@ class AssetsAssetDetails(AssetsAsset):
             bigfix_asset_id=None,
     ):
         self._tags = None
+        self._acr_drivers = None
+        self._scan_frequency = None
 
         self.has_agent = has_agent
         self.last_scan_target = last_scan_target
@@ -2919,6 +3105,24 @@ class AssetsAssetDetails(AssetsAsset):
     @BaseModel._model_list(AssetTag)
     def tags(self, tags):
         self._tags = tags
+
+    @property
+    def acr_drivers(self):
+        return self._acr_drivers
+
+    @acr_drivers.setter
+    @BaseModel._model_list(ACRDrivers)
+    def acr_drivers(self, acr_drivers):
+        self._acr_drivers = acr_drivers
+
+    @property
+    def scan_frequency(self):
+        return self._scan_frequency
+
+    @scan_frequency.setter
+    @BaseModel._model_list(AssetScanFrequency)
+    def scan_frequency(self, scan_frequency):
+        self._scan_frequency = scan_frequency
 
 
 class ExportsAssetsStatus(BaseModel):

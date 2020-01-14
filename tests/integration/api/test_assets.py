@@ -1,6 +1,6 @@
 import pytest
 
-from tenable_io.api.assets import BulkDeleteRequest, BulkMoveRequest
+from tenable_io.api.assets import BulkACRRequest, BulkDeleteRequest, BulkMoveRequest
 from tenable_io.api.models import AssetsAsset, AssetsAssetList, AssetsAssetDetails, AssetsAssetSource
 
 
@@ -42,3 +42,12 @@ def test_assets_bulk_delete(client):
     resp = client.assets_api.bulk_delete(req)
     assert isinstance(resp, int)
     assert resp == 1, u'Expected a single asset to be affected.'
+
+
+@pytest.mark.vcr()
+def test_assets_update_acr(client):
+    assets_list = client.assets_api.list()
+    asset = client.assets_api.get(assets_list.assets[0].id)
+    req = BulkACRRequest(acr_score=9, reason=[BulkACRRequest.REASON_DEV_ONLY], note='Internal', asset=[asset.id])
+    assert client.assets_api.update_acr(req)
+

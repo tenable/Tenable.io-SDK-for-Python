@@ -2,6 +2,10 @@
 CHANGELOG
 =========
 
+1.13.0
+==========
+* Added: Support for Bulk ACR updates and added Lumin related attributes to Asset objects.
+
 1.12.0
 ==========
 * Added: Support for Networks API

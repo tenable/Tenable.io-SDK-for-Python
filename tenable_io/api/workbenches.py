@@ -1,7 +1,7 @@
 from json import loads
 
 from tenable_io.api.base import BaseApi
-from tenable_io.api.models import AssetActivityList, AssetList, AssetInfo, VulnerabilityList, \
+from tenable_io.api.models import AssetActivityList, AssetsAssetList, AssetList, AssetInfo, VulnerabilityList, \
     VulnerabilityOutputList
 
 
@@ -36,7 +36,7 @@ class WorkbenchesApi(BaseApi):
         params = {'date_range': date_range, 'filter': filters, 'filter.search_type': filter_search_type}
         response = self._client.get('workbenches/assets',
                                     params={k: v for (k, v) in params.items() if v})
-        return AssetList.from_json(response.text)
+        return AssetsAssetList.from_json(response.text)
 
     def assets_vulnerabilities(self, date_range=None, filters=None, filter_search_type=None):
         """List all the assets with vulnerabilities.
@@ -57,7 +57,7 @@ class WorkbenchesApi(BaseApi):
 
         :param asset_id: The asset ID.
         :raise TenableIOApiException:  When API error is encountered.
-        :return: An instance of :class:`AssetInfo`.
+        :return: An instance of :class:`AssetActivityList`.
         """
         response = self._client.get('workbenches/assets/%(asset_id)s/activity',
                                     path_params={'asset_id': asset_id})
