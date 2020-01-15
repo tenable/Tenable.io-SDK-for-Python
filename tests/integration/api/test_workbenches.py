@@ -1,8 +1,8 @@
 import os
 import pytest
 
-from tenable_io.api.models import Asset, AssetActivity, AssetActivityList, AssetList, AssetInfo, Vulnerability, \
-    VulnerabilityList, VulnerabilityOutputList
+from tenable_io.api.models import AssetActivity, AssetActivityList, AssetsAsset,AssetsAssetList, AssetList, AssetInfo, \
+    Vulnerability, VulnerabilityList, VulnerabilityOutputList
 from tenable_io.api.workbenches import WorkbenchesApi
 
 from tests.integration.api.utils.utils import wait_until
@@ -11,9 +11,9 @@ from tests.integration.api.utils.utils import wait_until
 @pytest.mark.vcr()
 def test_workbenches_assets(client):
     assets_list = client.workbenches_api.assets()
-    assert isinstance(assets_list, AssetList), u'The `assets` method did not return type `AssetList`.'
+    assert isinstance(assets_list, AssetsAssetList), u'The `assets` method did not return type `AssetsAssetList`.'
     for asset in assets_list.assets:
-        assert isinstance(asset, Asset), u'Expected a list of type `Asset`.'
+        assert isinstance(asset, AssetsAsset), u'Expected a list of type `AssetsAsset`.'
 
 
 @pytest.mark.vcr()
