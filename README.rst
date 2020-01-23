@@ -1,3 +1,13 @@
+NOTICE: Tenable.io SDK for Python is being deprecated in favor of `pyTenable <https://github.com/tenable/pyTenable>`_
+=====================================================================================================================
+
+Tenable has decided to deprecate the ``tenable_io`` package in favor of the more widely used library,
+`pyTenable <https://github.com/tenable/pyTenable>`_. `pyTenable <https://github.com/tenable/pyTenable>`_ offers all of
+the same functionality as this package, as well as support for `tenable.sc <https://docs.tenable.com/Tenablesc.htm>`_.
+However, it should be noted that ``pyTenable`` functions are not compatible with ``tenable_io`` functions.
+
+Original README
+===============
 Tenable.io SDK for Python
 =========================
 .. image:: https://img.shields.io/pypi/v/tenable-io.svg?style=flat-square
